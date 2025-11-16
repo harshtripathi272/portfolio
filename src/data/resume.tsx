@@ -150,9 +150,14 @@ export const DATA = {
           href: "https://github.com/laksh-ya/deploy-bhc",
           icon: <Icons.github className="size-3" />,
         },
+        {
+          type: "Demo",
+          href: "https://www.youtube.com/watch?v=XTlps8ep0D8",
+          icon: <Icons.youtube className="size-3" />,
+        }
       ],
       image: "",
-      video: "",
+      video: "bhc_video.mp4",
     },
     {
       title: "OffPay - Offline UPI Payment System",
