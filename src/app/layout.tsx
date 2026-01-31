@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     yandex: "",
   },
   icons: {
-    icon: DATA.avatarUrl,
+    icon: "/me-circle.png",
   },
 };
 
