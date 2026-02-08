@@ -309,7 +309,7 @@ export const DATA = {
 
       ],
       image: "",
-      video: "",
+      video: "tnc_demo.mov",
     },
     {
       title: "Lunor Translator (DRDO Internship)",
