@@ -152,6 +152,52 @@ export default function Page() {
           </div>
         </div>
       </section>
+
+      <section id="achievements">
+        <div className="space-y-12 w-full py-12">
+          <BlurFade delay={BLUR_FADE_DELAY * 13}>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
+                  Achievements
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Recognition & Awards
+                </h2>
+                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Highlights from competitions and hackathons around the world.
+                </p>
+              </div>
+            </div>
+          </BlurFade>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-[800px] mx-auto">
+            {DATA.achievements.map((achievement, id) => (
+              <BlurFade
+                key={achievement.title}
+                delay={BLUR_FADE_DELAY * 14 + id * 0.05}
+              >
+                <Link
+                  href={`/achievements/${achievement.slug}`}
+                  className="block group"
+                >
+                  <div className="flex flex-col gap-2 rounded-lg border bg-card p-6 text-card-foreground shadow-sm transition-all hover:shadow-md hover:border-foreground/20 group-hover:bg-accent/50">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{achievement.icon}</span>
+                      <div className="flex flex-col">
+                        <h3 className="font-semibold leading-tight group-hover:text-foreground">{achievement.title}</h3>
+                        <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-end text-xs text-muted-foreground">
+                      <span className="group-hover:underline">View details →</span>
+                    </div>
+                  </div>
+                </Link>
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </section>
       
       <section id="contact">
         <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-12">

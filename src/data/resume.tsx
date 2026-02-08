@@ -82,6 +82,18 @@ export const DATA = {
       description:
         "Developing and training YOLO models for a real-time railway alert system using drone-based imagery. Optimizing deep learning models for efficient deployment on edge hardware, specifically the NVIDIA Jetson Nano Orin. Responsible for the end-to-end software pipeline, from model development to on-device implementation.",
     },
+    {
+      company: "Inter-IIT Tech Meet",
+      badges: ["12th/23 IITs"],
+      href: "#",
+      location: "",
+      title: "Explainable AI Trading System",
+      logoUrl: "/inter_iit.png",
+      start: "November 2025",
+      end: "December 2025",
+      description:
+        "Built a real-time algorithmic trading platform using PPO-based Reinforcement Learning. Designed a streaming data pipeline using Pathway and Redis Streams. Implemented multi-agent LLM reasoning with Bull vs Bear agent debates. Achieved 22.3% return and ranked 12th among 23 IITs.",
+    },
   ],
   education: [
     {
@@ -110,7 +122,6 @@ export const DATA = {
     },
   ],
   projects: [
-    
     {
       title: "BHC (Balaji Health Care) Business Suite",
       href: "https://bhcmp.store",
@@ -119,7 +130,6 @@ export const DATA = {
       description:
         "A full-stack, AI-enhanced application built to digitize and centralize the entire operational workflow for Balaji Health Care, a medical supply company. It manages inventory (with batch/expiry tracking), orders, and finances, replacing manual processes. The suite features an AI assistant (RAG) for data queries and AI-powered invoice scanning to automate order creation.",
       technologies: [
-        
         "Python",
         "FastAPI",
         "Firestore",
@@ -158,6 +168,26 @@ export const DATA = {
       ],
       image: "",
       video: "bhc_video.mp4",
+    },
+    {
+      title: "YOLOv11n with Dendritic Optimization",
+      href: "#",
+      dates: "Perforated AI Hackathon",
+      active: true,
+      description:
+        "Improved YOLOv11n object detection accuracy using PerforatedAI dendritic optimization. Integrated open-source PAI dendrites with a custom YOLO training loop. Achieved +2.30 mAP50 (100% data) and +2.90 mAP50 (50% data) over baseline. Demonstrated 5%+ remaining error reduction and improved data efficiency. Secured 3rd place globally among 693 participants as part of Team Neuron AI.",
+      technologies: [
+        "Python",
+        "PyTorch",
+        "YOLOv11n",
+        "PerforatedAI Dendrites",
+        "Ultralytics",
+        "Pascal VOC2007",
+        "Computer Vision",
+      ],
+      links: [],
+      image: "",
+      video: "",
     },
     {
       title: "OffPay - Offline UPI Payment System",
@@ -459,5 +489,39 @@ export const DATA = {
     // },
   ],
   hackathons: [
+  ],
+  achievements: [
+    {
+      slug: "student-innovators-without-borders",
+      title: "First Prize - Student Innovators Without Borders Hacks",
+      description: "Ranked 1st among 957 participants internationally",
+      date: "2024",
+      icon: "🥇",
+      longDescription: "",
+      details: {
+        event: "Student Innovators Without Borders Hacks",
+        placement: "1st Place",
+        participants: "957 participants internationally",
+        project: "",
+        techStack: [],
+        highlights: [],
+      },
+    },
+    {
+      slug: "perforated-ai-hackathon",
+      title: "Third Prize - International Hackathon by Perforated AI",
+      description: "Secured 3rd place among 693 participants globally as part of Team Neuron AI",
+      date: "2024",
+      icon: "🥉",
+      longDescription: "",
+      details: {
+        event: "International Hackathon by Perforated AI",
+        placement: "3rd Place",
+        participants: "693 participants globally",
+        project: "YOLOv11n with Dendritic Optimization",
+        techStack: ["Python", "PyTorch", "YOLOv11n", "PerforatedAI Dendrites"],
+        highlights: [],
+      },
+    },
   ],
 } as const;
