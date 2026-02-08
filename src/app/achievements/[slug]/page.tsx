@@ -221,6 +221,136 @@ const PerforatedAIContent = () => (
   </div>
 );
 
+// Detailed content for SafeWander (Student Innovators Without Borders)
+const SafeWanderContent = () => (
+  <div className="space-y-8">
+    {/* Why Section */}
+    <section>
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <span className="text-2xl">🎯</span> Why We Built This
+      </h2>
+      <div className="prose dark:prose-invert max-w-none">
+        <p className="text-muted-foreground leading-relaxed">
+          <strong>Dementia wandering</strong> is one of the most dangerous behaviors associated with Alzheimer&apos;s and other forms of dementia. Up to 60% of people with dementia will wander at least once, and if not found within 24 hours, up to 50% risk serious injury or death.
+        </p>
+        <p className="text-muted-foreground leading-relaxed mt-4">
+          We built SafeWander to address this critical need:
+        </p>
+        <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
+          <li><strong>Early Detection:</strong> Catch wandering incidents before they become emergencies through intelligent geofencing and real-time monitoring</li>
+          <li><strong>Rapid Response:</strong> Enable caregivers to respond within minutes, not hours, with live location tracking and emergency mode</li>
+          <li><strong>Peace of Mind:</strong> Allow family members to monitor loved ones remotely without being physically present 24/7</li>
+          <li><strong>Coordinated Search:</strong> When incidents do occur, enable rapid coordination with emergency contacts and authorities</li>
+        </ul>
+        <p className="text-muted-foreground leading-relaxed mt-4 italic">
+          &quot;Safe steps, peaceful mind&quot; - Our tagline reflects our mission to ensure dementia patients can maintain their independence while keeping caregivers informed and families at peace.
+        </p>
+      </div>
+    </section>
+
+    {/* What Section */}
+    <section>
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <span className="text-2xl">💡</span> What We Built
+      </h2>
+      <div className="prose dark:prose-invert max-w-none">
+        <p className="text-muted-foreground leading-relaxed">
+          <strong>SafeWander</strong> is a comprehensive full-stack application for monitoring and ensuring the safety of dementia patients. The system provides:
+        </p>
+        
+        <h3 className="text-lg font-semibold mt-6 mb-3">🛡️ Prevention Features</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>Real-time GPS tracking with live map updates</li>
+          <li>Intelligent geofence zones with automatic boundary alerts</li>
+          <li>Battery monitoring to ensure device is always active</li>
+          <li>Activity timeline to understand patient patterns</li>
+        </ul>
+        
+        <h3 className="text-lg font-semibold mt-6 mb-3">🔍 Detection Features</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>Multi-level alert system (Critical/High/Medium/Low)</li>
+          <li>Intelligent escalation when alerts go unacknowledged</li>
+          <li>Zone boundary detection with instant notifications</li>
+          <li>Anomaly detection for unusual movement patterns</li>
+        </ul>
+        
+        <h3 className="text-lg font-semibold mt-6 mb-3">🚨 Emergency Response</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>One-click emergency activation</li>
+          <li>Live location sharing with shareable links</li>
+          <li>Emergency contact notifications</li>
+          <li>Search radius management and visualization</li>
+          <li>Missing person profile with photo and medical info</li>
+        </ul>
+      </div>
+    </section>
+
+    {/* How Section */}
+    <section>
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <span className="text-2xl">⚙️</span> How We Built It
+      </h2>
+      <div className="prose dark:prose-invert max-w-none">
+        <h3 className="text-lg font-semibold mt-4 mb-2">Frontend Stack</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li><strong>Next.js 15</strong> with App Router for a modern React framework</li>
+          <li><strong>TypeScript</strong> for type safety across the entire codebase</li>
+          <li><strong>Tailwind CSS v4</strong> for utility-first styling</li>
+          <li><strong>shadcn/ui</strong> for polished, accessible UI components</li>
+          <li><strong>Leaflet.js</strong> for interactive maps with search radius visualization</li>
+        </ul>
+        
+        <h3 className="text-lg font-semibold mt-6 mb-2">Backend Stack</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li><strong>FastAPI</strong> for a modern, high-performance Python web framework</li>
+          <li><strong>SQLAlchemy</strong> for ORM-based database operations</li>
+          <li><strong>SQLite</strong> for a serverless database solution</li>
+          <li><strong>Pydantic</strong> for robust data validation</li>
+        </ul>
+        
+        <h3 className="text-lg font-semibold mt-6 mb-2">Key Implementation Details</h3>
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>Real-time data synchronization with auto-refresh</li>
+          <li>All buttons fully functional and connected to backend APIs</li>
+          <li>SQLite database tracks all patient data, alerts, and events</li>
+          <li>Responsive design that works on desktop and mobile devices</li>
+        </ul>
+      </div>
+    </section>
+
+    {/* Demo Section */}
+    <section>
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <span className="text-2xl">🎬</span> Demo Video
+      </h2>
+      <div className="rounded-lg overflow-hidden border bg-card aspect-video">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/lWFLmTwNg1I"
+          title="SafeWander Demo Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    </section>
+
+    {/* Impact Section */}
+    <section>
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <span className="text-2xl">🏆</span> Recognition & Impact
+      </h2>
+      <div className="prose dark:prose-invert max-w-none">
+        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>Secured <strong>1st place</strong> among 957 participants internationally</li>
+          <li>Built a complete, production-ready full-stack application in hackathon timeframe</li>
+          <li>Addressed a critical real-world problem affecting millions of dementia patients globally</li>
+          <li>Demonstrated technical excellence with modern tech stack (Next.js 15, FastAPI, TypeScript)</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+);
+
 export default async function AchievementPage({
   params,
 }: {
