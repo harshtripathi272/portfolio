@@ -363,6 +363,7 @@ export default async function AchievementPage({
   }
 
   const isPerforatedAI = achievement.slug === "perforated-ai-hackathon";
+  const isSafeWander = achievement.slug === "student-innovators-without-borders";
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
@@ -458,17 +459,30 @@ export default async function AchievementPage({
                       View Repository
                     </Link>
                   )}
-                  {achievement.links.pr && (
+                  {"devpost" in achievement.links && achievement.links.devpost && (
                     <Link
-                      href={achievement.links.pr}
+                      href={achievement.links.devpost}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm bg-secondary hover:bg-secondary/80 px-3 py-2 rounded-md transition-colors"
                     >
-                      <svg className="size-4" viewBox="0 0 16 16" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"/>
+                      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.002 1.61L0 12.004L6.002 22.39h11.996L24 12.004L17.998 1.61H6.002zm1.593 4.084h3.947c3.605 0 6.276 1.695 6.276 6.31c0 4.436-3.21 6.302-6.456 6.302H7.595V5.694zm2.517 2.449v7.714h1.241c2.646 0 3.862-1.55 3.862-3.861c.009-2.569-1.096-3.853-3.767-3.853H10.112z"/>
                       </svg>
-                      View Pull Request
+                      View on Devpost
+                    </Link>
+                  )}
+                  {"demo" in achievement.links && achievement.links.demo && (
+                    <Link
+                      href={achievement.links.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md transition-colors"
+                    >
+                      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                      Watch Demo
                     </Link>
                   )}
                 </div>
@@ -486,25 +500,11 @@ export default async function AchievementPage({
           </BlurFade>
         )}
 
-        {/* Generic content for other achievements */}
-        {!isPerforatedAI && achievement.longDescription && (
+        {/* Detailed Content for SafeWander */}
+        {isSafeWander && (
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="mt-8 rounded-lg border bg-card p-6">
-              <h2 className="text-xl font-bold mb-4">About</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                {achievement.longDescription}
-              </p>
-              
-              {achievement.details.highlights.length > 0 && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold mb-3">Key Highlights</h3>
-                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    {achievement.details.highlights.map((highlight, idx) => (
-                      <li key={idx}>{highlight}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+            <div className="mt-8">
+              <SafeWanderContent />
             </div>
           </BlurFade>
         )}
