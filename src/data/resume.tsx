@@ -363,7 +363,7 @@ export const DATA = {
       ],
       links: [],
       image: "",
-      video: "lung-demo.gif",
+      video: "lung_demo.mp4",
     },
     // {
     //   title: "Chat Collect",
