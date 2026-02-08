@@ -264,7 +264,7 @@ export const DATA = {
         },
       ],
       image: "",
-      video: "",
+      video: "roast_your_base.mp4",
     },
     {
       title: "T&C Summarizer",
@@ -309,7 +309,7 @@ export const DATA = {
 
       ],
       image: "",
-      video: "tnc_demo.mov",
+      video: "tnc_demo.mp4",
     },
     {
       title: "Lunor Translator (DRDO Internship)",
@@ -363,7 +363,7 @@ export const DATA = {
       ],
       links: [],
       image: "",
-      video: "",
+      video: "lung-demo.gif",
     },
     // {
     //   title: "Chat Collect",
