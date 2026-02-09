@@ -495,7 +495,7 @@ export const DATA = {
       slug: "student-innovators-without-borders",
       title: "First Prize - Student Innovators Without Borders Hacks",
       description: "Ranked 1st among 957 participants internationally",
-      date: "2024",
+      date: "2026",
       icon: "🥇",
       longDescription: "SafeWander is a comprehensive full-stack application for monitoring and ensuring the safety of dementia patients using real-time tracking, intelligent alerts, and emergency response capabilities. The system features real-time GPS tracking, intelligent geofencing with automatic alerts, an escalating multi-level alert system, and emergency mode for rapid response to missing patients.",
       links: {
@@ -536,7 +536,7 @@ export const DATA = {
       slug: "perforated-ai-hackathon",
       title: "Third Prize - International Hackathon by Perforated AI",
       description: "Secured 3rd place among 693 participants globally as part of Team Neuron AI",
-      date: "2024",
+      date: "2026",
       icon: "🥉",
       longDescription: "This project demonstrates the application of PerforatedAI's dendritic neural network optimization to YOLOv11n object detection on the Pascal VOC2007 dataset. We proved that dendrite-enhanced networks can achieve higher accuracy on the same data compared to traditional neural networks. Our submission was officially adopted as a base example in PerforatedAI's official repository.",
       links: {
