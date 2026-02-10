@@ -43,7 +43,7 @@ export function ProjectCard({
   return (
     <Card
       className={
-        "group relative flex flex-col overflow-hidden border border-white/10 bg-card h-full transition-all duration-300 hover:border-white/20 hover:shadow-sm"
+        "group relative flex flex-col overflow-hidden border border-white/[0.08] bg-zinc-900/80 h-full transition-all duration-300 hover:border-white/20 hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5 rounded-xl"
       }
     >
       <Link
@@ -57,7 +57,7 @@ export function ProjectCard({
             loop
             muted
             playsInline
-            className="pointer-events-none mx-auto h-40 w-full object-cover object-top transition-all duration-300 group-hover:scale-105 group-hover:grayscale-0 grayscale"
+            className="pointer-events-none mx-auto h-40 w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           />
         )}
         {image && (
@@ -66,13 +66,13 @@ export function ProjectCard({
             alt={title}
             width={500}
             height={300}
-            className="h-40 w-full overflow-hidden object-cover object-top transition-all duration-300 group-hover:scale-105 group-hover:grayscale-0 grayscale"
+            className="h-40 w-full overflow-hidden object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           />
         )}
       </Link>
       <CardHeader className="px-2">
         <div className="space-y-1">
-          <CardTitle className="mt-1 text-base font-medium text-foreground tracking-tight group-hover:text-foreground/90 transition-colors">
+          <CardTitle className="mt-1 text-base font-semibold text-foreground tracking-tight">
             {title}
           </CardTitle>
           <time className="font-sans text-xs font-normal text-muted-foreground/60">
@@ -106,7 +106,7 @@ export function ProjectCard({
           <div className="flex flex-row flex-wrap items-start gap-1">
             {links?.map((link, idx) => (
               <Link href={link?.href} key={idx} target="_blank">
-                <Badge className="flex gap-2 px-2 py-1 text-[10px] border border-white/10 bg-transparent hover:bg-neutral-800 transition-colors" variant="outline">
+                <Badge className="flex gap-2 px-2.5 py-1 text-[10px] border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-colors rounded-full" variant="outline">
                   {link?.icon}
                   {link?.type}
                 </Badge>

@@ -21,11 +21,12 @@ export default function Page() {
             <div className="flex-col flex flex-1 space-y-4">
               {/* Availability Badge - Minimalist */}
               <BlurFade delay={BLUR_FADE_DELAY * 0.5}>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/50 border border-border w-fit">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                  <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">
                     Available for work
                   </span>
                 </div>
@@ -33,7 +34,7 @@ export default function Page() {
               
               <BlurFadeText
                 delay={BLUR_FADE_DELAY}
-                className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-[family-name:var(--font-display)] text-foreground"
+                className="text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl/none font-[family-name:var(--font-display)] text-foreground"
                 yOffset={8}
                 text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
               />
@@ -63,7 +64,8 @@ export default function Page() {
             </div>
             <BlurFade delay={BLUR_FADE_DELAY}>
               <div className="relative">
-                <Avatar className="size-28 sm:size-32 border border-border grayscale hover:grayscale-0 transition-all duration-500">
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-amber-400/20 via-orange-300/10 to-transparent blur-md" />
+                <Avatar className="relative size-28 sm:size-32 border-2 border-white/10 ring-1 ring-white/5">
                   <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
                   <AvatarFallback>{DATA.initials}</AvatarFallback>
                 </Avatar>
@@ -76,7 +78,7 @@ export default function Page() {
       {/* ─── Stats Section - Minimalist ─── */}
       <section id="stats">
         <BlurFade delay={BLUR_FADE_DELAY * 2.5}>
-          <div className="grid grid-cols-3 gap-6 sm:gap-8 border-y border-border/40 py-8">
+          <div className="grid grid-cols-3 gap-4 sm:gap-6">
             {[
               { value: "7+", label: "Projects Built" },
               { value: "2", label: "Hackathon Wins" },
@@ -84,9 +86,9 @@ export default function Page() {
             ].map((stat, i) => (
               <div
                 key={stat.label}
-                className="flex flex-col items-center justify-center space-y-1"
+                className="flex flex-col items-center justify-center py-6 rounded-xl bg-zinc-900/60 border border-white/[0.06] space-y-1"
               >
-                <span className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] tracking-tight">
+                <span className="text-3xl sm:text-4xl font-extrabold font-[family-name:var(--font-display)] tracking-tight text-amber-50">
                   {stat.value}
                 </span>
                 <span className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-widest">
@@ -173,7 +175,7 @@ export default function Page() {
               <BlurFade key={skill} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
                 <Badge
                   key={skill}
-                  className="px-3 py-1 text-xs font-medium bg-secondary/50 hover:bg-secondary text-secondary-foreground border-transparent transition-colors cursor-default rounded-md"
+                  className="px-3.5 py-1.5 text-xs font-medium bg-zinc-800/80 text-zinc-300 border border-white/[0.06] hover:border-white/15 hover:text-foreground transition-all duration-200 cursor-default rounded-lg"
                 >
                   {skill}
                 </Badge>
@@ -249,9 +251,9 @@ export default function Page() {
                   href={`/achievements/${achievement.slug}`}
                   className="block group"
                 >
-                  <div className="relative flex flex-col gap-4 rounded-lg border border-border/40 bg-card p-6 transition-all duration-300 hover:border-foreground/20 hover:bg-secondary/20">
+                  <div className="relative flex flex-col gap-4 rounded-xl border border-white/[0.06] bg-zinc-900/60 p-6 transition-all duration-300 hover:border-white/15 hover:bg-zinc-900/90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20">
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary text-foreground text-xl">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-zinc-800 text-foreground text-xl border border-white/[0.06]">
                         {achievement.icon}
                       </div>
                       <svg 
@@ -284,23 +286,43 @@ export default function Page() {
       
       {/* ─── Contact ─── */}
       <section id="contact">
-        <div className="w-full py-12">
+        <div className="w-full py-16">
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
-            <div className="relative flex flex-col items-center text-center space-y-6">
-              <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Contact</span>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl font-[family-name:var(--font-display)]">
-                Get in Touch
-              </h2>
-              <p className="mx-auto max-w-[500px] text-muted-foreground text-base leading-relaxed text-balance">
-                Want to chat? Connect with me on{" "}
-                <Link
-                  href={DATA.contact.social.LinkedIn.url}
-                  className="text-foreground font-medium underline underline-offset-4 hover:text-muted-foreground transition-colors"
-                >
-                  LinkedIn
-                </Link>{" "}
-                and I&apos;ll respond whenever I can.
-              </p>
+            <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-zinc-900/60 p-10 sm:p-14">
+              <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+              <div className="relative flex flex-col items-center text-center space-y-6">
+                <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Contact</span>
+                <h2 className="text-3xl font-bold tracking-tight sm:text-5xl font-[family-name:var(--font-display)]">
+                  Get in Touch
+                </h2>
+                <p className="mx-auto max-w-[500px] text-muted-foreground text-base leading-relaxed text-balance">
+                  Want to chat? Connect with me on{" "}
+                  <Link
+                    href={DATA.contact.social.LinkedIn.url}
+                    className="text-foreground font-medium underline underline-offset-4 hover:text-muted-foreground transition-colors"
+                  >
+                    LinkedIn
+                  </Link>{" "}
+                  and I&apos;ll respond whenever I can.
+                </p>
+                <div className="flex items-center gap-3 pt-4">
+                  {Object.entries(DATA.contact.social)
+                    .filter(([_, social]) => social.navbar)
+                    .map(([name, social]) => (
+                      <Link
+                        key={name}
+                        href={social.url}
+                        target="_blank"
+                        className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.08] transition-all duration-200"
+                      >
+                        <social.icon className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                        <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                          {name}
+                        </span>
+                      </Link>
+                    ))}
+                </div>
+              </div>
             </div>
           </BlurFade>
         </div>
