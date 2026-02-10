@@ -6,63 +6,48 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
-
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
-
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-
-    --accent: 262 83% 58%;
-    --accent-foreground: 0 0% 98%;
-
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 262 83% 58%;
-
-    --radius: 0.75rem;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 228 15% 5%;
-    --foreground: 220 20% 92%;
-
-    --card: 228 15% 7%;
-    --card-foreground: 220 20% 92%;
-
-    --popover: 228 15% 7%;
-    --popover-foreground: 220 20% 92%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-
-    --secondary: 225 15% 12%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 225 15% 12%;
-    --muted-foreground: 220 10% 50%;
-
-    --accent: 262 83% 58%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 225 12% 16%;
-    --input: 225 12% 16%;
-    --ring: 262 83% 58%;
+    --background: 0 0% 3.9%;
+    /* Deep Zinc-950/Black */
+    --foreground: 0 0% 98%;
+    /* Zinc-50 */
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
   }
 }
 
@@ -71,270 +56,38 @@
     @apply border-border;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
     @apply bg-background text-foreground antialiased;
-  }
-
-  ::selection {
-    @apply bg-purple-500/30 text-foreground;
   }
 }
 
 @layer utilities {
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-  }
 
-  .section-heading {
-    @apply text-xs font-bold uppercase tracking-[0.25em] inline-block;
-    background-image: linear-gradient(135deg, #a855f7, #6366f1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-text-hero {
-    background: linear-gradient(135deg, #c084fc 0%, #818cf8 25%, #60a5fa 50%, #c084fc 75%, #818cf8 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient-flow 4s ease infinite;
-  }
-
-  .shimmer-border {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .shimmer-border::before {
+  /* Minimalist Noise Texture */
+  .noise-subtle::before {
     content: "";
-    position: absolute;
+    position: fixed;
     inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, transparent 20%, rgba(168, 85, 247, 0.4) 40%, rgba(99, 102, 241, 0.4) 60%, transparent 80%);
-    background-size: 300% 300%;
-    animation: shimmer-move 4s linear infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    opacity: 0.04;
     pointer-events: none;
+    z-index: 50;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-border/40;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-      0 1px 2px rgba(0, 0, 0, 0.1);
+  /* High-Contrast Border */
+  .border-minimal {
+    @apply border border-white/10 hover:border-white/20 transition-colors duration-300;
   }
 
-  .glass-card:hover {
-    @apply border-purple-500/30;
-    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.05) inset,
-      0 8px 32px -8px rgba(168, 85, 247, 0.15),
-      0 0 60px -12px rgba(168, 85, 247, 0.08);
-  }
-
-  .glow-purple {
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.15),
-      0 0 60px rgba(168, 85, 247, 0.05);
-  }
-
-  .text-glow {
-    text-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+  /* Typography Enhancements */
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-/* ─── Animated Gradient Flow ─── */
-@keyframes gradient-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes shimmer-move {
-  0% {
-    background-position: 200% 0%;
-  }
-
-  100% {
-    background-position: -200% 0%;
-  }
-}
-
-/* ─── Animated Gradient Mesh Background ─── */
-.bg-gradient-mesh::before,
-.bg-gradient-mesh::after {
-  content: "";
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.bg-gradient-mesh::before {
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, #a855f7, transparent 70%);
-  top: -250px;
-  right: -250px;
-  animation: orbit1 25s ease-in-out infinite;
-}
-
-.bg-gradient-mesh::after {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #3b82f6, transparent 70%);
-  bottom: -150px;
-  left: -250px;
-  animation: orbit2 30s ease-in-out infinite;
-}
-
-@keyframes orbit1 {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  25% {
-    transform: translate(-80px, 100px) scale(1.1);
-  }
-
-  50% {
-    transform: translate(60px, 180px) scale(0.9);
-  }
-
-  75% {
-    transform: translate(80px, 60px) scale(1.05);
-  }
-}
-
-@keyframes orbit2 {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(100px, -80px) scale(1.1);
-  }
-
-  66% {
-    transform: translate(-60px, -120px) scale(0.95);
-  }
-}
-
-/* ─── Noise Texture Overlay ─── */
-.noise-overlay::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  opacity: 0.025;
-  pointer-events: none;
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
-
-/* ─── Dot Grid Pattern ─── */
-.dot-pattern {
-  background-image: radial-gradient(circle, hsl(var(--muted-foreground) / 0.1) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* ─── Pulse Animation for Status Dot ─── */
-@keyframes pulse-dot {
-
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(1.5);
-  }
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* ─── Floating Animation ─── */
-@keyframes float-slow {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.animate-float-slow {
-  animation: float-slow 4s ease-in-out infinite;
-}
-
-/* ─── Typewriter cursor ─── */
-@keyframes blink-cursor {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-cursor {
-  animation: blink-cursor 1s step-end infinite;
-}
-
-/* ─── Glow pulse for cards ─── */
-@keyframes glow-pulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.08);
-  }
-
-  50% {
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
-  }
-}
-
-/* ─── Section divider ─── */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.2), transparent);
-}
-
-/* ─── Scrollbar Styling ─── */
+/* Custom Scrollbar - Minimal */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -342,80 +95,23 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.3);
-  border-radius: 100px;
+  background: #333;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.5);
+  background: #555;
 }
 
-/* ─── Code Styling ─── */
+/* Code Syntax Highlighting - Monochrome adjustments */
 h3 code {
-  @apply !text-lg md:!text-xl;
+  @apply !text-lg md:!text-xl font-medium;
 }
 
 pre {
-  @apply !px-0 rounded-lg overflow-x-auto py-4
+  @apply !px-0 rounded-md overflow-x-auto py-4 bg-secondary/50 border border-white/5;
 }
 
 pre [data-line] {
-  @apply px-4
-}
-
-code {
-  @apply text-sm md:text-base !leading-loose;
-}
-
-pre>code {
-  counter-reset: line;
-}
-
-code[data-theme*=" "],
-code[data-theme*=" "] span {
-  color: var(--shiki-light);
-  background-color: var(--shiki-light-bg);
-}
-
-@media (prefers-color-scheme: dark) {
-
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
-    color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
-  }
-}
-
-code[data-line-numbers] {
-  counter-reset: line;
-}
-
-code[data-line-numbers]>[data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-  @apply inline-block w-4 mr-4 text-right text-gray-500;
-}
-
-code {
-  counter-reset: line;
-}
-
-code>[data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-
-  /* Other styling */
-  display: inline-block;
-  width: 1rem;
-  margin-right: 2rem;
-  text-align: right;
-  color: gray;
-}
-
-code[data-line-numbers-max-digits="2"]>[data-line]::before {
-  width: 2rem;
-}
-
-code[data-line-numbers-max-digits="3"]>[data-line]::before {
-  width: 3rem;
+  @apply px-4 border-l-2 border-transparent;
 }
