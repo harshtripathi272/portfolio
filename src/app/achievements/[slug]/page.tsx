@@ -32,10 +32,10 @@ export async function generateMetadata({
 
 // Detailed content for Perforated AI Hackathon
 const PerforatedAIContent = () => (
-  <div className="space-y-8">
+  <div className="space-y-10">
     {/* Why Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">🎯</span> Why We Did This
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -56,7 +56,7 @@ const PerforatedAIContent = () => (
 
     {/* What Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">💡</span> What We Built
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -76,7 +76,7 @@ const PerforatedAIContent = () => (
 
     {/* How Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">⚙️</span> How We Did It
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -99,39 +99,39 @@ const PerforatedAIContent = () => (
 
     {/* Results Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">📊</span> Results
       </h2>
       
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse border border-border rounded-lg">
+      <div className="overflow-x-auto rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl">
+        <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-muted">
-              <th className="border border-border px-4 py-2 text-left">Metric</th>
-              <th className="border border-border px-4 py-2 text-center">100% Data</th>
-              <th className="border border-border px-4 py-2 text-center">50% Data</th>
+            <tr className="border-b border-border/30 bg-purple-500/5">
+              <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Metric</th>
+              <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">100% Data</th>
+              <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">50% Data</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border border-border px-4 py-2 font-medium">Baseline mAP50</td>
-              <td className="border border-border px-4 py-2 text-center">54.30</td>
-              <td className="border border-border px-4 py-2 text-center">49.55</td>
+            <tr className="border-b border-border/20">
+              <td className="px-5 py-3 font-medium text-sm">Baseline mAP50</td>
+              <td className="px-5 py-3 text-center text-sm">54.30</td>
+              <td className="px-5 py-3 text-center text-sm">49.55</td>
             </tr>
-            <tr>
-              <td className="border border-border px-4 py-2 font-medium">With Dendrites mAP50</td>
-              <td className="border border-border px-4 py-2 text-center text-green-600 dark:text-green-400 font-bold">56.60</td>
-              <td className="border border-border px-4 py-2 text-center text-green-600 dark:text-green-400 font-bold">52.45</td>
+            <tr className="border-b border-border/20">
+              <td className="px-5 py-3 font-medium text-sm">With Dendrites mAP50</td>
+              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">56.60</td>
+              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">52.45</td>
             </tr>
-            <tr className="bg-muted/50">
-              <td className="border border-border px-4 py-2 font-medium">Absolute Improvement</td>
-              <td className="border border-border px-4 py-2 text-center text-green-600 dark:text-green-400 font-bold">+2.30</td>
-              <td className="border border-border px-4 py-2 text-center text-green-600 dark:text-green-400 font-bold">+2.90</td>
+            <tr className="border-b border-border/20 bg-purple-500/5">
+              <td className="px-5 py-3 font-medium text-sm">Absolute Improvement</td>
+              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">+2.30</td>
+              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">+2.90</td>
             </tr>
-            <tr className="bg-muted/50">
-              <td className="border border-border px-4 py-2 font-medium">Remaining Error Reduced</td>
-              <td className="border border-border px-4 py-2 text-center">5.03%</td>
-              <td className="border border-border px-4 py-2 text-center">5.75%</td>
+            <tr className="bg-purple-500/5">
+              <td className="px-5 py-3 font-medium text-sm">Remaining Error Reduced</td>
+              <td className="px-5 py-3 text-center text-sm">5.03%</td>
+              <td className="px-5 py-3 text-center text-sm">5.75%</td>
             </tr>
           </tbody>
         </table>
@@ -144,14 +144,14 @@ const PerforatedAIContent = () => (
 
     {/* Graphs Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">📈</span> Training Graphs
       </h2>
       
       <div className="space-y-8">
         <div>
           <h3 className="text-lg font-semibold mb-3">Comparison Graph - 100% Data</h3>
-          <div className="rounded-lg overflow-hidden border bg-card">
+          <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40 backdrop-blur-xl">
             <Image
               src="/achievements/full_comparison.jpeg"
               alt="Comparison Graph for 100% Data showing baseline vs dendrite performance"
@@ -164,7 +164,7 @@ const PerforatedAIContent = () => (
         
         <div>
           <h3 className="text-lg font-semibold mb-3">Comparison Graph - 50% Data</h3>
-          <div className="rounded-lg overflow-hidden border bg-card">
+          <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40 backdrop-blur-xl">
             <Image
               src="/achievements/half_comparison.jpeg"
               alt="Comparison Graph for 50% Data showing baseline vs dendrite performance"
@@ -178,7 +178,7 @@ const PerforatedAIContent = () => (
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <h3 className="text-lg font-semibold mb-3">PAI Graph - 100% Data</h3>
-            <div className="rounded-lg overflow-hidden border bg-card">
+            <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40 backdrop-blur-xl">
               <Image
                 src="/achievements/dendrite_100.png"
                 alt="PAI Graph for 100% Data"
@@ -191,7 +191,7 @@ const PerforatedAIContent = () => (
           
           <div>
             <h3 className="text-lg font-semibold mb-3">PAI Graph - 50% Data</h3>
-            <div className="rounded-lg overflow-hidden border bg-card">
+            <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40 backdrop-blur-xl">
               <Image
                 src="/achievements/dendrite_50.png"
                 alt="PAI Graph for 50% Data"
@@ -207,7 +207,7 @@ const PerforatedAIContent = () => (
 
     {/* Impact Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">🏆</span> Recognition & Impact
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -223,10 +223,10 @@ const PerforatedAIContent = () => (
 
 // Detailed content for SafeWander (Student Innovators Without Borders)
 const SafeWanderContent = () => (
-  <div className="space-y-8">
+  <div className="space-y-10">
     {/* Why Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">🎯</span> Why We Built This
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -250,7 +250,7 @@ const SafeWanderContent = () => (
 
     {/* What Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">💡</span> What We Built
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -287,7 +287,7 @@ const SafeWanderContent = () => (
 
     {/* How Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">⚙️</span> How We Built It
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -320,10 +320,10 @@ const SafeWanderContent = () => (
 
     {/* Demo Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">🎬</span> Demo Video
       </h2>
-      <div className="rounded-lg overflow-hidden border bg-card aspect-video">
+      <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40 backdrop-blur-xl aspect-video">
         <iframe
           className="w-full h-full"
           src="https://www.youtube.com/embed/lWFLmTwNg1I"
@@ -336,7 +336,7 @@ const SafeWanderContent = () => (
 
     {/* Impact Section */}
     <section>
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2 font-[family-name:var(--font-display)]">
         <span className="text-2xl">🏆</span> Recognition & Impact
       </h2>
       <div className="prose dark:prose-invert max-w-none">
@@ -371,67 +371,76 @@ export default async function AchievementPage({
         <BlurFade delay={BLUR_FADE_DELAY}>
           <Link
             href="/#achievements"
-            className="text-sm text-muted-foreground hover:text-foreground mb-4 inline-block"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 hover:text-purple-400 mb-6 transition-colors duration-300 group"
           >
-            ← Back to Achievements
+            <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            Back to Achievements
           </Link>
         </BlurFade>
 
         <BlurFade delay={BLUR_FADE_DELAY * 2}>
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-5xl">{achievement.icon}</span>
+          <div className="flex items-center gap-5 mb-8">
+            <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
+              <span className="text-4xl">{achievement.icon}</span>
+            </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl font-[family-name:var(--font-display)]">
                 {achievement.title}
               </h1>
-              <p className="text-muted-foreground">{achievement.date}</p>
+              <p className="text-muted-foreground/70 text-sm uppercase tracking-wider mt-1">{achievement.date}</p>
             </div>
           </div>
         </BlurFade>
 
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
-          <div className="rounded-lg border bg-card p-6 space-y-6">
+          <div className="rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl p-6 sm:p-8 space-y-6">
             {/* Event Details */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              <div className="space-y-1">
+                <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
                   Event
                 </h3>
-                <p className="font-semibold">{achievement.details.event}</p>
+                <p className="font-semibold text-sm">{achievement.details.event}</p>
               </div>
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              <div className="space-y-1">
+                <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
                   Placement
                 </h3>
-                <p className="font-semibold text-green-600 dark:text-green-400">
+                <p className="font-semibold text-sm text-emerald-400">
                   {achievement.details.placement}
                 </p>
               </div>
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              <div className="space-y-1">
+                <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
                   Competition Size
                 </h3>
-                <p className="font-semibold">{achievement.details.participants}</p>
+                <p className="font-semibold text-sm">{achievement.details.participants}</p>
               </div>
               {achievement.details.project && (
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                <div className="space-y-1">
+                  <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
                     Project
                   </h3>
-                  <p className="font-semibold">{achievement.details.project}</p>
+                  <p className="font-semibold text-sm">{achievement.details.project}</p>
                 </div>
               )}
             </div>
 
+            <div className="section-divider" />
+
             {/* Tech Stack */}
             {achievement.details.techStack.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider mb-3">
                   Technologies Used
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {achievement.details.techStack.map((tech) => (
-                    <Badge key={tech} variant="secondary">
+                    <Badge
+                      key={tech}
+                      variant="secondary"
+                      className="px-3 py-1 text-[11px] font-medium bg-purple-500/8 text-purple-300/80 border border-purple-500/15"
+                    >
                       {tech}
                     </Badge>
                   ))}
@@ -441,65 +450,68 @@ export default async function AchievementPage({
 
             {/* Links */}
             {"links" in achievement && achievement.links && (
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                  Links
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {achievement.links.github && (
-                    <Link
-                      href={achievement.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm bg-secondary hover:bg-secondary/80 px-3 py-2 rounded-md transition-colors"
-                    >
-                      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                      </svg>
-                      View Repository
-                    </Link>
-                  )}
-                  {"pr" in achievement.links && achievement.links.pr && (
-                    <Link
-                      href={achievement.links.pr}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm bg-secondary hover:bg-secondary/80 px-3 py-2 rounded-md transition-colors"
-                    >
-                      <svg className="size-4" viewBox="0 0 16 16" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"/>
-                      </svg>
-                      View Pull Request
-                    </Link>
-                  )}
-                  {"devpost" in achievement.links && achievement.links.devpost && (
-                    <Link
-                      href={achievement.links.devpost}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm bg-secondary hover:bg-secondary/80 px-3 py-2 rounded-md transition-colors"
-                    >
-                      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.002 1.61L0 12.004L6.002 22.39h11.996L24 12.004L17.998 1.61H6.002zm1.593 4.084h3.947c3.605 0 6.276 1.695 6.276 6.31c0 4.436-3.21 6.302-6.456 6.302H7.595V5.694zm2.517 2.449v7.714h1.241c2.646 0 3.862-1.55 3.862-3.861c.009-2.569-1.096-3.853-3.767-3.853H10.112z"/>
-                      </svg>
-                      View on Devpost
-                    </Link>
-                  )}
-                  {"demo" in achievement.links && achievement.links.demo && (
-                    <Link
-                      href={achievement.links.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md transition-colors"
-                    >
-                      <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                      </svg>
-                      Watch Demo
-                    </Link>
-                  )}
+              <>
+                <div className="section-divider" />
+                <div>
+                  <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider mb-3">
+                    Links
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {achievement.links.github && (
+                      <Link
+                        href={achievement.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                      >
+                        <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        Repository
+                      </Link>
+                    )}
+                    {"pr" in achievement.links && achievement.links.pr && (
+                      <Link
+                        href={achievement.links.pr}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                      >
+                        <svg className="size-4" viewBox="0 0 16 16" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"/>
+                        </svg>
+                        Pull Request
+                      </Link>
+                    )}
+                    {"devpost" in achievement.links && achievement.links.devpost && (
+                      <Link
+                        href={achievement.links.devpost}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                      >
+                        <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M6.002 1.61L0 12.004L6.002 22.39h11.996L24 12.004L17.998 1.61H6.002zm1.593 4.084h3.947c3.605 0 6.276 1.695 6.276 6.31c0 4.436-3.21 6.302-6.456 6.302H7.595V5.694zm2.517 2.449v7.714h1.241c2.646 0 3.862-1.55 3.862-3.861c.009-2.569-1.096-3.853-3.767-3.853H10.112z"/>
+                        </svg>
+                        Devpost
+                      </Link>
+                    )}
+                    {"demo" in achievement.links && achievement.links.demo && (
+                      <Link
+                        href={achievement.links.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 hover:border-purple-500/50 px-4 py-2.5 rounded-xl transition-all duration-300"
+                      >
+                        <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        Watch Demo
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </BlurFade>
@@ -507,7 +519,7 @@ export default async function AchievementPage({
         {/* Detailed Content for Perforated AI */}
         {isPerforatedAI && (
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="mt-8">
+            <div className="mt-10">
               <PerforatedAIContent />
             </div>
           </BlurFade>
@@ -516,7 +528,7 @@ export default async function AchievementPage({
         {/* Detailed Content for SafeWander */}
         {isSafeWander && (
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="mt-8">
+            <div className="mt-10">
               <SafeWanderContent />
             </div>
           </BlurFade>
