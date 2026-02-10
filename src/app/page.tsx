@@ -20,7 +20,7 @@ export default function Page() {
             <div className="flex-col flex flex-1 space-y-1.5">
               <BlurFadeText
                 delay={BLUR_FADE_DELAY}
-                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
+                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-foreground via-purple-500 to-foreground bg-[length:200%_100%] animate-gradient-shift"
                 yOffset={8}
                 text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
               />
@@ -31,10 +31,13 @@ export default function Page() {
               />
             </div>
             <BlurFade delay={BLUR_FADE_DELAY}>
-              <Avatar className="size-28 border">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                <AvatarFallback>{DATA.initials}</AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 animate-pulse-glow blur-md opacity-60"></div>
+                <Avatar className="size-28 border-2 border-purple-500/20 relative">
+                  <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+                  <AvatarFallback>{DATA.initials}</AvatarFallback>
+                </Avatar>
+              </div>
             </BlurFade>
           </div>
         </div>
@@ -105,7 +108,7 @@ export default function Page() {
           <div className="flex flex-wrap gap-1">
             {DATA.skills.map((skill, id) => (
               <BlurFade key={skill} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <Badge key={skill}>{skill}</Badge>
+                <Badge key={skill} className="hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300 cursor-default">{skill}</Badge>
               </BlurFade>
             ))}
           </div>
@@ -180,16 +183,16 @@ export default function Page() {
                   href={`/achievements/${achievement.slug}`}
                   className="block group"
                 >
-                  <div className="flex flex-col gap-2 rounded-lg border bg-card p-6 text-card-foreground shadow-sm transition-all hover:shadow-md hover:border-foreground/20 group-hover:bg-accent/50">
+                  <div className="flex flex-col gap-2 rounded-lg border bg-card/95 backdrop-blur-sm p-6 text-card-foreground shadow-sm transition-all duration-500 hover:shadow-xl hover:border-purple-500/30 dark:hover:border-purple-400/30 hover:scale-[1.02] group-hover:bg-card">
                     <div className="flex items-center gap-3">
-                      <span className="text-3xl">{achievement.icon}</span>
+                      <span className="text-3xl group-hover:animate-float">{achievement.icon}</span>
                       <div className="flex flex-col">
-                        <h3 className="font-semibold leading-tight group-hover:text-foreground">{achievement.title}</h3>
+                        <h3 className="font-semibold leading-tight group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">{achievement.title}</h3>
                         <p className="text-sm text-muted-foreground">{achievement.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-end text-xs text-muted-foreground">
-                      <span className="group-hover:underline">View details →</span>
+                      <span className="group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">View details →</span>
                     </div>
                   </div>
                 </Link>

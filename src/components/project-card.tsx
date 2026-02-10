@@ -43,7 +43,7 @@ export function ProjectCard({
   return (
     <Card
       className={
-        "flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full"
+        "flex flex-col overflow-hidden border hover:shadow-xl transition-all duration-500 ease-out h-full backdrop-blur-sm bg-card/95 hover:bg-card hover:scale-[1.02] hover:border-purple-500/30 dark:hover:border-purple-400/30 group"
       }
     >
       <Link
