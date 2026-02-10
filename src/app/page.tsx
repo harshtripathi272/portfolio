@@ -1,10 +1,14 @@
 import { HackathonCard } from "@/components/hackathon-card";
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
+import { LetterPullup } from "@/components/magicui/letter-pullup";
+import { Marquee } from "@/components/magicui/marquee";
 import { ProjectCard } from "@/components/project-card";
 import { ResumeCard } from "@/components/resume-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { TiltCard } from "@/components/ui/tilt-card";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -32,12 +36,13 @@ export default function Page() {
                 </div>
               </BlurFade>
               
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY}
-                className="text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl/none font-[family-name:var(--font-display)] text-foreground"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
-              />
+              <BlurFade delay={BLUR_FADE_DELAY}>
+                <LetterPullup
+                  words={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+                  delay={0.04}
+                  className="text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl/none font-[family-name:var(--font-display)] text-foreground"
+                />
+              </BlurFade>
               <BlurFade delay={BLUR_FADE_DELAY * 1.5}>
                 <p className="max-w-[540px] text-base md:text-lg text-muted-foreground leading-relaxed text-balance">
                   {DATA.description}
@@ -170,18 +175,32 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
             <h2 className="text-sm font-medium uppercase tracking-widest text-muted-foreground mb-2">Skills</h2>
           </BlurFade>
-          <div className="flex flex-wrap gap-2">
-            {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <Badge
-                  key={skill}
-                  className="px-3.5 py-1.5 text-xs font-medium bg-zinc-800/80 text-zinc-300 border border-white/[0.06] hover:border-white/15 hover:text-foreground transition-all duration-200 cursor-default rounded-lg"
-                >
-                  {skill}
-                </Badge>
-              </BlurFade>
-            ))}
-          </div>
+          <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="relative">
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-background to-transparent" />
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-background to-transparent" />
+              <Marquee pauseOnHover className="[--duration:30s] [--gap:0.5rem]">
+                {DATA.skills.map((skill) => (
+                  <Badge
+                    key={skill}
+                    className="px-4 py-2 text-xs font-medium bg-zinc-800/80 text-zinc-300 border border-white/[0.06] hover:border-white/15 hover:text-foreground transition-all duration-200 cursor-default rounded-lg whitespace-nowrap"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </Marquee>
+              <Marquee reverse pauseOnHover className="[--duration:35s] [--gap:0.5rem] mt-2">
+                {DATA.skills.slice().reverse().map((skill) => (
+                  <Badge
+                    key={skill}
+                    className="px-4 py-2 text-xs font-medium bg-zinc-800/80 text-zinc-300 border border-white/[0.06] hover:border-white/15 hover:text-foreground transition-all duration-200 cursor-default rounded-lg whitespace-nowrap"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </Marquee>
+            </div>
+          </BlurFade>
         </div>
       </section>
 
@@ -208,17 +227,19 @@ export default function Page() {
                 key={project.title}
                 delay={BLUR_FADE_DELAY * 12 + id * 0.05}
               >
-                <ProjectCard
-                  href={project.href}
-                  key={project.title}
-                  title={project.title}
-                  description={project.description}
-                  dates={project.dates}
-                  tags={project.technologies}
-                  image={project.image}
-                  video={project.video}
-                  links={project.links}
-                />
+                <TiltCard tiltAmount={4}>
+                  <ProjectCard
+                    href={project.href}
+                    key={project.title}
+                    title={project.title}
+                    description={project.description}
+                    dates={project.dates}
+                    tags={project.technologies}
+                    image={project.image}
+                    video={project.video}
+                    links={project.links}
+                  />
+                </TiltCard>
               </BlurFade>
             ))}
           </div>
@@ -288,42 +309,47 @@ export default function Page() {
       <section id="contact">
         <div className="w-full py-16">
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
-            <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-zinc-900/60 p-10 sm:p-14">
-              <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-              <div className="relative flex flex-col items-center text-center space-y-6">
-                <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Contact</span>
-                <h2 className="text-3xl font-bold tracking-tight sm:text-5xl font-[family-name:var(--font-display)]">
-                  Get in Touch
-                </h2>
-                <p className="mx-auto max-w-[500px] text-muted-foreground text-base leading-relaxed text-balance">
-                  Want to chat? Connect with me on{" "}
-                  <Link
-                    href={DATA.contact.social.LinkedIn.url}
-                    className="text-foreground font-medium underline underline-offset-4 hover:text-muted-foreground transition-colors"
-                  >
-                    LinkedIn
-                  </Link>{" "}
-                  and I&apos;ll respond whenever I can.
-                </p>
-                <div className="flex items-center gap-3 pt-4">
-                  {Object.entries(DATA.contact.social)
-                    .filter(([_, social]) => social.navbar)
-                    .map(([name, social]) => (
-                      <Link
-                        key={name}
-                        href={social.url}
-                        target="_blank"
-                        className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.08] transition-all duration-200"
-                      >
-                        <social.icon className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                        <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                          {name}
-                        </span>
-                      </Link>
-                    ))}
+            <SpotlightCard
+              className="rounded-2xl border border-white/[0.06] bg-zinc-900/60"
+              spotlightColor="rgba(251, 191, 36, 0.04)"
+            >
+              <div className="relative p-10 sm:p-14">
+                <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+                <div className="relative flex flex-col items-center text-center space-y-6">
+                  <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Contact</span>
+                  <h2 className="text-3xl font-bold tracking-tight sm:text-5xl font-[family-name:var(--font-display)]">
+                    Get in Touch
+                  </h2>
+                  <p className="mx-auto max-w-[500px] text-muted-foreground text-base leading-relaxed text-balance">
+                    Want to chat? Connect with me on{" "}
+                    <Link
+                      href={DATA.contact.social.LinkedIn.url}
+                      className="text-foreground font-medium underline underline-offset-4 hover:text-muted-foreground transition-colors"
+                    >
+                      LinkedIn
+                    </Link>{" "}
+                    and I&apos;ll respond whenever I can.
+                  </p>
+                  <div className="flex items-center gap-3 pt-4">
+                    {Object.entries(DATA.contact.social)
+                      .filter(([_, social]) => social.navbar)
+                      .map(([name, social]) => (
+                        <Link
+                          key={name}
+                          href={social.url}
+                          target="_blank"
+                          className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.08] transition-all duration-200"
+                        >
+                          <social.icon className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                          <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                            {name}
+                          </span>
+                        </Link>
+                      ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
           </BlurFade>
         </div>
       </section>
