@@ -275,36 +275,24 @@ export default function Page() {
             delay={BLUR_FADE_DELAY * 11}
             className="relative"
           />
-          <div className="relative">
-            <BentoGrid>
-              {DATA.projects.map((project, id) => {
-                // Make first project large, vary others
-                const size = id === 0 ? "large" : id % 3 === 0 ? "wide" : "medium";
-                
-                return (
-                  <BlurFade
-                    key={project.title}
-                    delay={BLUR_FADE_DELAY * 12 + id * 0.05}
-                  >
-                    <BentoCard size={size} className="p-0 overflow-hidden group">
-                      <TiltCard tiltAmount={3}>
-                        <ProjectCard
-                          href={project.href}
-                          key={project.title}
-                          title={project.title}
-                          description={project.description}
-                          dates={project.dates}
-                          tags={project.technologies}
-                          image={project.image}
-                          video={project.video}
-                          links={project.links}
-                        />
-                      </TiltCard>
-                    </BentoCard>
-                  </BlurFade>
-                );
-              })}
-            </BentoGrid>
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+            {DATA.projects.map((project, id) => (
+              <BlurFade
+                key={project.title}
+                delay={BLUR_FADE_DELAY * 12 + id * 0.05}
+              >
+                <ProjectCard
+                  href={project.href}
+                  title={project.title}
+                  description={project.description}
+                  dates={project.dates}
+                  tags={project.technologies}
+                  image={project.image}
+                  video={project.video}
+                  links={project.links}
+                />
+              </BlurFade>
+            ))}
           </div>
         </div>
       </section>
