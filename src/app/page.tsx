@@ -6,6 +6,7 @@ import { LetterPullup } from "@/components/magicui/letter-pullup";
 import { Marquee } from "@/components/magicui/marquee";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ProjectCard } from "@/components/project-card";
+import { ProjectShowcase } from "@/components/project-showcase";
 import { ResumeCard } from "@/components/resume-card";
 import { AnimatedSectionHeader } from "@/components/ui/animated-section-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -275,25 +276,7 @@ export default function Page() {
             delay={BLUR_FADE_DELAY * 11}
             className="relative"
           />
-          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
-            {DATA.projects.map((project, id) => (
-              <BlurFade
-                key={project.title}
-                delay={BLUR_FADE_DELAY * 12 + id * 0.05}
-              >
-                <ProjectCard
-                  href={project.href}
-                  title={project.title}
-                  description={project.description}
-                  dates={project.dates}
-                  tags={project.technologies}
-                  image={project.image}
-                  video={project.video}
-                  links={project.links}
-                />
-              </BlurFade>
-            ))}
-          </div>
+          <ProjectShowcase />
         </div>
       </section>
 
