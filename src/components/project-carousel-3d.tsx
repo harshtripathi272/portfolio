@@ -114,6 +114,7 @@ function ProjectCardWrapper({ project, index, onClick }: { project: any, index: 
         <ProjectCard3D
             index={index}
             image={project.image || "/placeholder.png"}
+            video={project.video}
             title={project.title}
             description={project.description}
             onClick={onClick}

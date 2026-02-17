@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface ProjectCard3DProps {
   image: string;
+  video?: string;
   title: string;
   description: string;
   index: number;
@@ -15,7 +16,7 @@ interface ProjectCard3DProps {
   isActive?: boolean;
 }
 
-export function ProjectCard3D({ image, title, description, index, onClick, className }: ProjectCard3DProps) {
+export function ProjectCard3D({ image, video, title, description, index, onClick, className }: ProjectCard3DProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   // Mouse tilt logic
@@ -66,11 +67,22 @@ export function ProjectCard3D({ image, title, description, index, onClick, class
         className="absolute inset-4 rounded-xl overflow-hidden bg-black"
         style={{ transform: "translateZ(50px)" }}
       >
-         <img 
-            src={image} 
-            alt={title} 
-            className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-110" 
-         />
+         {video ? (
+            <video 
+              src={video} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-110"
+            />
+         ) : (
+             <img 
+                src={image} 
+                alt={title} 
+                className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-110" 
+             />
+         )}
          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       </div>
 
