@@ -5,10 +5,13 @@ import { DotPattern } from "@/components/magicui/dot-pattern";
 import { LetterPullup } from "@/components/magicui/letter-pullup";
 import { Marquee } from "@/components/magicui/marquee";
 import { NumberTicker } from "@/components/magicui/number-ticker";
-import { ProjectCard } from "@/components/project-card";
-import { ProjectShowcase } from "@/components/project-showcase";
-import { ProjectCarousel } from "@/components/project-carousel";
-import { ProjectCarousel3D } from "@/components/project-carousel-3d";
+
+import dynamic from "next/dynamic";
+
+const ProjectCarousel3D = dynamic(() => import("@/components/project-carousel-3d").then(mod => mod.ProjectCarousel3D), { 
+  ssr: false,
+  loading: () => <div className="w-full h-[600px] flex items-center justify-center text-muted-foreground">Loading 3D Scene...</div>
+});
 import { ResumeCard } from "@/components/resume-card";
 import { AnimatedSectionHeader } from "@/components/ui/animated-section-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -278,7 +281,8 @@ export default function Page() {
             delay={BLUR_FADE_DELAY * 11}
             className="relative"
           />
-          <ProjectCarousel3D /> 
+          {/* <ProjectCarousel3D /> */}
+          <ProjectCarousel3D />
         </div>
       </section>
 

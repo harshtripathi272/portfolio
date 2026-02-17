@@ -1,164 +1,99 @@
 "use client";
 
-import { useTexture, Text } from "@react-three/drei";
-import { useFrame, extend, ReactThreeFiber } from "@react-three/fiber";
-import { shaderMaterial } from "@react-three/drei";
-import { useRef, useState, useMemo } from "react";
-import * as THREE from "three";
-import { easing } from "maath";
-
-// --- Custom Shader Material ---
-const DistortionMaterial = shaderMaterial(
-  {
-    uTime: 0,
-    uTexture: new THREE.Texture(),
-    uHover: 0,
-    uOpactiy: 1,
-  },
-  // Vertex Shader
-  `
-    varying vec2 vUv;
-    uniform float uTime;
-    uniform float uHover;
-
-    void main() {
-      vUv = uv;
-      vec3 pos = position;
-      
-      // Subtle wave effect on hover
-      float noise = sin(pos.y * 10.0 + uTime) * 0.02;
-      pos.z += noise * uHover;
-
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    }
-  `,
-  // Fragment Shader
-  `
-    uniform sampler2D uTexture;
-    uniform float uHover;
-    uniform float uTime;
-    uniform float uOpactiy;
-    varying vec2 vUv;
-
-    void main() {
-      vec2 uv = vUv;
-      
-      // Liquid distortion on hover
-      float wave = sin(uv.y * 20.0 + uTime * 2.0) * 0.02 * uHover;
-      uv.x += wave;
-      
-      // Chromatic aberration on edges
-      float r = texture2D(uTexture, uv + vec2(0.005 * uHover, 0.0)).r;
-      float g = texture2D(uTexture, uv).g;
-      float b = texture2D(uTexture, uv - vec2(0.005 * uHover, 0.0)).b;
-      
-      vec3 color = vec3(r, g, b);
-      
-      // Darken slightly when not hovered
-      color *= 0.8 + 0.2 * uHover;
-
-      gl_FragColor = vec4(color, uOpactiy);
-    }
-  `
-);
-
-// Extend to make it available as a JSX element
-extend({ DistortionMaterial });
-
-// Add type definition for the custom shader material
-declare module "@react-three/fiber" {
-  interface ThreeElements {
-    distortionMaterial: any;
-  }
-}
+import React, { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface ProjectCard3DProps {
   image: string;
   title: string;
   description: string;
   index: number;
-  position: [number, number, number];
   onClick: () => void;
+  className?: string;
+  position?: any; // kept for compatibility if needed, but unused
   isActive?: boolean;
 }
 
-export function ProjectCard3D({ image, title, description, index, position, onClick, isActive }: ProjectCard3DProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  // @ts-ignore - shaderMaterial creates a class that extends ShaderMaterial but TS needs help
-  const materialRef = useRef<THREE.ShaderMaterial & { uniforms: { [key: string]: { value: any } } }>(null);
-  const [hovered, setHover] = useState(false);
-  const texture = useTexture(image || "/placeholder.png");
+export function ProjectCard3D({ image, title, description, index, onClick, className }: ProjectCard3DProps) {
+  const ref = useRef<HTMLDivElement>(null);
 
-  // Random floating offset
-  const randomOffset = useMemo(() => Math.random() * 100, []);
+  // Mouse tilt logic
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  useFrame((state, delta) => {
-    if (!meshRef.current || !materialRef.current) return;
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
 
-    // 1. Floating Animation
-    const t = state.clock.getElapsedTime();
-    meshRef.current.position.y = position[1] + Math.sin(t + randomOffset) * 0.1;
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-    // 2. Uniform Updates
-    // ShaderMaterial created by drei stores uniforms directly on the material instance for easy access if mapped, 
-    // but the underlying shader needs .uniforms.uTime.value usually. 
-    // HOWEVER, drei's shaderMaterial makes them properties.
-    // Let's safe access via standard uniforms object or direct property if three-fiber handles it.
-    // Actually drei shaderMaterial creates setters. 
-    // We can just set materialRef.current.uTime = ...
-    
-    // @ts-ignore
-    materialRef.current.uTime = t;
-    // @ts-ignore
-    easing.damp(materialRef.current, "uHover", hovered ? 1 : 0, 0.2, delta);
-    
-    // Scale effect
-    const targetScale = hovered ? 1.1 : 1;
-    easing.damp3(meshRef.current.scale, [4 * targetScale, 2.8 * targetScale, 1], 0.2, delta);
-  });
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <group position={position} onClick={onClick}>
-      {/* Main Image Card */}
-      <mesh 
-        ref={meshRef}
-        onPointerOver={() => setHover(true)}
-        onPointerOut={() => setHover(false)}
-        scale={[4, 2.8, 1]} // Base scale
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className={cn(
+        "relative h-[400px] w-[300px] md:h-[500px] md:w-[380px] rounded-xl bg-zinc-900 border border-white/10 cursor-pointer shadow-2xl transition-all duration-200 ease-out hover:shadow-amber-500/10",
+        className
+      )}
+    >
+      <div
+        className="absolute inset-4 rounded-xl overflow-hidden bg-black"
+        style={{ transform: "translateZ(50px)" }}
       >
-        <planeGeometry args={[1, 1, 32, 32]} />
-        {/* @ts-ignore */}
-        <distortionMaterial 
-            ref={materialRef} 
-            transparent 
-            uTexture={texture}
-        />
-      </mesh>
+         <img 
+            src={image} 
+            alt={title} 
+            className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-110" 
+         />
+         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+      </div>
 
-      {/* Floating 3D Text */}
-      <Text
-        position={[0, -1.8, 0.2]} // Below the card
-        fontSize={0.25}
-        color={hovered ? "#fbbf24" : "white"} // Amber-400 on hover
-        anchorX="center"
-        anchorY="top"
-        font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.ttf"
+      <div 
+        className="absolute bottom-10 left-8 right-8 z-20"
+        style={{ transform: "translateZ(75px)" }}
       >
-        {title.toUpperCase()}
-      </Text>
+        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300 font-[family-name:var(--font-display)]">
+            {title}
+        </h3>
+        <p className="text-zinc-400 text-sm line-clamp-3 leading-relaxed group-hover:text-zinc-300 transition-colors">
+            {description}
+        </p>
+      </div>
       
-      <Text
-         position={[0, -2.2, 0.2]}
-         fontSize={0.12}
-         color="#a1a1aa" // zinc-400
-         anchorX="center"
-         anchorY="top"
-         maxWidth={3.5}
-         textAlign="center"
-         font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.ttf"
-       >
-         {description.slice(0, 80) + (description.length > 80 ? "..." : "")}
-       </Text>
-    </group>
+      {/* Gloss Effect */}
+      <div 
+        className="absolute inset-0 z-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+            background: "linear-gradient(125deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%)",
+            transform: "translateZ(80px)" 
+        }}
+      />
+    </motion.div>
   );
 }
