@@ -8,7 +8,7 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectShowcase } from "@/components/project-showcase";
 import { ProjectCarousel } from "@/components/project-carousel";
-import { ProjectGallery } from "@/components/project-gallery";
+import { ProjectCarousel3D } from "@/components/project-carousel-3d";
 import { ResumeCard } from "@/components/resume-card";
 import { AnimatedSectionHeader } from "@/components/ui/animated-section-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -274,11 +274,11 @@ export default function Page() {
           <DotPattern className="[mask-image:radial-gradient(500px_circle_at_center,white,transparent)] opacity-40" />
           <AnimatedSectionHeader
             title="Featured Projects"
-            subtitle="Explore my work in 3D. Drag to rotate the gallery."
+            subtitle="Explore my work. Drag to navigate."
             delay={BLUR_FADE_DELAY * 11}
             className="relative"
           />
-          <ProjectGallery /> 
+          <ProjectCarousel3D /> 
         </div>
       </section>
 
