@@ -534,8 +534,8 @@ export const DATA = {
     },
     {
       slug: "perforated-ai-hackathon",
-      title: "Third Prize - International Hackathon by Perforated AI",
-      description: "Secured 3rd place among 693 participants globally as part of Team Neuron AI",
+      title: "First Prize - International Hackathon by Perforated AI",
+      description: "Secured 1st place among 693 participants globally as part of Team Neuron AI",
       date: "2026",
       icon: "🥉",
       longDescription: "This project demonstrates the application of PerforatedAI's dendritic neural network optimization to YOLOv11n object detection on the Pascal VOC2007 dataset. We proved that dendrite-enhanced networks can achieve higher accuracy on the same data compared to traditional neural networks. Our submission was officially adopted as a base example in PerforatedAI's official repository.",
@@ -545,7 +545,7 @@ export const DATA = {
       },
       details: {
         event: "International Hackathon by Perforated AI",
-        placement: "3rd Place",
+        placement: "1st Place",
         participants: "693 participants globally",
         project: "YOLOv11n with Dendritic Optimization",
         techStack: [

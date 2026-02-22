@@ -212,7 +212,7 @@ const PerforatedAIContent = () => (
       </h2>
       <div className="prose dark:prose-invert max-w-none">
         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-          <li>Secured <strong>3rd place globally</strong> among 693 participants</li>
+          <li>Secured <strong>1st place globally</strong> among 693 participants</li>
           <li>Our submission was <strong>officially adopted</strong> as a base example in PerforatedAI&apos;s official GitHub repository</li>
           <li>Demonstrated practical application of dendritic neural networks in production-ready object detection</li>
         </ul>
