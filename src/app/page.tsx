@@ -113,7 +113,7 @@ export default function Page() {
         <BlurFade delay={BLUR_FADE_DELAY * 2.5}>
           <div className="grid grid-cols-3 gap-3 sm:gap-5">
             {[
-              { value: 7, label: "Projects Built", suffix: "+", icon: "🚀" },
+              { value: 8, label: "Projects Built", suffix: "+", icon: "🚀" },
               { value: 2, label: "Hackathon Wins", suffix: "", icon: "🏆" },
               { value: 3, label: "Internships", suffix: "+", icon: "💼" },
             ].map((stat, i) => (
