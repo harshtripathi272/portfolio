@@ -25,11 +25,11 @@ export function ProjectCarousel3D() {
       {/* Scrollable Container */}
       <div 
         ref={containerRef}
-        className="flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-none py-10 px-[10vw] md:px-[25vw] items-center gap-8 md:gap-12"
+        className="flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-none py-10 px-4 md:px-8 items-center gap-8 md:gap-12"
         style={{ scrollBehavior: "smooth" }}
       >
         {DATA.projects.map((project, index) => (
-            <div key={project.title} className="snap-center shrink-0 perspective-1000 group">
+            <div key={project.title} className="snap-start shrink-0 perspective-1000 group">
                 <ProjectCardWrapper 
                     project={project}
                     index={index}
