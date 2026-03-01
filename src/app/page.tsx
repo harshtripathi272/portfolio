@@ -1,145 +1,99 @@
-import { HackathonCard } from "@/components/hackathon-card";
-import BlurFade from "@/components/magicui/blur-fade";
-import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { LetterPullup } from "@/components/magicui/letter-pullup";
-import { Marquee } from "@/components/magicui/marquee";
-import { NumberTicker } from "@/components/magicui/number-ticker";
-
-import dynamic from "next/dynamic";
-
-const ProjectCarousel3D = dynamic(
-  () =>
-    import("@/components/project-carousel-3d").then(
-      (mod) => mod.ProjectCarousel3D
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-[600px] flex items-center justify-center text-neutral-500">
-        Loading...
-      </div>
-    ),
-  }
-);
-
-const SpotlightClient = dynamic(
-  () => import("@/components/ui/spotlight").then((mod) => mod.Spotlight),
-  { ssr: false }
-);
+export const dynamic = 'force-dynamic';
 
 import { ResumeCard } from "@/components/resume-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
 
-const BLUR_FADE_DELAY = 0.04;
+import nextDynamic from "next/dynamic";
+
+const ProjectCarousel3D = nextDynamic(
+  () => import("@/components/project-carousel-3d").then((mod) => mod.ProjectCarousel3D),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-[600px] flex items-center justify-center text-neutral-500">Loading...</div>,
+  }
+);
+
+const HeroScene = nextDynamic(
+  () => import("@/components/3d/hero-scene").then((mod) => mod.HeroScene),
+  { ssr: false }
+);
+
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 export default function Page() {
   return (
-    <main className="relative">
-      <SpotlightClient />
+    <main className="relative bg-[#050505] selection:bg-white selection:text-black">
+      {/* ═══════════ HERO (3D WebGL) ═══════════ */}
+      <section id="hero" className="relative min-h-[120vh] w-full overflow-hidden">
+        {/* R3F Canvas component takes the bottom layer */}
+        <HeroScene />
 
-      {/* ═══════════ HERO ═══════════ */}
-      <section
-        id="hero"
-        className="relative min-h-screen flex items-center justify-center px-6"
-      >
-        {/* Subtle grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
-          {/* Avatar */}
-          <BlurFade delay={BLUR_FADE_DELAY}>
-            <div className="relative inline-block">
-              <Avatar className="size-28 sm:size-36 border border-white/10">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                <AvatarFallback>{DATA.initials}</AvatarFallback>
-              </Avatar>
-            </div>
-          </BlurFade>
-
-          {/* Name */}
-          <BlurFade delay={BLUR_FADE_DELAY * 2}>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white leading-[0.9]">
-              {DATA.name}
+        {/* Massive kinetic typography overlay */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none mt-[-10vh]">
+          <div className="overflow-hidden">
+            <h1 className="text-[12vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 leading-[0.8] uppercase font-[family-name:var(--font-display)] mx-auto text-center will-change-transform mix-blend-overlay">
+              {DATA.name.split(' ')[0]}
+              <br />
+              <span className="opacity-50">{DATA.name.split(' ')[1]}</span>
             </h1>
-          </BlurFade>
-
-          {/* Description */}
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <p className="text-lg sm:text-xl text-neutral-400 max-w-xl mx-auto leading-relaxed">
+          </div>
+          
+          <div className="mt-8 flex flex-col items-center gap-6 pointer-events-auto">
+            <p className="text-xl md:text-2xl font-medium text-neutral-300 max-w-2xl text-center px-4 mix-blend-difference">
               {DATA.description}
             </p>
-          </BlurFade>
-
-          {/* Social Links */}
-          <BlurFade delay={BLUR_FADE_DELAY * 6}>
-            <div className="flex items-center gap-3 justify-center pt-2">
-              {Object.entries(DATA.contact.social)
+            
+            {/* Magnetic-style subtle buttons */}
+            <div className="flex items-center gap-4">
+               {Object.entries(DATA.contact.social)
                 .filter(([_, social]) => social.navbar)
                 .map(([name, social]) => (
-                  <Link
-                    key={name}
-                    href={social.url}
-                    target="_blank"
-                    className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
-                  >
-                    <social.icon className="size-4 text-neutral-400 group-hover:text-white transition-colors" />
-                    <span className="text-sm text-neutral-400 group-hover:text-white transition-colors hidden sm:inline">
-                      {name}
-                    </span>
-                  </Link>
+                  <MagneticWrapper key={name}>
+                    <Link
+                      href={social.url}
+                      target="_blank"
+                      data-interactive
+                      className="group flex size-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white backdrop-blur-md transition-all hover:bg-white/10 hover:scale-110"
+                    >
+                      <social.icon className="size-5" />
+                    </Link>
+                  </MagneticWrapper>
                 ))}
             </div>
-          </BlurFade>
+          </div>
+        </div>
 
-          {/* Scroll indicator */}
-          <BlurFade delay={BLUR_FADE_DELAY * 8}>
-            <div className="pt-16">
-              <div className="flex flex-col items-center gap-2 text-neutral-600">
-                <span className="text-[10px] uppercase tracking-[0.3em]">
-                  Scroll
-                </span>
-                <div className="w-px h-8 bg-gradient-to-b from-neutral-600 to-transparent" />
-              </div>
-            </div>
-          </BlurFade>
+        {/* Premium Scroll Indicator */}
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-bold">Discover</span>
+          <div className="w-[1px] h-16 bg-white/10 overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-white/50 animate-[marquee-vertical_2s_ease-in-out_infinite]" />
+          </div>
         </div>
       </section>
 
-      {/* ═══════════ STATS ═══════════ */}
-      <section id="stats" className="px-6 py-24">
+      {/* ═══════════ STATS (Giant Numbers) ═══════════ */}
+      <section id="stats" className="relative z-20 px-6 py-32 bg-[#050505]">
         <ScrollReveal>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-3 gap-px bg-white/[0.04] rounded-xl overflow-hidden border border-white/[0.06]">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-px md:bg-white/[0.04] rounded-2xl md:border border-white/[0.06] overflow-hidden">
               {[
-                { value: 8, label: "Projects", suffix: "+" },
-                { value: 2, label: "Hackathon Wins", suffix: "" },
-                { value: 3, label: "Internships", suffix: "+" },
+                { value: "8+", label: "Feature Projects" },
+                { value: "2", label: "Hackathon Wins" },
+                { value: "3+", label: "Internships" },
               ].map((stat, i) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col items-center justify-center py-10 sm:py-14 bg-[#050505] hover:bg-white/[0.02] transition-colors duration-500"
+                  className="flex flex-col items-center justify-center py-16 px-8 bg-[#050505] transition-colors duration-500 hover:bg-white/[0.02] border border-white/[0.06] md:border-none rounded-2xl md:rounded-none group"
                 >
-                  <span className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] tracking-tight text-white">
-                    <NumberTicker
-                      value={stat.value}
-                      delay={0.3 + i * 0.2}
-                      suffix={stat.suffix}
-                    />
+                  <span className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-600 transition-transform duration-700 group-hover:scale-110">
+                    {stat.value}
                   </span>
-                  <span className="text-[10px] sm:text-xs text-neutral-500 uppercase tracking-[0.2em] mt-2">
+                  <span className="text-xs md:text-sm text-neutral-500 uppercase tracking-[0.3em] mt-6 font-bold">
                     {stat.label}
                   </span>
                 </div>
@@ -149,299 +103,164 @@ export default function Page() {
         </ScrollReveal>
       </section>
 
-      {/* ═══════════ ABOUT ═══════════ */}
-      <section id="about" className="px-6 py-24">
-        <div className="max-w-2xl mx-auto">
-          <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              About
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4 mb-8">
-              Building from the ground up.
+      {/* ═══════════ ABOUT (Aggressive Typography) ═══════════ */}
+      <section id="about" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal direction="up" duration={1}>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter font-[family-name:var(--font-display)] text-white mb-12 leading-[1.1]">
+              Engineering at the edge of <span className="text-neutral-500">possibility.</span>
             </h2>
           </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <div className="relative pl-6 border-l border-white/[0.06]">
-              <Markdown className="prose max-w-full text-base sm:text-lg text-neutral-400 dark:prose-invert leading-relaxed">
-                {DATA.summary}
-              </Markdown>
+          <ScrollReveal delay={0.2} duration={1}>
+            <div className="prose prose-xl prose-invert max-w-3xl text-neutral-400 font-sans leading-relaxed tracking-wide">
+              <Markdown>{DATA.summary}</Markdown>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* ═══════════ EXPERIENCE ═══════════ */}
-      <section id="work" className="px-6 py-24">
-        <div className="max-w-2xl mx-auto">
-          <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Experience
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4 mb-12">
-              Where I&apos;ve worked.
-            </h2>
-          </ScrollReveal>
-
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-white/[0.06]" />
-
-            <div className="space-y-2">
-              {DATA.work.map((work, id) => (
-                <ScrollReveal key={work.company} delay={0.1 + id * 0.08}>
-                  <div className="relative flex gap-6 items-start group">
-                    {/* Timeline dot */}
-                    <div className="relative z-10 flex-shrink-0 mt-5">
-                      <div className="w-[15px] h-[15px] rounded-full bg-[#050505] border border-white/[0.15] group-hover:border-white/40 transition-colors duration-300" />
-                    </div>
-                    <div className="flex-1 pb-2">
-                      <ResumeCard
-                        key={work.company}
-                        logoUrl={work.logoUrl}
-                        altText={work.company}
-                        title={work.company}
-                        subtitle={work.title}
-                        href={work.href}
-                        badges={work.badges}
-                        period={`${work.start} - ${work.end ?? "Present"}`}
-                        description={work.description}
-                      />
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════ EDUCATION ═══════════ */}
-      <section id="education" className="px-6 py-24">
-        <div className="max-w-2xl mx-auto">
-          <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Education
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4 mb-12">
-              Academic background.
-            </h2>
-          </ScrollReveal>
-
-          <div className="relative">
-            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-white/[0.06]" />
-            <div className="space-y-2">
-              {DATA.education.map((education, id) => (
-                <ScrollReveal
-                  key={education.school}
-                  delay={0.1 + id * 0.08}
-                >
-                  <div className="relative flex gap-6 items-start group">
-                    <div className="relative z-10 flex-shrink-0 mt-5">
-                      <div className="w-[15px] h-[15px] rounded-full bg-[#050505] border border-white/[0.15] group-hover:border-white/40 transition-colors duration-300" />
-                    </div>
-                    <div className="flex-1 pb-2">
-                      <ResumeCard
-                        key={education.school}
-                        href={education.href}
-                        logoUrl={education.logoUrl}
-                        altText={education.school}
-                        title={education.school}
-                        subtitle={education.degree}
-                        period={`${education.start} - ${education.end}`}
-                      />
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════ SKILLS ═══════════ */}
-      <section id="skills" className="py-24">
-        <div className="max-w-2xl mx-auto px-6 mb-8">
-          <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Skills
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4">
-              Technologies I use.
-            </h2>
-          </ScrollReveal>
-        </div>
-        <ScrollReveal delay={0.2}>
-          <div className="relative">
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[#050505] to-transparent" />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[#050505] to-transparent" />
-            <Marquee pauseOnHover className="[--duration:25s] [--gap:0.75rem]">
-              {DATA.skills.map((skill) => (
-                <Badge
-                  key={skill}
-                  className="px-5 py-2.5 text-sm font-medium bg-white/[0.03] text-neutral-300 border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] hover:text-white transition-all duration-300 cursor-default rounded-lg whitespace-nowrap"
-                >
-                  {skill}
-                </Badge>
-              ))}
-            </Marquee>
-            <Marquee
-              reverse
-              pauseOnHover
-              className="[--duration:30s] [--gap:0.75rem] mt-3"
-            >
-              {DATA.skills
-                .slice()
-                .reverse()
-                .map((skill) => (
-                  <Badge
-                    key={skill}
-                    className="px-5 py-2.5 text-sm font-medium bg-white/[0.03] text-neutral-300 border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] hover:text-white transition-all duration-300 cursor-default rounded-lg whitespace-nowrap"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-            </Marquee>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ═══════════ PROJECTS ═══════════ */}
-      <section id="projects" className="py-24">
-        <div className="max-w-2xl mx-auto px-6 mb-12">
-          <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Projects
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4">
-              Featured work.
-            </h2>
-          </ScrollReveal>
-        </div>
-        <ScrollReveal delay={0.2}>
-          <ProjectCarousel3D />
-        </ScrollReveal>
-      </section>
-
-      {/* ═══════════ ACHIEVEMENTS ═══════════ */}
-      <section id="achievements" className="px-6 py-24">
+      <section id="work" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Recognition
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4 mb-12">
-              Awards & achievements.
-            </h2>
+            <div className="flex items-center gap-4 mb-20">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white">
+                Experience
+              </h2>
+              <div className="h-[1px] flex-1 bg-white/10" />
+            </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {DATA.achievements.map((achievement, id) => (
-              <ScrollReveal key={achievement.title} delay={0.1 + id * 0.08}>
-                <Link
-                  href={`/achievements/${achievement.slug}`}
-                  className="block group h-full"
-                >
-                  <div className="relative h-full rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-500 overflow-hidden">
-                    <div className="relative flex flex-col gap-4 p-6 h-full">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] text-xl border border-white/[0.06]">
-                          {achievement.icon}
-                        </div>
-                        <svg
-                          className="w-4 h-4 text-neutral-600 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
-                      </div>
-                      <div className="space-y-2 flex-1">
-                        <h3 className="font-medium text-base text-white leading-tight">
-                          {achievement.title}
-                        </h3>
-                        <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">
-                          {achievement.description}
-                        </p>
-                      </div>
-                      <div className="text-xs text-neutral-600 font-medium pt-2 border-t border-white/[0.04]">
-                        {achievement.date}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+          <div className="space-y-12">
+            {DATA.work.map((work, id) => (
+              <ScrollReveal key={work.company} delay={0.1 * id}>
+                <ResumeCard
+                  logoUrl={work.logoUrl}
+                  altText={work.company}
+                  title={work.company}
+                  subtitle={work.title}
+                  href={work.href}
+                  badges={work.badges}
+                  period={`${work.start} - ${work.end ?? "Present"}`}
+                  description={work.description}
+                  className="bg-transparent border-none hover:bg-white/[0.02]"
+                />
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════ CONTACT ═══════════ */}
-      <section id="contact" className="px-6 py-32">
-        <div className="max-w-2xl mx-auto text-center">
+      {/* ═══════════ EDUCATION ═══════════ */}
+      <section id="education" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
+        <div className="max-w-4xl mx-auto">
           <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-medium">
-              Contact
-            </span>
+            <div className="flex items-center gap-4 mb-20">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white">
+                Education
+              </h2>
+              <div className="h-[1px] flex-1 bg-white/10" />
+            </div>
           </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h2 className="text-4xl sm:text-6xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white mt-4 mb-6">
-              Get in touch.
+
+          <div className="space-y-12">
+            {DATA.education.map((education, id) => (
+              <ScrollReveal key={education.school} delay={0.1 * id}>
+                <ResumeCard
+                  href={education.href}
+                  logoUrl={education.logoUrl}
+                  altText={education.school}
+                  title={education.school}
+                  subtitle={education.degree}
+                  period={`${education.start} - ${education.end}`}
+                  className="bg-transparent border-none hover:bg-white/[0.02]"
+                />
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ PROJECTS (Interactive Showcase) ═══════════ */}
+      <section id="projects" className="relative z-20 py-32 border-t border-white/[0.04] overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 mb-16">
+          <ScrollReveal>
+            <h2 className="text-5xl md:text-8xl font-black tracking-tighter font-[family-name:var(--font-display)] text-white/10 uppercase">
+              Featured<br/><span className="text-white">Selected Works</span>
             </h2>
           </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <p className="text-neutral-400 text-lg leading-relaxed max-w-md mx-auto mb-10">
-              Want to chat? Connect with me on{" "}
-              <Link
-                href={DATA.contact.social.LinkedIn.url}
-                className="text-white underline underline-offset-4 decoration-white/20 hover:decoration-white/60 transition-colors"
-              >
-                LinkedIn
-              </Link>{" "}
-              and I&apos;ll respond whenever I can.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.3}>
-            <div className="flex items-center gap-3 justify-center">
-              {Object.entries(DATA.contact.social)
-                .filter(([_, social]) => social.navbar)
-                .map(([name, social]) => (
-                  <Link
-                    key={name}
-                    href={social.url}
-                    target="_blank"
-                    className="group flex items-center gap-2 px-5 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
-                  >
-                    <social.icon className="size-4 text-neutral-400 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium text-neutral-400 group-hover:text-white transition-colors">
-                      {name}
-                    </span>
-                  </Link>
-                ))}
-            </div>
+        </div>
+        
+        {/* Full-bleed bleeding carousel for maximum impact */}
+        <div className="w-[110vw] relative left-1/2 -translate-x-1/2">
+          <ScrollReveal delay={0.2} duration={1}>
+            <ProjectCarousel3D />
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Footer spacer for dock nav */}
-      <div className="h-20" />
+      {/* ═══════════ ACHIEVEMENTS ═══════════ */}
+      <section id="achievements" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
+        <div className="max-w-6xl mx-auto">
+           <ScrollReveal>
+            <div className="flex items-center gap-4 mb-20">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-display)] text-white">
+                Recognition
+              </h2>
+              <div className="h-[1px] flex-1 bg-white/10" />
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {DATA.achievements.map((achievement, id) => (
+              <ScrollReveal key={achievement.title} delay={0.1 * id}>
+                 <Link href={`/achievements/${achievement.slug}`} className="block h-full group">
+                  <div className="h-full p-8 rounded-3xl bg-[#080808] border border-white/[0.04] hover:bg-[#111] hover:border-white/[0.1] transition-all duration-500 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-8">
+                        <span className="text-4xl group-hover:scale-125 transition-transform duration-500 inline-block">{achievement.icon}</span>
+                        <div className="size-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 group-hover:text-white group-hover:border-white/30 transition-all">
+                          ↗
+                        </div>
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-4 line-clamp-2">{achievement.title}</h3>
+                      <p className="text-neutral-500 text-lg line-clamp-2">{achievement.description}</p>
+                    </div>
+                    <div className="mt-8 pt-6 border-t border-white/[0.05] text-sm text-neutral-600 font-bold uppercase tracking-widest">
+                      {achievement.date}
+                    </div>
+                  </div>
+                 </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ CONTACT (Dramatic Footer) ═══════════ */}
+      <section id="contact" className="relative z-20 w-full bg-white text-black py-40 rounded-t-[3rem] mt-32">
+        <div className="max-w-5xl mx-auto text-center px-6">
+          <ScrollReveal direction="up" duration={1}>
+            <h2 className="text-6xl md:text-[8vw] font-black tracking-tighter uppercase leading-[0.8] mb-12">
+              Let&apos;s craft <br/>
+              <span className="text-neutral-400">the future.</span>
+            </h2>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2} duration={1}>
+            <Link
+              href={DATA.contact.social.LinkedIn.url}
+              data-interactive
+              className="inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-black text-white text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-300 shadow-2xl"
+            >
+              Get in Touch →
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Dock spacer */}
+      <div className="h-24 bg-white hidden" />
     </main>
   );
 }

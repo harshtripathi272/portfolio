@@ -18,6 +18,7 @@ interface ResumeCardProps {
   badges?: readonly string[];
   period: string;
   description?: string;
+  className?: string;
 }
 export const ResumeCard = ({
   logoUrl,
@@ -28,6 +29,7 @@ export const ResumeCard = ({
   badges,
   period,
   description,
+  className,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -41,7 +43,7 @@ export const ResumeCard = ({
   return (
     <Link
       href={href || "#"}
-      className="block cursor-pointer"
+      className={cn("block cursor-pointer", className)}
       onClick={handleClick}
     >
       <Card className="flex group relative overflow-hidden border border-white/[0.08] bg-zinc-900/60 hover:border-white/15 hover:bg-zinc-900/90 transition-all duration-300 rounded-xl">

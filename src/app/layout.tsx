@@ -56,6 +56,9 @@ export const metadata: Metadata = {
   },
 };
 
+import { SmoothScrollProvider } from "@/components/smooth-scroll";
+import { CustomCursor } from "@/components/ui/custom-cursor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,16 +68,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased noise-overlay",
           fontSans.variable,
           fontDisplay.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
-          <TooltipProvider delayDuration={0}>
-            {children}
-            <Navbar />
-          </TooltipProvider>
+          <SmoothScrollProvider>
+            <CustomCursor />
+            <TooltipProvider delayDuration={0}>
+              {children}
+              <Navbar />
+            </TooltipProvider>
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

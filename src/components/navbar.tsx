@@ -22,6 +22,7 @@ export default function Navbar() {
               <TooltipTrigger asChild>
                 <Link
                   href={item.href}
+                  data-interactive
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
                     "size-12 text-neutral-400 hover:text-white hover:bg-white/[0.06] transition-all duration-300"
@@ -45,6 +46,7 @@ export default function Navbar() {
                 <TooltipTrigger asChild>
                   <Link
                     href={social.url}
+                    data-interactive
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "icon" }),
                       "size-12 text-neutral-400 hover:text-white hover:bg-white/[0.06] transition-all duration-300"
