@@ -22,34 +22,44 @@ const HeroScene = nextDynamic(
   { ssr: false }
 );
 
+import Image from "next/image";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 export default function Page() {
   return (
     <main className="relative bg-[#050505] selection:bg-white selection:text-black">
-      {/* ═══════════ HERO (3D WebGL) ═══════════ */}
-      <section id="hero" className="relative min-h-[120vh] w-full overflow-hidden">
-        {/* R3F Canvas component takes the bottom layer */}
+      {/* ═══════════ HERO (3D WebGL + Photo) ═══════════ */}
+      <section id="hero" className="relative min-h-screen w-full overflow-hidden">
+        {/* 3D WebGL Background */}
         <HeroScene />
 
-        {/* Massive kinetic typography overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none mt-[-10vh]">
-          <div className="overflow-hidden">
-            <h1 className="text-[12vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 leading-[0.8] uppercase font-[family-name:var(--font-display)] mx-auto text-center will-change-transform mix-blend-overlay">
-              {DATA.name.split(' ')[0]}
-              <br />
-              <span className="opacity-50">{DATA.name.split(' ')[1]}</span>
-            </h1>
-          </div>
+        {/* Split Layout Overlay */}
+        <div className="absolute inset-0 z-10 flex items-end md:items-center px-6 md:px-16 lg:px-24 pb-24 md:pb-0">
           
-          <div className="mt-8 flex flex-col items-center gap-6 pointer-events-auto">
-            <p className="text-xl md:text-2xl font-medium text-neutral-300 max-w-2xl text-center px-4 mix-blend-difference">
+          {/* LEFT — Name + Info */}
+          <div className="flex-1 flex flex-col justify-center gap-6 pt-20 md:pt-0">
+            {/* Role badge */}
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-xs uppercase tracking-[0.3em] text-white/50 font-semibold">Available for work</span>
+            </div>
+
+            {/* Giant Name */}
+            <div className="overflow-hidden">
+              <h1 className="text-[14vw] md:text-[10vw] lg:text-[9vw] font-black tracking-[-0.04em] leading-[0.85] uppercase font-[family-name:var(--font-display)]">
+                <span className="block text-gradient">{DATA.name.split(' ')[0]}</span>
+                <span className="block text-white/20 text-outline">{DATA.name.split(' ')[1]}</span>
+              </h1>
+            </div>
+
+            {/* Description */}
+            <p className="text-base md:text-lg text-neutral-400 max-w-sm leading-relaxed">
               {DATA.description}
             </p>
-            
-            {/* Magnetic-style subtle buttons */}
-            <div className="flex items-center gap-4">
-               {Object.entries(DATA.contact.social)
+
+            {/* Social Links */}
+            <div className="flex items-center gap-3 pointer-events-auto">
+              {Object.entries(DATA.contact.social)
                 .filter(([_, social]) => social.navbar)
                 .map(([name, social]) => (
                   <MagneticWrapper key={name}>
@@ -57,24 +67,45 @@ export default function Page() {
                       href={social.url}
                       target="_blank"
                       data-interactive
-                      className="group flex size-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white backdrop-blur-md transition-all hover:bg-white/10 hover:scale-110"
+                      className="group flex size-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/70 backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30"
                     >
-                      <social.icon className="size-5" />
+                      <social.icon className="size-4" />
                     </Link>
                   </MagneticWrapper>
                 ))}
             </div>
           </div>
+
+          {/* RIGHT — Photo */}
+          <div className="hidden md:flex flex-1 items-end justify-center md:justify-end relative h-screen max-h-screen">
+            {/* Glow behind photo */}
+            <div className="absolute bottom-0 right-1/4 w-[40vw] h-[70vh] bg-white/5 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-[20vw] h-[40vh] bg-blue-500/10 rounded-full blur-[60px] pointer-events-none" />
+
+            {/* Photo */}
+            <div className="relative w-[36vw] max-w-[520px] h-[85vh] flex items-end justify-center">
+              <Image
+                src="/me-nobg.png"
+                alt="Harsh Tripathi"
+                fill
+                className="object-contain object-bottom drop-shadow-[0_0_80px_rgba(255,255,255,0.08)]"
+                priority
+              />
+              {/* Bottom fade so photo blends into the dark bg */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent pointer-events-none z-10" />
+            </div>
+          </div>
         </div>
 
-        {/* Premium Scroll Indicator */}
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-bold">Discover</span>
-          <div className="w-[1px] h-16 bg-white/10 overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-1/2 bg-white/50 animate-[marquee-vertical_2s_ease-in-out_infinite]" />
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">Scroll</span>
+          <div className="w-[1px] h-12 bg-white/10 overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-white/40 animate-[marquee-vertical_2s_ease-in-out_infinite]" />
           </div>
         </div>
       </section>
+
 
       {/* ═══════════ STATS (Giant Numbers) ═══════════ */}
       <section id="stats" className="relative z-20 px-6 py-32 bg-[#050505]">
