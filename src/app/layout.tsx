@@ -58,6 +58,7 @@ export const metadata: Metadata = {
 
 import { SmoothScrollProvider } from "@/components/smooth-scroll";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import { PageLoader } from "@/components/page-loader";
 
 export default function RootLayout({
   children,
@@ -76,6 +77,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark">
           <SmoothScrollProvider>
             <CustomCursor />
+            <PageLoader />
             <TooltipProvider delayDuration={0}>
               {children}
               <Navbar />

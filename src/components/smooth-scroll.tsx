@@ -18,8 +18,9 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     return <>{children}</>;
   }
 
+  // Increased lerp and reduced duration for less floaty, more responsive scroll
   return (
-    <ReactLenis root options={{ lerp: 0.05, duration: 1.5 }}>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
       {children}
     </ReactLenis>
   );

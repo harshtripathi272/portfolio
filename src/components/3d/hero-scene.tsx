@@ -72,7 +72,8 @@ export function HeroScene() {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
         dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
+        frameloop="always" // Use always but we reduced internal complexity
       >
         <color attach="background" args={["#030303"]} />
         <ambientLight intensity={0.3} />
@@ -81,8 +82,8 @@ export function HeroScene() {
         <pointLight position={[0, 0, 5]} intensity={0.3} color="#ffffff" />
 
         <FloatingGeometry />
-        <Stars radius={80} depth={50} count={2000} factor={4} saturation={0} fade speed={0.5} />
-        <Sparkles count={100} scale={12} size={1.5} speed={0.3} opacity={0.2} />
+        <Stars radius={80} depth={50} count={1000} factor={3} saturation={0} fade speed={0.5} />
+        <Sparkles count={50} scale={12} size={1.5} speed={0.3} opacity={0.15} />
       </Canvas>
 
       {/* Bottom fade to dark */}

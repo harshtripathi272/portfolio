@@ -127,9 +127,9 @@ pre [data-line] {
   width: 100%;
   height: 100%;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.15;
+  opacity: 0.05; /* Reduced opacity */
   pointer-events: none;
-  z-index: 9999;
+  z-index: 50; /* Changed from 9999 to 50 so it doesn't block top level modals */
 }
 
 /* ── Typography Effects ── */

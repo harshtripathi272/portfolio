@@ -1,8 +1,14 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -22,35 +28,42 @@ export function ScrollReveal({
   once = true,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-80px" });
 
-  const directionOffset = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { x: 40, y: 0 },
-    right: { x: -40, y: 0 },
-  };
+  useGSAP(() => {
+    if (!ref.current) return;
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{
+    const directionOffset = {
+      up: { y: 40, x: 0 },
+      down: { y: -40, x: 0 },
+      left: { x: 40, y: 0 },
+      right: { x: -40, y: 0 },
+    };
+
+    gsap.fromTo(
+      ref.current,
+      {
         opacity: 0,
         ...directionOffset[direction],
-      }}
-      animate={
-        isInView
-          ? { opacity: 1, x: 0, y: 0 }
-          : { opacity: 0, ...directionOffset[direction] }
-      }
-      transition={{
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
         duration,
         delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      className={cn(className)}
-    >
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom-=80",
+          once: once,
+        },
+      }
+    );
+  }, { scope: ref, dependencies: [direction, duration, delay, once] });
+
+  return (
+    <div ref={ref} className={cn("opacity-0", className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }

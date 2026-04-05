@@ -9,13 +9,9 @@ import Markdown from "react-markdown";
 
 import nextDynamic from "next/dynamic";
 
-const ProjectCarousel3D = nextDynamic(
-  () => import("@/components/project-carousel-3d").then((mod) => mod.ProjectCarousel3D),
-  {
-    ssr: false,
-    loading: () => <div className="w-full h-[600px] flex items-center justify-center text-neutral-500">Loading...</div>,
-  }
-);
+import { ProjectsSection } from "@/components/projects-section";
+import { StatsSection } from "@/components/stats-section";
+import { ContactSection } from "@/components/contact-section";
 
 const HeroScene = nextDynamic(
   () => import("@/components/3d/hero-scene").then((mod) => mod.HeroScene),
@@ -24,6 +20,7 @@ const HeroScene = nextDynamic(
 
 import Image from "next/image";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
+import { HeroContent } from "@/components/hero-content";
 
 export default function Page() {
   return (
@@ -33,69 +30,8 @@ export default function Page() {
         {/* 3D WebGL Background */}
         <HeroScene />
 
-        {/* Split Layout Overlay */}
-        <div className="absolute inset-0 z-10 flex items-end md:items-center px-6 md:px-16 lg:px-24 pb-24 md:pb-0">
-          
-          {/* LEFT — Name + Info */}
-          <div className="flex-1 flex flex-col justify-center gap-6 pt-20 md:pt-0">
-            {/* Role badge */}
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs uppercase tracking-[0.3em] text-white/50 font-semibold">Available for work</span>
-            </div>
-
-            {/* Giant Name */}
-            <div className="overflow-hidden">
-              <h1 className="text-[14vw] md:text-[10vw] lg:text-[9vw] font-black tracking-[-0.04em] leading-[0.85] uppercase font-[family-name:var(--font-display)]">
-                <span className="block text-gradient">{DATA.name.split(' ')[0]}</span>
-                <span className="block text-white/20 text-outline">{DATA.name.split(' ')[1]}</span>
-              </h1>
-            </div>
-
-            {/* Description */}
-            <p className="text-base md:text-lg text-neutral-400 max-w-sm leading-relaxed">
-              {DATA.description}
-            </p>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pointer-events-auto">
-              {Object.entries(DATA.contact.social)
-                .filter(([_, social]) => social.navbar)
-                .map(([name, social]) => (
-                  <MagneticWrapper key={name}>
-                    <Link
-                      href={social.url}
-                      target="_blank"
-                      data-interactive
-                      className="group flex size-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/70 backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30"
-                    >
-                      <social.icon className="size-4" />
-                    </Link>
-                  </MagneticWrapper>
-                ))}
-            </div>
-          </div>
-
-          {/* RIGHT — Photo */}
-          <div className="hidden md:flex flex-1 items-end justify-center md:justify-end relative h-screen max-h-screen">
-            {/* Glow behind photo */}
-            <div className="absolute bottom-0 right-1/4 w-[40vw] h-[70vh] bg-white/5 rounded-full blur-[80px] pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-[20vw] h-[40vh] bg-blue-500/10 rounded-full blur-[60px] pointer-events-none" />
-
-            {/* Photo */}
-            <div className="relative w-[36vw] max-w-[520px] h-[85vh] flex items-end justify-center">
-              <Image
-                src="/me-nobg.png"
-                alt="Harsh Tripathi"
-                fill
-                className="object-contain object-bottom drop-shadow-[0_0_80px_rgba(255,255,255,0.08)]"
-                priority
-              />
-              {/* Bottom fade so photo blends into the dark bg */}
-              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent pointer-events-none z-10" />
-            </div>
-          </div>
-        </div>
+        {/* Left and Right Overlay extracted to HeroContent for GSAP animations */}
+        <HeroContent />
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20">
@@ -108,31 +44,7 @@ export default function Page() {
 
 
       {/* ═══════════ STATS (Giant Numbers) ═══════════ */}
-      <section id="stats" className="relative z-20 px-6 py-32 bg-[#050505]">
-        <ScrollReveal>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-px md:bg-white/[0.04] rounded-2xl md:border border-white/[0.06] overflow-hidden">
-              {[
-                { value: "8+", label: "Feature Projects" },
-                { value: "2", label: "Hackathon Wins" },
-                { value: "3+", label: "Internships" },
-              ].map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center justify-center py-16 px-8 bg-[#050505] transition-colors duration-500 hover:bg-white/[0.02] border border-white/[0.06] md:border-none rounded-2xl md:rounded-none group"
-                >
-                  <span className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-600 transition-transform duration-700 group-hover:scale-110">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs md:text-sm text-neutral-500 uppercase tracking-[0.3em] mt-6 font-bold">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
+      <StatsSection />
 
       {/* ═══════════ ABOUT (Aggressive Typography) ═══════════ */}
       <section id="about" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
@@ -212,23 +124,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ═══════════ PROJECTS (Interactive Showcase) ═══════════ */}
-      <section id="projects" className="relative z-20 py-32 border-t border-white/[0.04] overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 mb-16">
-          <ScrollReveal>
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter font-[family-name:var(--font-display)] text-white/10 uppercase">
-              Featured<br/><span className="text-white">Selected Works</span>
-            </h2>
-          </ScrollReveal>
-        </div>
-        
-        {/* Full-bleed bleeding carousel for maximum impact */}
-        <div className="w-[110vw] relative left-1/2 -translate-x-1/2">
-          <ScrollReveal delay={0.2} duration={1}>
-            <ProjectCarousel3D />
-          </ScrollReveal>
-        </div>
-      </section>
+      <ProjectsSection />
 
       {/* ═══════════ ACHIEVEMENTS ═══════════ */}
       <section id="achievements" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
@@ -269,26 +165,7 @@ export default function Page() {
       </section>
 
       {/* ═══════════ CONTACT (Dramatic Footer) ═══════════ */}
-      <section id="contact" className="relative z-20 w-full bg-white text-black py-40 rounded-t-[3rem] mt-32">
-        <div className="max-w-5xl mx-auto text-center px-6">
-          <ScrollReveal direction="up" duration={1}>
-            <h2 className="text-6xl md:text-[8vw] font-black tracking-tighter uppercase leading-[0.8] mb-12">
-              Let&apos;s craft <br/>
-              <span className="text-neutral-400">the future.</span>
-            </h2>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.2} duration={1}>
-            <Link
-              href={DATA.contact.social.LinkedIn.url}
-              data-interactive
-              className="inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-black text-white text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-300 shadow-2xl"
-            >
-              Get in Touch →
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+      <ContactSection />
 
       {/* Dock spacer */}
       <div className="h-24 bg-white hidden" />
