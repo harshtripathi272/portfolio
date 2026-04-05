@@ -95,16 +95,18 @@ export function HeroContent() {
       </div>
 
       {/* RIGHT — Photo */}
-      <div className="hidden md:flex flex-1 items-end justify-center md:justify-end relative h-screen max-h-screen">
-        <div className="absolute bottom-0 right-1/4 w-[40vw] h-[70vh] bg-white/5 rounded-full blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[20vw] h-[40vh] bg-blue-500/10 rounded-full blur-[60px] pointer-events-none" />
+      <div className="hidden md:flex flex-1 items-end justify-center md:justify-end relative h-[100vh] max-h-screen">
+        {/* Optimized glow behind photo using standard opacity and background images instead of expensive CSS blur filters */}
+        <div className="absolute bottom-0 right-1/4 w-[40vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.05)_0%,_transparent_70%)] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[20vw] h-[40vh] bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] rounded-full pointer-events-none" />
 
-        <div ref={photoRef} className="relative w-[36vw] max-w-[520px] h-[85vh] flex items-end justify-center pointer-events-none opacity-0">
+        <div ref={photoRef} className="relative w-[36vw] max-w-[520px] h-[85vh] flex items-end justify-center pointer-events-none opacity-0 translate-y-8">
           <Image
             src="/me-nobg.png"
             alt={DATA.name}
             fill
-            className="object-contain object-bottom drop-shadow-[0_0_80px_rgba(255,255,255,0.08)]"
+            /* Removed heavy drop-shadow that causes scroll lag */
+            className="object-contain object-bottom"
             priority
           />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent pointer-events-none z-10" />
