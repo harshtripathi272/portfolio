@@ -10,7 +10,6 @@ import Markdown from "react-markdown";
 import { ProjectsSection } from "@/components/projects-section";
 import { StatsSection } from "@/components/stats-section";
 import { ContactSection } from "@/components/contact-section";
-import { SkillsMarquee } from "@/components/skills-marquee";
 import { HeroContent } from "@/components/hero-content";
 
 export default function Page() {
@@ -37,9 +36,6 @@ export default function Page() {
         <HeroContent />
       </section>
 
-      {/* ═══════════ SKILLS MARQUEE ═══════════ */}
-      <SkillsMarquee />
-
       {/* ═══════════ ABOUT ═══════════ */}
       <section id="about" className="relative px-6 py-28 md:px-10 md:py-36">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-12">
@@ -59,6 +55,26 @@ export default function Page() {
             <ScrollReveal delay={0.15}>
               <div className="mt-10 max-w-2xl text-lg leading-relaxed text-foreground/70">
                 <Markdown>{DATA.summary}</Markdown>
+              </div>
+            </ScrollReveal>
+
+            {/* Skills grid */}
+            <ScrollReveal delay={0.25}>
+              <div className="mt-14 border-t border-foreground/15 pt-8">
+                <p className="eyebrow mb-6">Toolkit</p>
+                <div className="flex flex-wrap gap-x-2 gap-y-3">
+                  {DATA.skills.map((skill, i) => (
+                    <span
+                      key={skill}
+                      className="group inline-flex items-center gap-2 rounded-full border border-foreground/15 px-4 py-2 text-sm font-medium text-foreground/70 transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background"
+                    >
+                      <span className="text-[10px] tabular-nums text-foreground/30 transition-colors group-hover:text-background/50">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
           </div>

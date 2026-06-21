@@ -44,9 +44,11 @@ export default function Navbar() {
           data-interactive
           className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-tight"
         >
-          <span className="flex size-7 items-center justify-center rounded-full bg-foreground text-[11px] font-bold text-background">
-            {initials}
-          </span>
+          <img
+            src="/me-circle.png"
+            alt={DATA.name}
+            className="size-7 rounded-full object-cover"
+          />
           <span className="hidden sm:inline">{DATA.name}</span>
         </Link>
 

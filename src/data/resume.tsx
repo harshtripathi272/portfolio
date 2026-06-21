@@ -5,7 +5,7 @@ export const DATA = {
   name: "Harsh Tripathi",
   initials: "DV",
   url: "https://dillion.io",
-  location: "San Francisco, CA",
+  location: "",
   locationLink: "https://www.google.com/maps/place/sanfrancisco",
   description:
     "I transform ideas into functional, user-friendly products with cutting-edge technology. ",

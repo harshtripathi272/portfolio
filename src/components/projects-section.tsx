@@ -9,57 +9,27 @@ import Markdown from "react-markdown";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 
+type Project = (typeof DATA.projects)[number];
+
 export function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<(typeof DATA.projects)[number] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="relative px-6 py-28 md:px-10 md:py-36">
       <div className="mx-auto max-w-7xl">
         <SectionHeader index="03" eyebrow="Selected Work" title="Things I've built" />
 
-        {/* Editorial index list */}
-        <div className="mt-16 border-t border-foreground/15">
-          {DATA.projects.map((project, index) => {
-            const num = String(index + 1).padStart(2, "0");
-            return (
-              <ScrollReveal key={project.title} delay={0.04 * index}>
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  data-interactive
-                  className="group flex w-full items-center gap-5 border-b border-foreground/15 py-7 text-left transition-colors duration-300 hover:bg-foreground/[0.03] md:gap-10 md:py-9"
-                >
-                  <span className="font-[family-name:var(--font-display)] text-sm font-medium tabular-nums text-foreground/40 md:text-base">
-                    {num}
-                  </span>
-
-                  <div className="flex-1 overflow-hidden">
-                    <h3 className="font-serif text-2xl font-light leading-tight tracking-tight transition-all duration-300 group-hover:translate-x-2 group-hover:italic md:text-5xl">
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <div className="hidden max-w-[180px] flex-wrap justify-end gap-1.5 lg:flex">
-                    {project.technologies.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className="whitespace-nowrap rounded-full border border-foreground/15 px-2.5 py-0.5 text-[11px] font-medium text-foreground/55"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <span className="shrink-0 text-xs font-medium tabular-nums text-foreground/45 md:text-sm">
-                    {project.dates}
-                  </span>
-
-                  <span className="shrink-0 text-2xl text-foreground/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[hsl(var(--accent))]">
-                    ↗
-                  </span>
-                </button>
-              </ScrollReveal>
-            );
-          })}
+        {/* Card grid */}
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {DATA.projects.map((project, index) => (
+            <ScrollReveal key={project.title} delay={0.05 * (index % 3)}>
+              <ProjectCard
+                project={project}
+                index={index}
+                onClick={() => setSelectedProject(project)}
+              />
+            </ScrollReveal>
+          ))}
         </div>
       </div>
 
@@ -76,18 +46,16 @@ export function ProjectsSection() {
           </DialogHeader>
 
           <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {/* Media */}
             {(selectedProject?.video || selectedProject?.image) && (
               <div className="relative aspect-video overflow-hidden rounded-md border border-foreground/15 bg-foreground/5">
                 {selectedProject?.video ? (
-                  <video src={selectedProject.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+                  <video src={selectedProject.video.startsWith("http") || selectedProject.video.startsWith("/") ? selectedProject.video : `/${selectedProject.video}`} autoPlay loop muted playsInline className="h-full w-full object-cover" />
                 ) : (
                   <img src={selectedProject?.image || "/placeholder.png"} className="h-full w-full object-cover" alt={selectedProject?.title || "project"} />
                 )}
               </div>
             )}
 
-            {/* Details */}
             <div className={selectedProject?.video || selectedProject?.image ? "flex h-full flex-col space-y-6" : "flex h-full flex-col space-y-6 md:col-span-2"}>
               <Markdown className="prose prose-sm max-w-none leading-relaxed text-foreground/70">
                 {selectedProject?.description || ""}
@@ -128,5 +96,96 @@ export function ProjectsSection() {
         </DialogContent>
       </Dialog>
     </section>
+  );
+}
+
+function ProjectCard({
+  project,
+  index,
+  onClick,
+}: {
+  project: Project;
+  index: number;
+  onClick: () => void;
+}) {
+  const normalize = (src: string) =>
+    !src ? src : src.startsWith("http") || src.startsWith("/") ? src : `/${src}`;
+  const videoSrc = normalize(project.video || "");
+  const imageSrc = normalize(project.image || "");
+
+  return (
+    <button
+      onClick={onClick}
+      data-interactive
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-foreground/15 bg-background text-left transition-all duration-500 hover:-translate-y-1 hover:border-foreground/40 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.25)]"
+    >
+      {/* Media / placeholder */}
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-foreground/10 bg-foreground/[0.04]">
+        {project.video ? (
+          <video
+            src={videoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : project.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imageSrc}
+            alt={project.title}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-serif text-7xl font-light text-foreground/10 transition-colors duration-500 group-hover:text-[hsl(var(--accent))]/30">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+        )}
+
+        {/* corner arrow */}
+        <span className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground/60 backdrop-blur-sm transition-all duration-300 group-hover:rotate-45 group-hover:border-foreground group-hover:text-foreground">
+          ↗
+        </span>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col p-6">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="eyebrow !tracking-[0.2em]">
+            <span className="accent">{String(index + 1).padStart(2, "0")}</span>
+          </span>
+          <span className="text-xs font-medium tabular-nums text-foreground/45">
+            {project.dates}
+          </span>
+        </div>
+
+        <h3 className="font-serif text-2xl font-light leading-tight tracking-tight transition-colors duration-300 group-hover:text-[hsl(var(--accent))]">
+          {project.title}
+        </h3>
+
+        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-foreground/60">
+          {project.description.replace(/[*_#`]/g, "")}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-foreground/15 px-2.5 py-0.5 text-[11px] font-medium text-foreground/55"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="rounded-full px-2 py-0.5 text-[11px] font-medium text-foreground/40">
+              +{project.technologies.length - 4}
+            </span>
+          )}
+        </div>
+      </div>
+    </button>
   );
 }
