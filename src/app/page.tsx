@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
 
-import { ResumeCard } from "@/components/resume-card";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { Timeline } from "@/components/timeline";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -13,6 +13,7 @@ import nextDynamic from "next/dynamic";
 import { ProjectsSection } from "@/components/projects-section";
 import { StatsSection } from "@/components/stats-section";
 import { ContactSection } from "@/components/contact-section";
+import { SkillsMarquee } from "@/components/skills-marquee";
 
 const HeroScene = nextDynamic(
   () => import("@/components/3d/hero-scene").then((mod) => mod.HeroScene),
@@ -22,6 +23,22 @@ const HeroScene = nextDynamic(
 import { HeroContent } from "@/components/hero-content";
 
 export default function Page() {
+  const workItems = DATA.work.map((w) => ({
+    logoUrl: w.logoUrl,
+    title: w.company,
+    subtitle: w.title,
+    period: `${w.start} - ${w.end ?? "Present"}`,
+    description: w.description,
+    badges: w.badges,
+  }));
+
+  const eduItems = DATA.education.map((e) => ({
+    logoUrl: e.logoUrl,
+    title: e.school,
+    subtitle: e.degree,
+    period: `${e.start} - ${e.end}`,
+  }));
+
   return (
     <main className="relative bg-[#050505] selection:bg-violet-500/30 selection:text-white">
       {/* ═══════════ HERO (3D WebGL) ═══════════ */}
@@ -41,6 +58,9 @@ export default function Page() {
       {/* ═══════════ STATS ═══════════ */}
       <StatsSection />
 
+      {/* ═══════════ SKILLS MARQUEE ═══════════ */}
+      <SkillsMarquee />
+
       {/* ═══════════ ABOUT ═══════════ */}
       <section id="about" className="relative z-20 px-6 py-32 border-t border-white/[0.04] overflow-hidden">
         <div className="absolute inset-0 bg-grid pointer-events-none" />
@@ -57,63 +77,19 @@ export default function Page() {
               <Markdown>{DATA.summary}</Markdown>
             </div>
           </ScrollReveal>
-
-          {/* Skill chips */}
-          <ScrollReveal delay={0.3}>
-            <div className="mt-12 flex flex-wrap gap-3">
-              {DATA.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="glass rounded-full px-4 py-2 text-sm font-medium text-neutral-300 transition-colors duration-300 hover:text-white hover:border-violet-400/40"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
-      {/* ═══════════ EXPERIENCE ═══════════ */}
+      {/* ═══════════ EXPERIENCE + EDUCATION (Timeline) ═══════════ */}
       <section id="work" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader eyebrow="Career" title="Experience" />
-          <div className="space-y-6">
-            {DATA.work.map((work, id) => (
-              <ScrollReveal key={work.company} delay={0.08 * id}>
-                <ResumeCard
-                  logoUrl={work.logoUrl}
-                  altText={work.company}
-                  title={work.company}
-                  subtitle={work.title}
-                  href={work.href}
-                  badges={work.badges}
-                  period={`${work.start} - ${work.end ?? "Present"}`}
-                  description={work.description}
-                />
-              </ScrollReveal>
-            ))}
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-16 gap-y-20 lg:grid-cols-2">
+          <div>
+            <SectionHeader eyebrow="Career" title="Experience" />
+            <Timeline items={workItems} />
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════ EDUCATION ═══════════ */}
-      <section id="education" className="relative z-20 px-6 py-32 border-t border-white/[0.04]">
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader eyebrow="Learning" title="Education" />
-          <div className="space-y-6">
-            {DATA.education.map((education, id) => (
-              <ScrollReveal key={education.school} delay={0.08 * id}>
-                <ResumeCard
-                  href={education.href}
-                  logoUrl={education.logoUrl}
-                  altText={education.school}
-                  title={education.school}
-                  subtitle={education.degree}
-                  period={`${education.start} - ${education.end}`}
-                />
-              </ScrollReveal>
-            ))}
+          <div id="education">
+            <SectionHeader eyebrow="Learning" title="Education" />
+            <Timeline items={eduItems} />
           </div>
         </div>
       </section>
