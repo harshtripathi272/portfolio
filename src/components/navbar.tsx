@@ -1,78 +1,78 @@
-import { Dock, DockIcon } from "@/components/magicui/dock";
-import { ModeToggle } from "@/components/mode-toggle";
-import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+
+const NAV_LINKS = [
+  { href: "#about", label: "About" },
+  { href: "#work", label: "Work" },
+  { href: "#projects", label: "Projects" },
+  { href: "#achievements", label: "Awards" },
+  { href: "/blog", label: "Blog" },
+];
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const initials = DATA.name
+    .split(" ")
+    .map((w) => w[0])
+    .join("");
+
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex origin-bottom h-full max-h-14">
-      <div className="fixed bottom-0 inset-x-0 h-16 w-full bg-gradient-to-t from-[#050505] to-transparent" />
-      <Dock className="z-50 pointer-events-auto relative mx-auto flex min-h-full h-full items-center px-1 bg-neutral-950/80 backdrop-blur-2xl border border-white/[0.06] rounded-2xl transform-gpu transition-all duration-300 hover:border-white/[0.1]">
-        {DATA.navbar.map((item) => (
-          <DockIcon key={item.href}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href={item.href}
-                  data-interactive
-                  className={cn(
-                    buttonVariants({ variant: "ghost", size: "icon" }),
-                    "size-12 text-neutral-400 hover:text-white hover:bg-white/[0.06] transition-all duration-300"
-                  )}
-                >
-                  <item.icon className="size-4" />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{item.label}</p>
-              </TooltipContent>
-            </Tooltip>
-          </DockIcon>
-        ))}
-        <Separator orientation="vertical" className="h-full" />
-        {Object.entries(DATA.contact.social)
-          .filter(([_, social]) => social.navbar)
-          .map(([name, social]) => (
-            <DockIcon key={name}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={social.url}
-                    data-interactive
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-12 text-neutral-400 hover:text-white hover:bg-white/[0.06] transition-all duration-300"
-                    )}
-                  >
-                    <social.icon className="size-4" />
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{name}</p>
-                </TooltipContent>
-              </Tooltip>
-            </DockIcon>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-40 transition-all duration-500",
+        scrolled
+          ? "border-b border-foreground/10 bg-background/80 backdrop-blur-md"
+          : "border-b border-transparent"
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
+        {/* Wordmark */}
+        <Link
+          href="/"
+          data-interactive
+          className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-tight"
+        >
+          <span className="flex size-7 items-center justify-center rounded-full bg-foreground text-[11px] font-bold text-background">
+            {initials}
+          </span>
+          <span className="hidden sm:inline">{DATA.name}</span>
+        </Link>
+
+        {/* Center links */}
+        <nav className="hidden items-center gap-8 md:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              data-interactive
+              className="ed-link text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </Link>
           ))}
-        <Separator orientation="vertical" className="h-full py-2" />
-        <DockIcon>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <ModeToggle />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Theme</p>
-            </TooltipContent>
-          </Tooltip>
-        </DockIcon>
-      </Dock>
-    </div>
+        </nav>
+
+        {/* CTA */}
+        <Link
+          href={DATA.contact.social.email.url}
+          data-interactive
+          className="rounded-full bg-foreground px-5 py-2 text-xs font-semibold uppercase tracking-wider text-background transition-transform duration-300 hover:scale-[1.03]"
+        >
+          Get in touch
+        </Link>
+      </div>
+    </header>
   );
 }

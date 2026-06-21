@@ -366,7 +366,7 @@ export default async function AchievementPage({
   const isSafeWander = achievement.slug === "student-innovators-without-borders";
 
   return (
-    <main className="flex flex-col min-h-[100dvh] space-y-10">
+    <main className="flex flex-col min-h-[100dvh] space-y-10 px-6 pb-28 pt-32 md:px-10">
       <section className="w-full max-w-3xl mx-auto">
         <BlurFade delay={BLUR_FADE_DELAY}>
           <Link

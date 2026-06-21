@@ -65,27 +65,25 @@ export function StatsSection() {
   }, { scope: containerRef });
 
   return (
-    <section id="stats" ref={containerRef} className="relative z-20 px-6 py-32 bg-[#050505]">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-px md:bg-white/[0.04] rounded-2xl md:border border-white/[0.06] overflow-hidden">
+    <section id="stats" ref={containerRef} className="relative px-6 py-20 md:px-10">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 border-t border-foreground/15 md:grid-cols-3">
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
               ref={(el) => { blockRefs.current[i] = el; }}
-              className="flex flex-col items-center justify-center py-16 px-8 bg-[#050505] transition-colors duration-500 hover:bg-white/[0.02] border border-white/[0.06] md:border-none rounded-2xl md:rounded-none group opacity-0"
+              className="flex flex-col gap-4 border-b border-foreground/15 py-12 opacity-0 md:border-b-0 md:border-r md:px-10 md:last:border-r-0 md:[&:first-child]:pl-0"
             >
-              <div className="flex items-center">
-                <span 
+              <div className="flex items-start font-serif text-7xl font-light leading-none tracking-tight md:text-8xl">
+                <span
                   ref={(el) => { numberRefs.current[i] = el; }}
-                  className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-violet-200 to-cyan-300 transition-transform duration-700 group-hover:scale-110 inline-block w-[1em] text-right"
+                  className="tabular-nums"
                 >
                   0
                 </span>
-                <span className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-violet-200 to-cyan-300 transition-transform duration-700 group-hover:scale-110">
-                  {stat.suffix}
-                </span>
+                <span className="accent">{stat.suffix}</span>
               </div>
-              <span className="text-xs md:text-sm text-neutral-500 uppercase tracking-[0.3em] mt-6 font-bold">
+              <span className="font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50">
                 {stat.label}
               </span>
             </div>

@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const fontSans = Inter({
@@ -15,6 +15,12 @@ const fontSans = Inter({
 const fontDisplay = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
+});
+
+const fontSerif = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
 export const metadata: Metadata = {
@@ -72,17 +78,18 @@ export default function RootLayout({
         className={cn(
           "min-h-screen bg-background font-sans antialiased noise-overlay",
           fontSans.variable,
-          fontDisplay.variable
+          fontDisplay.variable,
+          fontSerif.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <SmoothScrollProvider>
             <CustomCursor />
             <PageLoader />
             <ScrollProgress />
             <TooltipProvider delayDuration={0}>
-              {children}
               <Navbar />
+              {children}
             </TooltipProvider>
           </SmoothScrollProvider>
         </ThemeProvider>

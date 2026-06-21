@@ -6,7 +6,6 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -14,88 +13,75 @@ if (typeof window !== "undefined") {
 
 export function ContactSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!containerRef.current) return;
-
-    // Dramatic scale up and fade in for the footer section
     gsap.fromTo(
-      containerRef.current,
-      { y: 150, opacity: 0.5 },
-      {
-        y: 0,
-        opacity: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
-        },
-      }
-    );
-
-    // Text reveal
-    gsap.fromTo(
-      textRef.current,
-      { opacity: 0, scale: 0.8, y: 50 },
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "back.out(1.2)",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom-=100",
-          once: true,
-        },
-      }
-    );
-
-    // Button reveal
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, y: 20 },
+      ".contact-reveal",
+      { opacity: 0, y: 40 },
       {
         opacity: 1,
         y: 0,
         duration: 1,
-        delay: 0.3,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom-=100",
-          once: true,
-        },
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: containerRef.current, start: "top bottom-=120", once: true },
       }
     );
-
   }, { scope: containerRef });
 
+  const year = new Date().getFullYear();
+
   return (
-    <section id="contact" ref={containerRef} className="relative z-20 w-full bg-white text-black py-40 rounded-t-[3rem] mt-32 transform-gpu">
-      <div className="max-w-5xl mx-auto text-center px-6">
-        <div className="overflow-hidden mb-12">
-          <h2 ref={textRef} className="text-6xl md:text-[8vw] font-black tracking-tighter uppercase leading-[0.8] opacity-0 origin-bottom transform-gpu">
-            Let&apos;s craft <br/>
-            <span className="bg-gradient-to-r from-violet-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent">the future.</span>
-          </h2>
+    <section
+      id="contact"
+      ref={containerRef}
+      className="relative bg-foreground px-6 pt-28 pb-12 text-background md:px-10 md:pt-40"
+    >
+      <div className="mx-auto max-w-7xl">
+        <span className="eyebrow contact-reveal !text-background/50">
+          <span className="size-1.5 rounded-full bg-[hsl(var(--accent))]" />
+          Let&apos;s talk
+        </span>
+
+        <h2 className="contact-reveal mt-8 font-serif text-6xl font-light leading-[0.92] tracking-tight md:text-[10vw]">
+          Let&apos;s craft <br />
+          <span className="italic accent">the future.</span>
+        </h2>
+
+        <div className="contact-reveal mt-12 flex flex-wrap items-center gap-4">
+          <Link
+            href={DATA.contact.social.email.url}
+            data-interactive
+            className="group inline-flex items-center gap-3 rounded-full bg-background px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:gap-4"
+          >
+            {DATA.contact.email}
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </Link>
+          <Link
+            href={DATA.contact.social.LinkedIn.url}
+            data-interactive
+            className="inline-flex items-center gap-2 rounded-full border border-background/25 px-8 py-4 text-base font-semibold transition-colors duration-300 hover:border-background"
+          >
+            LinkedIn ↗
+          </Link>
         </div>
-        
-        <div ref={buttonRef} className="opacity-0">
-          <MagneticWrapper>
-            <Link
-              href={DATA.contact.social.LinkedIn.url}
-              data-interactive
-              className="group inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-black text-white text-2xl font-bold tracking-tight transition-all duration-300 hover:scale-105 shadow-2xl"
-            >
-              Get in Touch
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </Link>
-          </MagneticWrapper>
+
+        {/* Footer row */}
+        <div className="contact-reveal mt-28 flex flex-col gap-6 border-t border-background/15 pt-8 md:flex-row md:items-center md:justify-between">
+          <span className="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-[0.2em]">
+            {DATA.name}
+          </span>
+          <div className="flex flex-wrap gap-6 text-sm text-background/60">
+            {Object.entries(DATA.contact.social)
+              .filter(([, s]) => s.navbar)
+              .map(([name, s]) => (
+                <Link key={name} href={s.url} target="_blank" data-interactive className="ed-link hover:text-background">
+                  {name}
+                </Link>
+              ))}
+          </div>
+          <span className="text-sm text-background/45">© {year} — All rights reserved</span>
         </div>
       </div>
     </section>

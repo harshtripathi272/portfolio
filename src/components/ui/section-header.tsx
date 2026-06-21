@@ -4,6 +4,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
+  index?: string;
   eyebrow: string;
   title: React.ReactNode;
   align?: "left" | "center";
@@ -11,10 +12,11 @@ interface SectionHeaderProps {
 }
 
 /**
- * Consistent section heading used across the site: an eyebrow label,
- * a large display title, and an accent divider line.
+ * Editorial section heading: numbered index, eyebrow label and
+ * a large serif title over a hairline rule.
  */
 export function SectionHeader({
+  index,
   eyebrow,
   title,
   align = "left",
@@ -24,21 +26,25 @@ export function SectionHeader({
     <ScrollReveal>
       <div
         className={cn(
-          "mb-16 flex flex-col gap-5",
-          align === "center" && "items-center text-center",
+          "border-t border-foreground/15 pt-6",
+          align === "center" && "text-center",
           className
         )}
       >
-        <span className="eyebrow">{eyebrow}</span>
-        <h2 className="font-[family-name:var(--font-display)] text-4xl font-bold tracking-tighter text-white md:text-6xl">
-          {title}
-        </h2>
         <div
           className={cn(
-            "h-px w-24 bg-gradient-to-r from-violet-500/70 via-cyan-400/50 to-transparent",
-            align === "center" && "from-transparent via-violet-400/60 to-transparent w-40"
+            "mb-6 flex items-baseline gap-4",
+            align === "center" && "justify-center"
           )}
-        />
+        >
+          <span className="eyebrow">
+            {index && <span className="accent">{index} —</span>}
+            {eyebrow}
+          </span>
+        </div>
+        <h2 className="font-serif text-5xl font-light leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
+          {title}
+        </h2>
       </div>
     </ScrollReveal>
   );
