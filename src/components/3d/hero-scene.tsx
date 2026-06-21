@@ -78,15 +78,21 @@ export function HeroScene() {
         <color attach="background" args={["#030303"]} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#ffffff" />
-        <pointLight position={[-10, -10, -5]} intensity={0.5} color="#3333ff" />
+        <pointLight position={[-10, -10, -5]} intensity={0.7} color="#4f46e5" />
+        <pointLight position={[8, -6, 2]} intensity={0.5} color="#06b6d4" />
         <pointLight position={[0, 0, 5]} intensity={0.3} color="#ffffff" />
 
         <FloatingGeometry />
-        <Stars radius={80} depth={50} count={1000} factor={3} saturation={0} fade speed={0.5} />
-        <Sparkles count={50} scale={12} size={1.5} speed={0.3} opacity={0.15} />
+        <Stars radius={80} depth={50} count={1200} factor={3} saturation={0} fade speed={0.5} />
+        <Sparkles count={60} scale={12} size={1.5} speed={0.3} opacity={0.2} color="#a5b4fc" />
       </Canvas>
 
-      {/* Bottom fade to dark */}
+      {/* Animated aurora glow accents */}
+      <div className="pointer-events-none absolute -top-1/4 left-1/4 h-[60vh] w-[60vh] rounded-full bg-[radial-gradient(circle,_rgba(79,70,229,0.18)_0%,_transparent_70%)] animate-aurora" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-[50vh] w-[50vh] rounded-full bg-[radial-gradient(circle,_rgba(6,182,212,0.14)_0%,_transparent_70%)] animate-aurora [animation-delay:-9s]" />
+
+      {/* Vignette + bottom fade to dark */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_55%,_rgba(3,3,3,0.6)_100%)]" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
     </div>
   );

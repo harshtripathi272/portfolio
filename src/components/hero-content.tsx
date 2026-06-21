@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
-import Image from "next/image";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,106 +10,144 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function HeroContent() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
   const nameRef1 = useRef<HTMLSpanElement>(null);
   const nameRef2 = useRef<HTMLSpanElement>(null);
+  const roleRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
-  const photoRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
+
+  const firstName = DATA.name.split(" ")[0] ?? "";
+  const lastName = DATA.name.split(" ").slice(1).join(" ");
 
   useGSAP(() => {
-    // Register scroll trigger exclusively for the parallax effect if needed
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" }, delay: 0.2 });
-    
-    tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
-      .fromTo([nameRef1.current, nameRef2.current], 
-        { y: 120, opacity: 0, rotateX: -30 }, 
-        { y: 0, opacity: 1, rotateX: 0, duration: 1.4, stagger: 0.15 }, 
-        "-=0.6"
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" }, delay: 0.25 });
+
+    tl.fromTo(
+      badgeRef.current,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 1 }
+    )
+      .fromTo(
+        [nameRef1.current, nameRef2.current],
+        { yPercent: 120, opacity: 0, rotateX: -45 },
+        { yPercent: 0, opacity: 1, rotateX: 0, duration: 1.5, stagger: 0.14 },
+        "-=0.5"
       )
-      .fromTo(descRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, "-=0.8")
-      .fromTo(socialRef.current?.children ? Array.from(socialRef.current.children) : [], 
-        { opacity: 0, scale: 0.8, y: 20 }, 
-        { opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.1 }, 
-        "-=0.8"
+      .fromTo(
+        roleRef.current,
+        { opacity: 0, y: 20, letterSpacing: "0.6em" },
+        { opacity: 1, y: 0, letterSpacing: "0.35em", duration: 1.1 },
+        "-=0.9"
       )
-      .fromTo(photoRef.current, 
-        { opacity: 0, filter: 'blur(20px)', scale: 1.05 }, 
-        { opacity: 1, filter: 'blur(0px)', scale: 1, duration: 1.5, ease: "power2.out" }, 
-        "-=1.5"
+      .fromTo(
+        descRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1 },
+        "-=0.7"
+      )
+      .fromTo(
+        socialRef.current?.children
+          ? Array.from(socialRef.current.children)
+          : [],
+        { opacity: 0, scale: 0.6, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.08 },
+        "-=0.7"
       );
-      
-    // Parallax on scroll
-    gsap.to(photoRef.current, {
-      y: "15%",
+
+    // Subtle parallax drift on the whole hero content as you scroll away
+    gsap.to(containerRef.current, {
+      yPercent: 18,
+      opacity: 0.2,
       ease: "none",
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom top",
         scrub: true,
-      }
+      },
     });
-
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-10 flex items-end md:items-center px-6 md:px-16 lg:px-24 pb-24 md:pb-0 pointer-events-none">
-      
-      {/* LEFT — Name + Info */}
-      <div className="flex-1 flex flex-col justify-center gap-6 pt-20 md:pt-0 pointer-events-auto">
-        <div ref={badgeRef} className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-xs uppercase tracking-[0.3em] text-white/50 font-semibold">Available for work</span>
-        </div>
-
-        <div className="perspective-[1000px] overflow-hidden py-2 -my-2">
-          <h1 className="text-[14vw] md:text-[10vw] lg:text-[9vw] font-black tracking-[-0.04em] leading-[0.85] uppercase font-[family-name:var(--font-display)]">
-            <span ref={nameRef1} className="block text-gradient origin-bottom opacity-0">{DATA.name.split(' ')[0]}</span>
-            <span ref={nameRef2} className="block text-white/20 text-outline origin-bottom opacity-0">{DATA.name.split(' ')[1]}</span>
-          </h1>
-        </div>
-
-        <p ref={descRef} className="text-base md:text-lg text-neutral-400 max-w-sm leading-relaxed opacity-0">
-          {DATA.description}
-        </p>
-
-        <div ref={socialRef} className="flex items-center gap-3">
-          {Object.entries(DATA.contact.social)
-            .filter(([_, social]) => social.navbar)
-            .map(([name, social]) => (
-              <MagneticWrapper key={name}>
-                <Link
-                  href={social.url}
-                  target="_blank"
-                  className="group flex size-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/70 backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30 opacity-0"
-                >
-                  <social.icon className="size-4" />
-                </Link>
-              </MagneticWrapper>
-            ))}
-        </div>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center pointer-events-none"
+    >
+      {/* Availability badge */}
+      <div
+        ref={badgeRef}
+        className="pointer-events-auto mb-8 flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 backdrop-blur-md opacity-0"
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+        </span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">
+          Available for work
+        </span>
       </div>
 
-      {/* RIGHT — Photo */}
-      <div className="hidden md:flex flex-1 items-end justify-center md:justify-end relative h-[100vh] max-h-screen">
-        {/* Optimized glow behind photo using standard opacity and background images instead of expensive CSS blur filters */}
-        <div className="absolute bottom-0 right-1/4 w-[40vw] h-[70vh] bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.05)_0%,_transparent_70%)] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[20vw] h-[40vh] bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] rounded-full pointer-events-none" />
+      {/* Giant name */}
+      <div className="perspective-[1200px]">
+        <h1 className="font-[family-name:var(--font-display)] text-[17vw] font-black uppercase leading-[0.82] tracking-[-0.04em] md:text-[13vw] lg:text-[11vw]">
+          <span className="block overflow-hidden py-1">
+            <span ref={nameRef1} className="block origin-bottom text-gradient opacity-0">
+              {firstName}
+            </span>
+          </span>
+          <span className="block overflow-hidden py-1">
+            <span
+              ref={nameRef2}
+              className="block origin-bottom text-outline opacity-0"
+            >
+              {lastName}
+            </span>
+          </span>
+        </h1>
+      </div>
 
-        <div ref={photoRef} className="relative w-[36vw] max-w-[520px] h-[85vh] flex items-end justify-center pointer-events-none opacity-0 translate-y-8">
-          <Image
-            src="/me-nobg.png"
-            alt={DATA.name}
-            fill
-            /* Removed heavy drop-shadow that causes scroll lag */
-            className="object-contain object-bottom"
-            priority
-          />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent pointer-events-none z-10" />
-        </div>
+      {/* Role line */}
+      <div
+        ref={roleRef}
+        className="mt-6 flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.35em] text-white/45 opacity-0 sm:text-sm"
+      >
+        <span className="hidden h-px w-10 bg-white/20 sm:block" />
+        <span>Engineer</span>
+        <span className="text-white/20">/</span>
+        <span>AI &amp; ML</span>
+        <span className="text-white/20">/</span>
+        <span>Builder</span>
+        <span className="hidden h-px w-10 bg-white/20 sm:block" />
+      </div>
+
+      {/* Description */}
+      <p
+        ref={descRef}
+        className="mt-8 max-w-xl text-balance text-base leading-relaxed text-neutral-400 opacity-0 md:text-lg"
+      >
+        {DATA.description}
+      </p>
+
+      {/* Socials */}
+      <div ref={socialRef} className="pointer-events-auto mt-10 flex items-center gap-3">
+        {Object.entries(DATA.contact.social)
+          .filter(([, social]) => social.navbar)
+          .map(([name, social]) => (
+            <MagneticWrapper key={name}>
+              <Link
+                href={social.url}
+                target="_blank"
+                aria-label={name}
+                data-interactive
+                className="group flex size-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
+              >
+                <social.icon className="size-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </MagneticWrapper>
+          ))}
       </div>
     </div>
   );
