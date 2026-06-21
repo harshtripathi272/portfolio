@@ -69,6 +69,71 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* ── Design System: reusable component utilities ── */
+
+  /* Eyebrow label above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.35em] text-neutral-500;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-px w-6 bg-gradient-to-r from-violet-400/70 to-cyan-400/40;
+  }
+
+  /* Glassmorphism surface */
+  .glass {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Accent gradient text */
+  .text-accent-gradient {
+    background: linear-gradient(110deg, #a78bfa 0%, #818cf8 40%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Primary accent button with glow */
+  .btn-accent {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 font-semibold text-white transition-all duration-300;
+    background: linear-gradient(110deg, #7c3aed 0%, #4f46e5 50%, #0891b2 100%);
+    box-shadow: 0 8px 30px -8px rgba(124, 58, 237, 0.55);
+  }
+  .btn-accent:hover {
+    box-shadow: 0 10px 40px -6px rgba(124, 58, 237, 0.75);
+    transform: translateY(-2px);
+  }
+
+  /* Card with animated gradient border on hover */
+  .card-spotlight {
+    @apply relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[#0a0a0a] transition-all duration-500;
+  }
+  .card-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      400px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(139, 92, 246, 0.5),
+      rgba(34, 211, 238, 0.2) 40%,
+      transparent 70%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .card-spotlight:hover::before {
+    opacity: 1;
+  }
 }
 
 /* ── Custom Scrollbar ── */

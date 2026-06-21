@@ -57,8 +57,9 @@ export function ProjectsSection() {
     <section id="projects" ref={sectionRef} className="relative z-20 py-32 border-t border-white/[0.04] bg-[#050505] overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="max-w-6xl mx-auto px-6 mb-16 w-full">
         <ScrollReveal>
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter font-[family-name:var(--font-display)] text-white/10 uppercase">
-            Featured<br/><span className="text-white">Selected Works</span>
+          <span className="eyebrow mb-5">Portfolio</span>
+          <h2 className="mt-5 text-5xl md:text-8xl font-black tracking-tighter font-[family-name:var(--font-display)] text-white/10 uppercase">
+            Featured<br/><span className="text-accent-gradient">Selected Works</span>
           </h2>
         </ScrollReveal>
       </div>

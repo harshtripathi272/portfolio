@@ -94,7 +94,7 @@ export function HeroContent() {
       <div className="perspective-[1200px]">
         <h1 className="font-[family-name:var(--font-display)] text-[17vw] font-black uppercase leading-[0.82] tracking-[-0.04em] md:text-[13vw] lg:text-[11vw]">
           <span className="block overflow-hidden py-1">
-            <span ref={nameRef1} className="block origin-bottom text-gradient opacity-0">
+            <span ref={nameRef1} className="block origin-bottom text-accent-gradient opacity-0">
               {firstName}
             </span>
           </span>

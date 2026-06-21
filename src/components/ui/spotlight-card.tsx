@@ -1,59 +1,41 @@
 "use client";
 
-import { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
 
-interface SpotlightCardProps {
+interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  as?: React.ElementType;
   children: React.ReactNode;
-  className?: string;
-  spotlightColor?: string;
 }
 
+/**
+ * A card surface with an animated gradient border that follows the cursor.
+ * Pairs with the `.card-spotlight` utility in globals.css.
+ */
 export function SpotlightCard({
-  children,
+  as: Tag = "div",
   className,
-  spotlightColor = "rgba(255, 255, 255, 0.05)",
+  children,
+  ...props
 }: SpotlightCardProps) {
-  const divRef = useRef<HTMLDivElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
-    const rect = divRef.current.getBoundingClientRect();
-    setPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const handleMouseEnter = () => {
-    setIsFocused(true);
-    setOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
-    setIsFocused(false);
-    setOpacity(0);
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    el.style.setProperty("--my", `${e.clientY - rect.top}px`);
   };
 
   return (
-    <div
-      ref={divRef}
+    <Tag
+      ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={cn("relative overflow-hidden", className)}
+      className={cn("card-spotlight", className)}
+      {...props}
     >
-      <div
-        className="pointer-events-none absolute -inset-px transition-opacity duration-500"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
-      />
       {children}
-    </div>
+    </Tag>
   );
 }

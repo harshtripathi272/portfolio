@@ -81,7 +81,7 @@ export function ContactSection() {
         <div className="overflow-hidden mb-12">
           <h2 ref={textRef} className="text-6xl md:text-[8vw] font-black tracking-tighter uppercase leading-[0.8] opacity-0 origin-bottom transform-gpu">
             Let&apos;s craft <br/>
-            <span className="text-neutral-400">the future.</span>
+            <span className="bg-gradient-to-r from-violet-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent">the future.</span>
           </h2>
         </div>
         
@@ -90,9 +90,10 @@ export function ContactSection() {
             <Link
               href={DATA.contact.social.LinkedIn.url}
               data-interactive
-              className="inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-black text-white text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-300 shadow-2xl"
+              className="group inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-black text-white text-2xl font-bold tracking-tight transition-all duration-300 hover:scale-105 shadow-2xl"
             >
-              Get in Touch →
+              Get in Touch
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </MagneticWrapper>
         </div>

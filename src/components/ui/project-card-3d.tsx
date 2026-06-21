@@ -54,7 +54,7 @@ export function ProjectCard3D({ image, video, title, description, index, onClick
         transformStyle: "preserve-3d",
       }}
       className={cn(
-        "relative h-[420px] w-[320px] md:h-[500px] md:w-[380px] rounded-2xl bg-neutral-950 border border-white/[0.06] cursor-pointer group transition-all duration-300 hover:border-white/[0.15]",
+        "relative h-[420px] w-[320px] md:h-[500px] md:w-[380px] rounded-2xl bg-neutral-950 border border-white/[0.06] cursor-pointer group transition-all duration-300 hover:border-violet-400/30",
         className
       )}
     >
@@ -99,7 +99,7 @@ export function ProjectCard3D({ image, video, title, description, index, onClick
       <div
         className="absolute inset-0 z-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         style={{
-          background: "linear-gradient(130deg, rgba(255,255,255,0.04) 0%, transparent 50%)",
+          background: "linear-gradient(130deg, rgba(139,92,246,0.12) 0%, rgba(34,211,238,0.06) 40%, transparent 70%)",
           transform: "translateZ(70px)",
         }}
       />

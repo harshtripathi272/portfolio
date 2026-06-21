@@ -46,9 +46,9 @@ export const ResumeCard = ({
       className={cn("block cursor-pointer", className)}
       onClick={handleClick}
     >
-      <Card className="flex group relative overflow-hidden border border-white/[0.08] bg-zinc-900/60 hover:border-white/15 hover:bg-zinc-900/90 transition-all duration-300 rounded-xl">
+      <Card className="flex group relative overflow-hidden glass hover:border-violet-400/30 transition-all duration-300 rounded-2xl">
         <div className="flex-none">
-          <Avatar className="border m-auto bg-muted-foreground/10 size-12 border-white/10">
+          <Avatar className="border m-auto bg-white/5 size-12 border-white/10">
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -60,7 +60,7 @@ export const ResumeCard = ({
         <div className="flex-grow ml-4 items-center flex-col group/content">
           <CardHeader>
             <div className="flex items-center justify-between gap-x-2 text-base">
-              <h3 className="inline-flex items-center justify-center font-medium leading-none text-xs sm:text-sm group-hover:text-foreground/90 transition-colors">
+              <h3 className="inline-flex items-center justify-center font-semibold leading-none text-sm sm:text-base text-white/90 group-hover:text-white transition-colors">
                 {title}
                 {badges && (
                   <span className="inline-flex gap-x-1 ml-2">
@@ -86,7 +86,7 @@ export const ResumeCard = ({
                 {period}
               </div>
             </div>
-            {subtitle && <div className="font-sans text-xs text-muted-foreground mt-0.5">{subtitle}</div>}
+            {subtitle && <div className="font-sans text-xs sm:text-sm text-violet-300/70 mt-1">{subtitle}</div>}
           </CardHeader>
           {description && (
             <motion.div

@@ -77,11 +77,11 @@ export function StatsSection() {
               <div className="flex items-center">
                 <span 
                   ref={(el) => { numberRefs.current[i] = el; }}
-                  className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-600 transition-transform duration-700 group-hover:scale-110 inline-block w-[1em] text-right"
+                  className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-violet-200 to-cyan-300 transition-transform duration-700 group-hover:scale-110 inline-block w-[1em] text-right"
                 >
                   0
                 </span>
-                <span className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-600 transition-transform duration-700 group-hover:scale-110">
+                <span className="text-6xl md:text-8xl font-black font-[family-name:var(--font-display)] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-violet-200 to-cyan-300 transition-transform duration-700 group-hover:scale-110">
                   {stat.suffix}
                 </span>
               </div>
