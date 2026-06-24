@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import Link from "next/link";
 import Markdown from "react-markdown";
 
 type Project = (typeof DATA.projects)[number];
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const normalize = (src: string) =>
   !src ? src : src.startsWith("http") || src.startsWith("/") ? src : `/${src}`;
@@ -23,7 +26,16 @@ export function ProjectsGrid() {
           const isLive = project.links?.some((l) => l.type === "Live") || project.href?.startsWith("http");
 
           return (
-            <button key={project.title} className="project-card" onClick={() => setSelected(project)}>
+            <motion.button
+              key={project.title}
+              className="project-card"
+              onClick={() => setSelected(project)}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: (index % 2) * 0.08, ease: EASE }}
+              whileHover={{ y: -4 }}
+            >
               <div className="project-card-img">
                 {project.video ? (
                   <video src={video} autoPlay loop muted playsInline />
@@ -50,7 +62,7 @@ export function ProjectsGrid() {
                   ))}
                 </div>
               </div>
-            </button>
+            </motion.button>
           );
         })}
       </div>

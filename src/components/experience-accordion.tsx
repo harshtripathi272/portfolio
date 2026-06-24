@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export interface ExpItem {
   logoUrl: string;
@@ -47,20 +50,36 @@ function AccordionRow({ item }: { item: ExpItem }) {
         {expandable && <ChevronDownIcon className="acc-arrow size-4" />}
       </button>
 
-      {expandable && (
-        <div className={cn("acc-body", open && "is-open")}>
-          <div className="acc-body-inner">
-            <p>{item.description}</p>
-            {item.tags && item.tags.length > 0 && (
-              <div className="exp-tags">
-                {item.tags.map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {expandable && open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="pl-[52px] pr-2 pt-1">
+              <motion.p
+                initial={{ y: 8, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.08, ease: EASE }}
+                className="mb-3 text-sm leading-relaxed"
+                style={{ color: "var(--muted)" }}
+              >
+                {item.description}
+              </motion.p>
+              {item.tags && item.tags.length > 0 && (
+                <div className="exp-tags">
+                  {item.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
