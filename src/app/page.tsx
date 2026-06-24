@@ -5,6 +5,7 @@ import { ExperienceAccordion } from "@/components/experience-accordion";
 import { ProjectsGrid } from "@/components/projects-grid";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/reveal";
 import { HeroIntro } from "@/components/hero-intro";
+import { WhoamiSection } from "@/components/whoami-section";
 
 export default function Page() {
   return (
@@ -78,6 +79,7 @@ export default function Page() {
       {/* ── Experience + Education ── */}
       <section id="work" className="content-section">
         <Reveal>
+          <span className="featured-label">Featured</span>
           <h2 className="section-title">
             Experience<span className="accent">.</span>
           </h2>
@@ -116,12 +118,16 @@ export default function Page() {
       {/* ── Projects ── */}
       <section id="projects" className="content-section">
         <Reveal>
+          <span className="featured-label">Featured</span>
           <h2 className="section-title">
             Projects<span className="accent">.</span>
           </h2>
         </Reveal>
         <ProjectsGrid />
       </section>
+
+      {/* ── whoami terminal ── */}
+      <WhoamiSection />
 
       {/* ── Quote band ── */}
       <section className="quote-band">

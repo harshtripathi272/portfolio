@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -14,6 +14,14 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const normalize = (src: string) =>
   !src ? src : src.startsWith("http") || src.startsWith("/") ? src : `/${src}`;
 
+/** Renders video only on the client to avoid hydration mismatch */
+function ClientVideo({ src }: { src: string }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <span className="ph">▶</span>;
+  return <video src={src} autoPlay loop muted playsInline />;
+}
+
 export function ProjectsGrid() {
   const [selected, setSelected] = useState<Project | null>(null);
 
@@ -26,19 +34,22 @@ export function ProjectsGrid() {
           const isLive = project.links?.some((l) => l.type === "Live") || project.href?.startsWith("http");
 
           return (
-            <motion.button
+            <motion.div
               key={project.title}
               className="project-card"
               onClick={() => setSelected(project)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && setSelected(project)}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: (index % 2) * 0.08, ease: EASE }}
               whileHover={{ y: -4 }}
             >
-              <div className="project-card-img">
+              <div className="project-card-img" suppressHydrationWarning>
                 {project.video ? (
-                  <video src={video} autoPlay loop muted playsInline />
+                  <ClientVideo src={video} />
                 ) : project.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={image} alt={project.title} />
@@ -62,7 +73,7 @@ export function ProjectsGrid() {
                   ))}
                 </div>
               </div>
-            </motion.button>
+            </motion.div>
           );
         })}
       </div>
@@ -84,7 +95,7 @@ export function ProjectsGrid() {
           {(selected?.video || selected?.image) && (
             <div className="relative mt-2 aspect-video overflow-hidden rounded-lg border" style={{ borderColor: "var(--line)" }}>
               {selected?.video ? (
-                <video src={normalize(selected.video)} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+                <ClientVideo src={normalize(selected.video)} />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={normalize(selected?.image || "")} alt={selected?.title || ""} className="h-full w-full object-cover" />
