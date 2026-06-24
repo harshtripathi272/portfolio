@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
+import { GithubActivity } from "@/components/github-activity";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -67,6 +68,8 @@ export function WhoamiSection() {
             <span className="accent">$</span>{" "}
             <span className="terminal-cursor" />
           </p>
+
+          <GithubActivity />
         </div>
       </motion.div>
     </section>
