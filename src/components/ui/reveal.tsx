@@ -3,33 +3,61 @@
 import { motion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+// Buttery custom easing — expo-out feel
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+type Direction = "up" | "down" | "left" | "right" | "none";
 
 interface RevealProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  y?: number;
+  distance?: number;
+  direction?: Direction;
+  blur?: boolean;
+  duration?: number;
   once?: boolean;
 }
 
+function offset(direction: Direction, d: number) {
+  switch (direction) {
+    case "up":
+      return { y: d };
+    case "down":
+      return { y: -d };
+    case "left":
+      return { x: d };
+    case "right":
+      return { x: -d };
+    default:
+      return {};
+  }
+}
+
 /**
- * Fade + slide-up on scroll into view. The signature "sleek" reveal.
+ * Fade + slide + blur on scroll into view. The signature buttery reveal.
  */
 export function Reveal({
   children,
   className,
   delay = 0,
-  y = 24,
+  distance = 28,
+  direction = "up",
+  blur = true,
+  duration = 0.9,
   once = true,
 }: RevealProps) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{
+        opacity: 0,
+        filter: blur ? "blur(10px)" : "blur(0px)",
+        ...offset(direction, distance),
+      }}
+      whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
       viewport={{ once, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: EASE }}
+      transition={{ duration, delay, ease: EASE }}
     >
       {children}
     </motion.div>
@@ -39,22 +67,22 @@ export function Reveal({
 const containerVariants: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.09, delayChildren: 0.08 },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: EASE },
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: EASE },
   },
 };
 
 /**
  * Wrap a list to stagger children as they enter the viewport.
- * Each direct child should be a <Stagger.Item>.
  */
 export function Stagger({
   children,

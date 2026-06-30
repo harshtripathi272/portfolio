@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Spotlight } from "@/components/ui/spotlight";
+import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 import Markdown from "react-markdown";
 
 type Project = (typeof DATA.projects)[number];
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const normalize = (src: string) =>
   !src ? src : src.startsWith("http") || src.startsWith("/") ? src : `/${src}`;
@@ -41,38 +43,45 @@ export function ProjectsGrid() {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === "Enter" && setSelected(project)}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 32, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: (index % 2) * 0.08, ease: EASE }}
-              whileHover={{ y: -4 }}
+              transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: EASE }}
+              whileHover={{ y: -6 }}
             >
-              <div className="project-card-img" suppressHydrationWarning>
-                {project.video ? (
-                  <ClientVideo src={video} />
-                ) : project.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={image} alt={project.title} />
-                ) : (
-                  <span className="ph">{String(index + 1).padStart(2, "0")}</span>
-                )}
-              </div>
-              <div className="project-card-body">
-                <div className="project-card-head">
-                  <h3>{project.title}</h3>
-                  {isLive && (
-                    <span className="project-status status-live">
-                      <span className="status-dot" /> Live
-                    </span>
+              <Spotlight className="h-full" radius={300}>
+                <div className="project-card-img" suppressHydrationWarning>
+                  {project.video ? (
+                    <ClientVideo src={video} />
+                  ) : project.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={image} alt={project.title} />
+                  ) : (
+                    <span className="ph">{String(index + 1).padStart(2, "0")}</span>
                   )}
                 </div>
-                <p>{(project.description || "").replace(/[*_#`]/g, "").slice(0, 110)}…</p>
-                <div className="project-card-tags">
-                  {project.technologies.slice(0, 3).map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
+                <div className="project-card-body">
+                  <div className="project-card-head">
+                    <h3>{project.title}</h3>
+                    {isLive && (
+                      <span className="project-status status-live">
+                        <span className="status-dot" /> Live
+                      </span>
+                    )}
+                  </div>
+                  <p>{(project.description || "").replace(/[*_#`]/g, "").slice(0, 110)}…</p>
+                  <div className="project-card-footer">
+                    <div className="project-card-tags">
+                      {project.technologies.slice(0, 3).map((t) => (
+                        <span key={t}>{t}</span>
+                      ))}
+                    </div>
+                    <span className="project-card-arrow">
+                      <ArrowUpRightIcon className="size-4" />
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Spotlight>
             </motion.div>
           );
         })}

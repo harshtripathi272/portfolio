@@ -42,6 +42,7 @@ export const metadata: Metadata = {
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SmoothScrollProvider } from "@/components/smooth-scroll";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 export default function RootLayout({
   children,
@@ -59,6 +60,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
           <SmoothScrollProvider>
+            <ScrollProgress />
             <div className="site-frame">
               <SiteHeader />
               <main>{children}</main>

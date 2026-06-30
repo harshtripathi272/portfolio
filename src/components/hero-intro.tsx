@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { MapPinIcon, ArrowUpRightIcon } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: EASE },
+  initial: { opacity: 0, y: 16, filter: "blur(8px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: { duration: 0.85, delay, ease: EASE },
 });
 
 export function HeroIntro() {
@@ -19,7 +20,8 @@ export function HeroIntro() {
         className="avatar-frame"
         initial={{ opacity: 0, scale: 0.85, filter: "blur(8px)" }}
         animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.8, ease: EASE }}
+        transition={{ duration: 0.9, ease: EASE }}
+        whileHover={{ scale: 1.04, rotate: 2 }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/me-circle.png" alt={DATA.name} />
@@ -44,26 +46,31 @@ export function HeroIntro() {
 
         {/* CTAs + socials */}
         <motion.div className="hero-actions" {...fadeUp(0.55)}>
-          <a href="/#projects" className="cta-button">
-            Explore Projects <ArrowUpRightIcon className="size-4" />
-          </a>
-          <a href={DATA.contact.social.email.url} className="ghost-button">
-            Get in touch
-          </a>
+          <Magnetic strength={0.4}>
+            <a href="/#projects" className="cta-button">
+              Explore Projects <ArrowUpRightIcon className="size-4" />
+            </a>
+          </Magnetic>
+          <Magnetic strength={0.4}>
+            <a href={DATA.contact.social.email.url} className="ghost-button">
+              Get in touch
+            </a>
+          </Magnetic>
           <span className="hero-socials">
             {Object.entries(DATA.contact.social)
               .filter(([, s]) => s.navbar)
               .map(([name, s]) => (
-                <a
-                  key={name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={name}
-                  className="hero-social-icon"
-                >
-                  <s.icon />
-                </a>
+                <Magnetic key={name} strength={0.5}>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={name}
+                    className="hero-social-icon"
+                  >
+                    <s.icon />
+                  </a>
+                </Magnetic>
               ))}
           </span>
         </motion.div>

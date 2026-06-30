@@ -4,8 +4,9 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Spotlight } from "@/components/ui/spotlight";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export interface ExpItem {
   logoUrl: string;
@@ -32,23 +33,25 @@ function AccordionRow({ item }: { item: ExpItem }) {
 
   return (
     <div className="acc-item">
-      <button
-        type="button"
-        className={cn("acc-head", open && "is-open")}
-        onClick={() => expandable && setOpen((v) => !v)}
-        aria-expanded={open}
-      >
-        <span className="acc-icon">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={item.logoUrl} alt={item.title} />
-        </span>
-        <span className="acc-meta">
-          <strong>{item.title}</strong>
-          <span>{item.subtitle}</span>
-        </span>
-        <span className="acc-period">{item.period}</span>
-        {expandable && <ChevronDownIcon className="acc-arrow size-4" />}
-      </button>
+      <Spotlight radius={280}>
+        <button
+          type="button"
+          className={cn("acc-head", open && "is-open")}
+          onClick={() => expandable && setOpen((v) => !v)}
+          aria-expanded={open}
+        >
+          <span className="acc-icon">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={item.logoUrl} alt={item.title} />
+          </span>
+          <span className="acc-meta">
+            <strong>{item.title}</strong>
+            <span>{item.subtitle}</span>
+          </span>
+          <span className="acc-period">{item.period}</span>
+          {expandable && <ChevronDownIcon className="acc-arrow size-4" />}
+        </button>
+      </Spotlight>
 
       <AnimatePresence initial={false}>
         {expandable && open && (

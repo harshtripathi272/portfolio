@@ -5,16 +5,15 @@ import { ExperienceAccordion } from "@/components/experience-accordion";
 import { ProjectsGrid } from "@/components/projects-grid";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/reveal";
 import { HeroIntro } from "@/components/hero-intro";
+import { HeroBand } from "@/components/hero-band";
 import { WhoamiSection } from "@/components/whoami-section";
+import { StatsDashboard } from "@/components/stats-dashboard";
 
 export default function Page() {
   return (
     <div>
       {/* ── Hero band ── */}
-      <section className="hero-band">
-        <div className="mesh-bg" />
-        <div className="dot-field" />
-      </section>
+      <HeroBand />
 
       {/* ── Profile row (animated) ── */}
       <HeroIntro />
@@ -38,6 +37,9 @@ export default function Page() {
           </StaggerItem>
         </Stagger>
       </section>
+
+      {/* ── Stats dashboard ── */}
+      <StatsDashboard />
 
       {/* ── Connect ── */}
       <section id="connect" className="content-section">

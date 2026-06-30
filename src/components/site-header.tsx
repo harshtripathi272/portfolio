@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { SunIcon, MoonIcon, MenuIcon, XIcon } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -17,32 +21,73 @@ const NAV = [
 export function SiteHeader() {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    document.documentElement.classList.add("is-theming");
+    setTheme(theme === "dark" ? "light" : "dark");
+    window.setTimeout(() => document.documentElement.classList.remove("is-theming"), 600);
+  };
 
   return (
-    <header className="site-header">
+    <motion.header
+      className={cn("site-header", scrolled && "is-scrolled")}
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: EASE }}
+    >
       <Link href="/" className="logo" aria-label="Home">
-        <img src="/me-circle.png" alt={DATA.name} />
+        <motion.img
+          src="/me-circle.png"
+          alt={DATA.name}
+          whileHover={{ rotate: 8, scale: 1.08 }}
+          transition={{ type: "spring", stiffness: 300, damping: 12 }}
+        />
         <span className="hidden sm:inline">{DATA.initials}</span>
       </Link>
 
-      <nav className={cn("nav", !open && "nav-links-desktop")}>
+      <nav className="nav nav-links-desktop">
         {NAV.map((item) => (
-          <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
+          <Link key={item.href} href={item.href}>
             {item.label}
           </Link>
         ))}
       </nav>
 
       <div className="header-actions">
-        <button
-          type="button"
-          className="icon-btn"
-          aria-label="Toggle theme"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          <SunIcon className="hidden size-4 dark:block" />
-          <MoonIcon className="block size-4 dark:hidden" />
-        </button>
+        <Magnetic>
+          <button
+            type="button"
+            className="icon-btn"
+            aria-label="Toggle theme"
+            onClick={toggleTheme}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {mounted && (
+                <motion.span
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                  style={{ display: "inline-flex" }}
+                >
+                  {theme === "dark" ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+        </Magnetic>
+
         <button
           type="button"
           className="icon-btn sm:hidden"
@@ -55,20 +100,35 @@ export function SiteHeader() {
       </div>
 
       {/* mobile dropdown */}
-      {open && (
-        <div className="absolute inset-x-0 top-full z-30 flex flex-col border-b border-[var(--line)] bg-[var(--bg)] p-4 sm:hidden">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="border-b border-[var(--line)] py-3 text-[var(--muted)] last:border-0"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      )}
-    </header>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="absolute inset-x-0 top-full z-30 flex flex-col border-b border-[var(--line)] bg-[var(--bg)] p-4 sm:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            style={{ overflow: "hidden" }}
+          >
+            {NAV.map((item, i) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * i, duration: 0.3, ease: EASE }}
+              >
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="block border-b border-[var(--line)] py-3 text-[var(--muted)]"
+                >
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }

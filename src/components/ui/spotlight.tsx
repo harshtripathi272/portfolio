@@ -1,30 +1,55 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import { useRef, useState, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-export function Spotlight() {
-  const spotlightRef = useRef<HTMLDivElement>(null);
+interface SpotlightProps {
+  children: ReactNode;
+  className?: string;
+  /** glow radius in px */
+  radius?: number;
+  /** accent color (defaults to css --accent) */
+  color?: string;
+}
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (spotlightRef.current) {
-      spotlightRef.current.style.setProperty("--x", `${e.clientX}px`);
-      spotlightRef.current.style.setProperty("--y", `${e.clientY}px`);
-    }
-  }, []);
+/**
+ * Cursor-tracking radial spotlight. A subtle glow follows the pointer
+ * across the surface — the signature Aceternity/Magic UI feel.
+ */
+export function Spotlight({
+  children,
+  className,
+  radius = 350,
+  color = "var(--accent)",
+}: SpotlightProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [active, setActive] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   return (
     <div
-      ref={spotlightRef}
-      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-      style={{
-        background:
-          "radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.03), transparent 40%)",
-      }}
-    />
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      className={cn("relative", className)}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
+        style={{
+          opacity: active ? 1 : 0,
+          background: `radial-gradient(${radius}px circle at ${pos.x}px ${pos.y}px, color-mix(in srgb, ${color} 14%, transparent), transparent 70%)`,
+        }}
+      />
+      <div style={{ display: "contents" }}>{children}</div>
+    </div>
   );
 }
