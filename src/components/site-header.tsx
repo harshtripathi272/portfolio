@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
-import { SunIcon, MoonIcon, MenuIcon, XIcon } from "lucide-react";
-import { Magnetic } from "@/components/ui/magnetic";
+import { MenuIcon, XIcon } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -20,26 +19,17 @@ const NAV = [
 ];
 
 export function SiteHeader() {
-  const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
-    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 30);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const toggleTheme = () => {
-    document.documentElement.classList.add("is-theming");
-    setTheme(theme === "dark" ? "light" : "dark");
-    window.setTimeout(() => document.documentElement.classList.remove("is-theming"), 600);
-  };
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href.replace("/#", "/"));
@@ -95,29 +85,7 @@ export function SiteHeader() {
       </nav>
 
       <div className="header-actions">
-        <Magnetic>
-          <button
-            type="button"
-            className="icon-btn"
-            aria-label="Toggle theme"
-            onClick={toggleTheme}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              {mounted && (
-                <motion.span
-                  key={theme}
-                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.35, ease: EASE }}
-                  style={{ display: "inline-flex" }}
-                >
-                  {theme === "dark" ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
-        </Magnetic>
+        <ThemeToggle />
 
         <button
           type="button"

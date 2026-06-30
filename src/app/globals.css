@@ -762,7 +762,21 @@ img { display: block; max-width: 100%; }
   display: inline-block;
 }
 
-/* ── Buttery theme transition ── */
+/* ── View Transitions theme reveal ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* New theme reveals on top via the JS clip-path animation */
+::view-transition-new(root) {
+  z-index: 9999;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+/* ── Buttery theme transition (fallback for no View Transitions) ── */
 html.is-theming,
 html.is-theming *,
 html.is-theming *::before,
