@@ -3,10 +3,10 @@ import { HomeIcon, NotebookIcon } from "lucide-react";
 
 export const DATA = {
   name: "Harsh Tripathi",
-  initials: "DV",
-  url: "https://dillion.io",
-  location: "",
-  locationLink: "https://www.google.com/maps/place/sanfrancisco",
+  initials: "HT",
+  url: "https://harshtripathi.dev",
+  location: "IIT Bhilai, India",
+  locationLink: "https://www.google.com/maps/place/IIT+Bhilai",
   description:
     "I transform ideas into functional, user-friendly products with cutting-edge technology. ",
   summary:

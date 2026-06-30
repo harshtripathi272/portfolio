@@ -64,7 +64,6 @@ export default function RootLayout({
             <div className="site-frame">
               <SiteHeader />
               <main>{children}</main>
-              <div className="divider" />
               <SiteFooter />
             </div>
           </SmoothScrollProvider>

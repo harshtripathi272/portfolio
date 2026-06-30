@@ -144,17 +144,6 @@ export default function Page() {
           </div>
         </Reveal>
       </section>
-
-      {/* ── CTA ── */}
-      <section className="cta-section">
-        <Reveal>
-          <h2>Let&apos;s build something.</h2>
-          <p className="cta-text">Have a project in mind or just want to say hi?</p>
-          <a href={DATA.contact.social.email.url} className="cta-button">
-            Get in touch →
-          </a>
-        </Reveal>
-      </section>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import { DATA } from "@/data/resume";
@@ -20,9 +21,11 @@ const NAV = [
 
 export function SiteHeader() {
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -38,6 +41,9 @@ export function SiteHeader() {
     window.setTimeout(() => document.documentElement.classList.remove("is-theming"), 600);
   };
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href.replace("/#", "/"));
+
   return (
     <motion.header
       className={cn("site-header", scrolled && "is-scrolled")}
@@ -52,15 +58,40 @@ export function SiteHeader() {
           whileHover={{ rotate: 8, scale: 1.08 }}
           transition={{ type: "spring", stiffness: 300, damping: 12 }}
         />
-        <span className="hidden sm:inline">{DATA.initials}</span>
+        <span className="logo-name hidden sm:inline">{DATA.name}</span>
       </Link>
 
-      <nav className="nav nav-links-desktop">
-        {NAV.map((item) => (
-          <Link key={item.href} href={item.href}>
-            {item.label}
-          </Link>
-        ))}
+      {/* Pill nav with sliding hover indicator */}
+      <nav
+        className="nav-pill nav-links-desktop"
+        onMouseLeave={() => setHovered(null)}
+      >
+        {NAV.map((item) => {
+          const active = isActive(item.href);
+          const showBg = hovered ? hovered === item.href : active;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onMouseEnter={() => setHovered(item.href)}
+              className={cn("nav-pill-link", active && "is-active")}
+            >
+              <AnimatePresence>
+                {showBg && (
+                  <motion.span
+                    layoutId="nav-pill-bg"
+                    className="nav-pill-bg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="nav-pill-text">{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
       <div className="header-actions">

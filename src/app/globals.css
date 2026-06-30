@@ -122,6 +122,45 @@ img { display: block; max-width: 100%; }
     gap: 10px;
   }
   .logo img { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+  .logo-name {
+    font-family: var(--font-mono), monospace;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Pill nav with sliding indicator ── */
+  .nav-pill {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 60%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .nav-pill-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.25s ease;
+  }
+  .nav-pill-link:hover,
+  .nav-pill-link.is-active { color: var(--text); }
+  .nav-pill-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .nav-pill-text { position: relative; z-index: 1; }
 
   .nav { display: flex; align-items: center; gap: 18px; color: var(--muted); }
   .nav a {
@@ -425,6 +464,69 @@ img { display: block; max-width: 100%; }
     padding: 22px 28px; color: var(--muted); font-size: 13px;
   }
   .site-footer .stack { display: flex; flex-direction: column; gap: 3px; }
+
+  /* ── Professional footer ── */
+  .site-footer-pro {
+    border-top: 1px solid var(--line);
+  }
+  .footer-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 72px 28px 56px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
+  }
+  .footer-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .footer-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 8px var(--green);
+  }
+  .footer-title {
+    margin: 0;
+    font-size: clamp(30px, 6vw, 56px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .footer-mail { margin-top: 6px; }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 28px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer-socials { display: flex; gap: 6px; }
+  .footer-social {
+    display: grid;
+    place-items: center;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1);
+  }
+  .footer-social svg { width: 16px; height: 16px; }
+  .footer-social:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    transform: translateY(-2px);
+  }
+  .footer-built { font-size: 12px; }
 
   /* Divider stripe */
   .divider {
