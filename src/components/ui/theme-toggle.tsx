@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import { SunIcon, MoonIcon } from "lucide-react";
-import { Magnetic } from "@/components/ui/magnetic";
+import { Magnetic } from "@/components/motion/magnetic";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
