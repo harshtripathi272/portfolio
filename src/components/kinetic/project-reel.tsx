@@ -11,11 +11,21 @@ import {
 import { ArrowUpRight } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { MaskText } from "@/components/motion/mask-text";
+import { Reveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 
 type Project = (typeof DATA.projects)[number];
 
-const PROJECTS = DATA.projects;
+const isFeatured = (p: Project) => "featured" in p && p.featured === true;
+
+// The kinetic reel shows a curated set; everything else lands in the archive
+// grid below. Fall back to the first 8 if nothing is tagged.
+const FEATURED = DATA.projects.filter(isFeatured);
+const REEL: readonly Project[] = FEATURED.length ? FEATURED : DATA.projects.slice(0, 8);
+const ARCHIVE: readonly Project[] = FEATURED.length
+  ? DATA.projects.filter((p) => !isFeatured(p))
+  : DATA.projects.slice(8);
+
 const pad = (n: number) => String(n).padStart(2, "0");
 
 const normalize = (src: string) =>
@@ -169,8 +179,8 @@ export function ProjectReel() {
 
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     const i = Math.min(
-      PROJECTS.length - 1,
-      Math.max(0, Math.round(p * (PROJECTS.length - 1)))
+      REEL.length - 1,
+      Math.max(0, Math.round(p * (REEL.length - 1)))
     );
     setActive(i);
   });
@@ -190,45 +200,97 @@ export function ProjectReel() {
   // outerRef stays attached so useScroll always has a live target.
   if (!horizontal) {
     return (
-      <section ref={outerRef} className="section" id="projects">
-        {head}
-        <div className="reel-stack">
-          {PROJECTS.map((p, i) => (
-            <Card key={p.title} project={p} index={i} active={false} autoActivate />
-          ))}
-        </div>
-      </section>
+      <>
+        <section ref={outerRef} className="section" id="projects">
+          {head}
+          <div className="reel-stack">
+            {REEL.map((p, i) => (
+              <Card key={p.title} project={p} index={i} active={false} autoActivate />
+            ))}
+          </div>
+        </section>
+        <Archive />
+      </>
     );
   }
 
   return (
-    <section
-      ref={outerRef}
-      id="projects"
-      className="reel"
-      // Scroll length = one viewport to pin + however far the track must travel.
-      style={{ height: `calc(100svh + ${distance}px)` }}
-    >
-      <div className="reel-sticky">
-        {head}
+    <>
+      <section
+        ref={outerRef}
+        id="projects"
+        className="reel"
+        // Scroll length = one viewport to pin + however far the track must travel.
+        style={{ height: `calc(100svh + ${distance}px)` }}
+      >
+        <div className="reel-sticky">
+          {head}
 
-        <motion.div ref={trackRef} className="reel-track" style={{ x }}>
-          {PROJECTS.map((p, i) => (
-            <Card key={p.title} project={p} index={i} active={i === active} />
-          ))}
-          <div className="reel-spacer" aria-hidden />
-        </motion.div>
+          <motion.div ref={trackRef} className="reel-track" style={{ x }}>
+            {REEL.map((p, i) => (
+              <Card key={p.title} project={p} index={i} active={i === active} />
+            ))}
+            <div className="reel-spacer" aria-hidden />
+          </motion.div>
 
-        <div className="reel-progress">
-          <span>{pad(active + 1)}</span>
-          <div className="reel-rail">
-            <motion.div
-              className="reel-rail-fill"
-              style={{ scaleX: fill, transformOrigin: "left" }}
-            />
-            <motion.span className="reel-rail-knob" style={{ left: knob }} />
+          <div className="reel-progress">
+            <span>{pad(active + 1)}</span>
+            <div className="reel-rail">
+              <motion.div
+                className="reel-rail-fill"
+                style={{ scaleX: fill, transformOrigin: "left" }}
+              />
+              <motion.span className="reel-rail-knob" style={{ left: knob }} />
+            </div>
+            <span>{pad(REEL.length)}</span>
           </div>
-          <span>{pad(PROJECTS.length)}</span>
+        </div>
+      </section>
+      <Archive />
+    </>
+  );
+}
+
+/** Compact grid of every non-featured project, below the reel. */
+function Archive() {
+  if (ARCHIVE.length === 0) return null;
+
+  return (
+    <section className="section" id="archive">
+      <div className="shell">
+        <p className="eyebrow">
+          <span className="eyebrow-num">01b</span> Everything else · {ARCHIVE.length}
+        </p>
+        <div className="archive-grid">
+          {ARCHIVE.map((p, i) => {
+            const primary = p.links?.[0];
+            const href =
+              (p.href && p.href !== "#" && p.href) || primary?.href || undefined;
+            const Tag = href ? "a" : "div";
+            return (
+              <Reveal key={p.title} delay={(i % 3) * 0.05}>
+                <Tag
+                  {...(href
+                    ? { href, target: "_blank", rel: "noreferrer" }
+                    : {})}
+                  className="archive-card"
+                >
+                  <div className="archive-top">
+                    <h3>{p.title}</h3>
+                    {href && <ArrowUpRight className="size-4 archive-arrow" />}
+                  </div>
+                  <p className="archive-desc">{clean(p.description)}</p>
+                  <div className="archive-tags">
+                    {p.technologies.slice(0, 3).map((t) => (
+                      <span className="tag" key={t}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </Tag>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
