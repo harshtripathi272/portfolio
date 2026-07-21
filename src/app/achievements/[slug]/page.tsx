@@ -2,7 +2,7 @@ import { DATA } from "@/data/resume";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import BlurFade from "@/components/magicui/blur-fade";
+import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 
 const BLUR_FADE_DELAY = 0.04;
@@ -106,7 +106,7 @@ const PerforatedAIContent = () => (
       <div className="overflow-x-auto rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="border-b border-border/30 bg-purple-500/5">
+            <tr className="border-b border-border/30 bg-accent/5">
               <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Metric</th>
               <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">100% Data</th>
               <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">50% Data</th>
@@ -120,15 +120,15 @@ const PerforatedAIContent = () => (
             </tr>
             <tr className="border-b border-border/20">
               <td className="px-5 py-3 font-medium text-sm">With Dendrites mAP50</td>
-              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">56.60</td>
-              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">52.45</td>
+              <td className="px-5 py-3 text-center text-sm text-accent font-bold">56.60</td>
+              <td className="px-5 py-3 text-center text-sm text-accent font-bold">52.45</td>
             </tr>
-            <tr className="border-b border-border/20 bg-purple-500/5">
+            <tr className="border-b border-border/20 bg-accent/5">
               <td className="px-5 py-3 font-medium text-sm">Absolute Improvement</td>
-              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">+2.30</td>
-              <td className="px-5 py-3 text-center text-sm text-emerald-400 font-bold">+2.90</td>
+              <td className="px-5 py-3 text-center text-sm text-accent font-bold">+2.30</td>
+              <td className="px-5 py-3 text-center text-sm text-accent font-bold">+2.90</td>
             </tr>
-            <tr className="bg-purple-500/5">
+            <tr className="bg-accent/5">
               <td className="px-5 py-3 font-medium text-sm">Remaining Error Reduced</td>
               <td className="px-5 py-3 text-center text-sm">5.03%</td>
               <td className="px-5 py-3 text-center text-sm">5.75%</td>
@@ -368,19 +368,19 @@ export default async function AchievementPage({
   return (
     <main className="content-section page-fade">
       <section className="w-full max-w-3xl mx-auto">
-        <BlurFade delay={BLUR_FADE_DELAY}>
+        <Reveal delay={BLUR_FADE_DELAY}>
           <Link
             href="/#achievements"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 hover:text-purple-400 mb-6 transition-colors duration-300 group"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/70 hover:text-accent mb-6 transition-colors duration-300 group"
           >
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Achievements
           </Link>
-        </BlurFade>
+        </Reveal>
 
-        <BlurFade delay={BLUR_FADE_DELAY * 2}>
+        <Reveal delay={BLUR_FADE_DELAY * 2}>
           <div className="flex items-center gap-5 mb-8">
-            <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
+            <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/10 to-blue-500/10 border border-accent/20">
               <span className="text-4xl">{achievement.icon}</span>
             </div>
             <div>
@@ -390,9 +390,9 @@ export default async function AchievementPage({
               <p className="text-muted-foreground/70 text-sm uppercase tracking-wider mt-1">{achievement.date}</p>
             </div>
           </div>
-        </BlurFade>
+        </Reveal>
 
-        <BlurFade delay={BLUR_FADE_DELAY * 3}>
+        <Reveal delay={BLUR_FADE_DELAY * 3}>
           <div className="rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl p-6 sm:p-8 space-y-6">
             {/* Event Details */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -406,7 +406,7 @@ export default async function AchievementPage({
                 <h3 className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
                   Placement
                 </h3>
-                <p className="font-semibold text-sm text-emerald-400">
+                <p className="font-semibold text-sm text-accent">
                   {achievement.details.placement}
                 </p>
               </div>
@@ -439,7 +439,7 @@ export default async function AchievementPage({
                     <Badge
                       key={tech}
                       variant="secondary"
-                      className="px-3 py-1 text-[11px] font-medium bg-purple-500/8 text-purple-300/80 border border-purple-500/15"
+                      className="px-3 py-1 text-[11px] font-medium bg-accent/8 text-accent/80 border border-accent/15"
                     >
                       {tech}
                     </Badge>
@@ -462,7 +462,7 @@ export default async function AchievementPage({
                         href={achievement.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-accent/30 hover:bg-accent/10 px-4 py-2.5 rounded-xl transition-all duration-300"
                       >
                         <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -475,7 +475,7 @@ export default async function AchievementPage({
                         href={achievement.links.pr}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-accent/30 hover:bg-accent/10 px-4 py-2.5 rounded-xl transition-all duration-300"
                       >
                         <svg className="size-4" viewBox="0 0 16 16" fill="currentColor">
                           <path fillRule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"/>
@@ -488,7 +488,7 @@ export default async function AchievementPage({
                         href={achievement.links.devpost}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/10 px-4 py-2.5 rounded-xl transition-all duration-300"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-white/5 border border-white/10 hover:border-accent/30 hover:bg-accent/10 px-4 py-2.5 rounded-xl transition-all duration-300"
                       >
                         <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M6.002 1.61L0 12.004L6.002 22.39h11.996L24 12.004L17.998 1.61H6.002zm1.593 4.084h3.947c3.605 0 6.276 1.695 6.276 6.31c0 4.436-3.21 6.302-6.456 6.302H7.595V5.694zm2.517 2.449v7.714h1.241c2.646 0 3.862-1.55 3.862-3.861c.009-2.569-1.096-3.853-3.767-3.853H10.112z"/>
@@ -501,7 +501,7 @@ export default async function AchievementPage({
                         href={achievement.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 hover:border-purple-500/50 px-4 py-2.5 rounded-xl transition-all duration-300"
+                        className="inline-flex items-center gap-2 text-xs font-medium bg-gradient-to-r from-accent/20 to-blue-500/20 border border-accent/30 hover:border-accent/50 px-4 py-2.5 rounded-xl transition-all duration-300"
                       >
                         <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -514,24 +514,24 @@ export default async function AchievementPage({
               </>
             )}
           </div>
-        </BlurFade>
+        </Reveal>
 
         {/* Detailed Content for Perforated AI */}
         {isPerforatedAI && (
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
+          <Reveal delay={BLUR_FADE_DELAY * 4}>
             <div className="mt-10">
               <PerforatedAIContent />
             </div>
-          </BlurFade>
+          </Reveal>
         )}
 
         {/* Detailed Content for SafeWander */}
         {isSafeWander && (
-          <BlurFade delay={BLUR_FADE_DELAY * 4}>
+          <Reveal delay={BLUR_FADE_DELAY * 4}>
             <div className="mt-10">
               <SafeWanderContent />
             </div>
-          </BlurFade>
+          </Reveal>
         )}
       </section>
     </main>

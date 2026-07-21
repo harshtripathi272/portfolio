@@ -124,6 +124,7 @@ export const DATA = {
   projects: [
     {
       title: "BHC (Balaji Health Care) Business Suite",
+      featured: true,
       href: "https://bhcmp.store",
       dates: "Jul 2025 - Aug 2025",
       active: true,
@@ -171,6 +172,7 @@ export const DATA = {
     },
     {
       title: "YOLOv11n with Dendritic Optimization",
+      featured: true,
       href: "#",
       dates: "Perforated AI Hackathon",
       active: true,
@@ -191,6 +193,7 @@ export const DATA = {
     },
     {
       title: "OffPay - Offline UPI Payment System",
+      featured: true,
       href: "#",
       dates: "Oct 2025 - Nov 2025",
       active: true,
@@ -227,6 +230,7 @@ export const DATA = {
     },
     {
       title: "Roast Your Base",
+      featured: true,
       href: "https://roastyourcocbase.vercel.app/",
       dates: "July 2025",
       active: true,
@@ -313,6 +317,7 @@ export const DATA = {
     },
     {
       title: "Lunor Translator (DRDO Internship)",
+      featured: true,
       href: "#",
       dates: "May 2025 - Jul 2025",
       active: true,
@@ -364,6 +369,517 @@ export const DATA = {
       links: [],
       image: "",
       video: "lung_demo.mp4",
+    },
+    {
+      title: "FlowSpeak - Live Presenter Co-Pilot",
+      featured: true,
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "An always-on-top overlay that answers audience questions for you mid-presentation. A four-agent pipeline — Listener (Groq Whisper), Watcher & Synthesizer & Critic (Gemma 4 on Cerebras) — hears a question, generates the right visual (diagram, table, timeline, bullets or code) grounded in your own material, and floats it over your screen with sub-second first paint. The Critic runs off the critical path so visuals appear instantly and self-correct in the background.",
+      technologies: [
+        "TypeScript",
+        "Groq (Whisper large-v3-turbo)",
+        "Gemma 4 31B",
+        "Cerebras",
+        "Multi-Agent Systems",
+        "RAG",
+        "Electron/Overlay UI",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/FlowSpeaks",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "memora - Memory Layer for AI Agents",
+      featured: true,
+      href: "https://pypi.org/project/memora-cli/",
+      dates: "2026",
+      active: true,
+      description:
+        "A typed, version-controlled, provenance-tracked memory store for AI coding agents, written in Rust. memora gives every agent a durable, queryable, shareable trace of what it believes about your project, where each belief came from, and how trustworthy it is. Commit beliefs like code, branch before risky experiments, roll back when the agent goes wrong, replay a session step-by-step, and export to Claude Code, Cursor, Cline, or OpenHands. Published on PyPI as memora-cli.",
+      technologies: [
+        "Rust",
+        "PyPI (memora-cli)",
+        "CLI Tooling",
+        "Version Control",
+        "AI Agent Infrastructure",
+      ],
+      links: [
+        {
+          type: "PyPI",
+          href: "https://pypi.org/project/memora-cli/",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/memora",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Reverie - Cognitive Observability for AI Agents",
+      href: "https://pypi.org/project/reverie-obs/",
+      dates: "2026",
+      active: true,
+      description:
+        "Chrome DevTools for AI agents — cognitive observability, replay, and comparative debugging for autonomous agents. Reverie captures every cognitive event as an inspectable node, renders them in a 3D orb world where each orb is a thought and every connection a causal link, and lets you click any event to inspect its full payload (tool, inputs, outputs, token cost, latency) and annotate it to steer the next run. Published on PyPI as reverie-obs with 431 passing tests.",
+      technologies: [
+        "Python",
+        "Node.js",
+        "PyPI (reverie-obs)",
+        "OpenTelemetry",
+        "Three.js (3D Explorer)",
+        "AI Agent Observability",
+      ],
+      links: [
+        {
+          type: "PyPI",
+          href: "https://pypi.org/project/reverie-obs/",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/Reverie",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "OnCall AI - AI On-Call Engineer",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "An AI on-call engineer for teams without a dedicated SRE, built as a Lemma pod. OnCall AI monitors alerts, triages incidents, investigates root causes, safely applies auto-remediations based on configured runbooks, and generates blameless postmortems — keeping the engineering team updated in real time via Slack or Telegram. Spans typed tables, AI agent personas (responder, analyst, postmortem writer), durable workflows, functions, schedules, and dashboards.",
+      technologies: [
+        "Lemma Platform",
+        "Python",
+        "Multi-Agent Systems",
+        "Slack / Telegram Connectors",
+        "Incident Response Automation",
+        "Runbook-Driven Remediation",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/lemma-dev-ops",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "SevaSetu - Crisis Response Platform",
+      href: "#",
+      dates: "Google Solution Challenge 2026",
+      active: true,
+      description:
+        "A crisis-response and volunteer coordination platform that bridges the gap between affected communities and relief workers during disasters. Using AI-powered fuzzy crisis validation (10km / 2hr matching), real-time geolocation, and intelligent volunteer allocation by skills and proximity, SevaSetu enables rapid, effective disaster response. Built for the Google Solution Challenge 2026, aligned with SDGs 3, 11, 13, and 17.",
+      technologies: [
+        "AI Fuzzy Matching",
+        "Real-Time Geolocation",
+        "Volunteer Allocation",
+        "Full-Stack",
+        "Google Solution Challenge",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/Solution",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "VesselWatch - Oil Spill Detection System",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A production-grade, end-to-end environmental monitoring system that detects and validates potential oil spills by fusing real-time vessel traffic (AIS) data with satellite Synthetic Aperture Radar (SAR) imagery. VesselWatch ingests live ship positions from global AIS streams, runs them through a deep-learning anomaly detector, and automatically triggers Sentinel-1 SAR validation via Apache Airflow — enabling rapid, all-weather response to maritime environmental threats through a decoupled, event-driven Kafka pipeline.",
+      technologies: [
+        "Python",
+        "Apache Kafka",
+        "Apache Airflow",
+        "Sentinel-1 SAR",
+        "AIS Data Streams",
+        "Deep Learning (Anomaly Detection)",
+        "Event-Driven Architecture",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/oil-spill-detection",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "VERIFAI - Verified Evidence-Based Radiology AI",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A multi-agent AI system for chest X-ray interpretation that produces clinically trustworthy, evidence-backed diagnoses with built-in safety guardrails, adversarial debate, and human-in-the-loop review. VERIFAI orchestrates nine specialized agents through a LangGraph state machine to analyze chest X-rays, cross-reference patient history and medical literature, debate diagnostic uncertainty via a Monotonic Uncertainty Cascade, and produce auditable diagnoses — all runnable on a single A100 / 24GB+ GPU.",
+      technologies: [
+        "Python",
+        "PyTorch",
+        "LangGraph",
+        "MedGemma-4B-IT",
+        "Next.js",
+        "Multi-Agent Systems",
+        "CUDA",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/VERIFAI",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "SafeWander - Dementia Patient Monitoring",
+      featured: true,
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A full-stack application for monitoring and ensuring the safety of dementia patients through real-time tracking, intelligent alerts, and emergency response. SafeWander offers intelligent geofencing with automatic safe-zone alerts, a multi-level escalating alert system, an emergency mode for missing patients, detailed patient profiles, and live interactive map tracking with reports and analytics.",
+      technologies: [
+        "Next.js 15",
+        "TypeScript",
+        "FastAPI",
+        "SQLAlchemy",
+        "Leaflet.js",
+        "Tailwind CSS",
+        "shadcn/ui",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/Safe-Wander",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "EcoVoice - Acoustic Biodiversity Monitor",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A mobile app and backend that bridges acoustic monitoring and conservation action. By integrating BirdNET for bird-song identification and Claude for narrative synthesis, EcoVoice lets users listen to the heartbeat of an ecosystem, identify threatened species, and take immediate action through NGO alerts and Traditional Ecological Knowledge observations. Features real-time acoustic fingerprinting, ecosystem-health visualization, and interactive species mapping.",
+      technologies: [
+        "React Native (Expo)",
+        "FastAPI",
+        "BirdNET",
+        "Claude",
+        "Zustand",
+        "Docker",
+        "iNaturalist API",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/EcoVoice",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "MERAZ 6.0 - Techno-Cultural Fest Portal",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "The official web portal for Meraz 6.0, IIT Bhilai's techno-cultural festival (Steampunk: Gears of Glory theme). Features a 3D interactive mascot, event registration, and a fully realized steampunk aesthetic, backed by Firebase authentication and Firestore.",
+      technologies: [
+        "Next.js 15",
+        "Tailwind CSS v4",
+        "Framer Motion",
+        "React Three Fiber",
+        "Drei",
+        "Firebase",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/harshtripathi272/meraz",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Dia - Offline On-Device AI Companion",
+      href: "#",
+      dates: "Gemma Hackathon 2026",
+      active: true,
+      description:
+        "A complete on-device AI companion for Android, powered by Google's Gemma 4 running through LiteRT-LM. Dia delivers eight AI experiences — chat, vision, automation, on-screen guidance, handwriting, voice, smart-home control, and a floating bubble — all sharing one local model with no cloud, no account, and no bill. Built for people and places the cloud can't reach. Submitted to the Gemma 4 Good Hackathon.",
+      technologies: [
+        "Kotlin",
+        "Android",
+        "Gemma 4",
+        "LiteRT-LM",
+        "On-Device ML",
+        "Offline-First",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/dia",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Asfalis - AI-Powered Security Monitor",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "Turns a laptop webcam into an intelligent security camera. Asfalis watches a live feed, understands scenes with Gemma on Cerebras (1500+ tok/s), records meaningful events to a searchable timeline, sends Telegram alerts with snapshots, and answers questions about what happened — by text or voice — in plain English. Includes a live dashboard with detection overlays, schedule/context rules to suppress false positives, and a Cerebras-vs-other-provider speed benchmark.",
+      technologies: [
+        "Python",
+        "Gemma",
+        "Cerebras",
+        "WebSockets",
+        "Telegram Bot API",
+        "Speech-to-Text",
+        "Computer Vision",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/securitycam",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "ClinicalPilot - Multi-Agent Clinical Support",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A multi-agent clinical decision support system driven by debate-based reasoning. Three specialized agents — Clinical, Literature, and Safety — argue through 2-3 adversarial rounds with a Critic, then a Synthesizer merges their output into a structured SOAP note while a Medical Error Prevention Panel catches drug interactions and dosing issues in parallel. Supports emergency ESI triage, FHIR R4 / EHR uploads, and PHI anonymization via Presidio before anything reaches an LLM.",
+      technologies: [
+        "Python",
+        "FastAPI",
+        "Multi-Agent Debate",
+        "FHIR R4",
+        "RxNorm / DrugBank",
+        "Microsoft Presidio",
+        "PubMed Retrieval",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/ClinicalPilot",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Collections Agent - AR Follow-Up Automation",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "An AI accounts-receivable desk built as a Lemma pod. It watches overdue invoices, writes the right follow-up for each account at the correct escalation level, sends the safe ones on its own, and routes the sensitive ones to a human — with a full audit trail, live team chat, and a daily stats digest. Built end-to-end on Lemma: typed tables, Python functions, LLM agents, a durable per-invoice workflow, event and time schedules, Slack/Sheets/Gmail connectors, and a single-file operator app.",
+      technologies: [
+        "Lemma Platform",
+        "Python",
+        "LLM Agents",
+        "RAG",
+        "Gmail / Slack / Google Sheets",
+        "Workflow Automation",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/followup-lemma",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Fake Dataset Factory - Synthetic Medical Imaging",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A synthetic chest X-ray generation tool that tests and compares six generative architectures spanning 2014-2022. Users pick a model, a class (Normal / Pneumonia), and a count, and the tool outputs a ready-to-use labeled dataset (images, labels.csv, metrics.json) — then honestly measures whether the synthetic data is actually good by evaluating each model individually. Built as a GenAI course project addressing the cost, privacy, and class-imbalance problems of real medical data.",
+      technologies: [
+        "Python",
+        "Generative Models (GAN/VAE/Diffusion)",
+        "PyTorch",
+        "Jupyter",
+        "Synthetic Data Evaluation",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/Fake-Dataset-Factory",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Recapture Detection",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "An exploratory research project experimenting with methods to detect screen recaptures — images or videos that have been re-photographed off a display — a key signal for anti-spoofing and media authenticity verification.",
+      technologies: [
+        "Python",
+        "Computer Vision",
+        "Image Forensics",
+        "Anti-Spoofing",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/laksh-ya/recap-analysis",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "SoilStack - Biochar Carbon Credit Marketplace",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A mobile platform connecting Indian farmers to corporate carbon markets through biochar-based carbon removal credits. Instead of burning crop residue, farmers convert it into biochar and bury it in their fields — sequestering carbon permanently, improving soil fertility, and generating verifiable removal credits companies can buy. SoilStack handles the full pipeline: farmer submission, multi-layer verification, credit issuance, and payment — turning a pollution problem into an income stream.",
+      technologies: [
+        "TypeScript",
+        "Mobile Platform",
+        "Carbon Credit Verification",
+        "Geospatial Data",
+        "Full-Stack",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/KrishRaghuwanshi/soilstack",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "RootCause - AI Intent Tracking & Code Provenance",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A local-first, privacy-focused system that answers the question 'why did I write this code?' with real evidence. RootCause captures your AI prompts (ChatGPT, Claude) and automatically links them to the code you write, preserving the intent behind each change. Delivered as a VS Code extension backed by a local service.",
+      technologies: [
+        "TypeScript",
+        "React",
+        "VS Code Extension API",
+        "Local-First Architecture",
+        "Code Provenance",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/KrishRaghuwanshi/Mile",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "FlakeForge - OpenEnv Environment Server",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A containerized OpenEnv-compatible environment server for reproducible agent/ML evaluation, packaged as a Docker service exposing a FastAPI application. Designed to standardize how environments are provisioned and served for training and benchmarking workloads.",
+      technologies: [
+        "Python",
+        "Docker",
+        "FastAPI",
+        "OpenEnv",
+        "Reproducible Environments",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/aayush2789/FlakeForge",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      title: "PII Redaction Env",
+      href: "#",
+      dates: "2026",
+      active: true,
+      description:
+        "A containerized OpenEnv service for redacting personally identifiable information from text, packaged as a Docker application exposing a FastAPI endpoint. Built to provide a standardized, reproducible environment for privacy-preserving data processing and safety evaluation pipelines.",
+      technologies: [
+        "Python 3.12",
+        "Docker",
+        "FastAPI",
+        "OpenEnv",
+        "PII Redaction",
+      ],
+      links: [
+        {
+          type: "Github",
+          href: "https://github.com/aayush2789/pii_redaction_env",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
     },
     // {
     //   title: "Chat Collect",
