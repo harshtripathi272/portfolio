@@ -77,6 +77,7 @@ export default function RootLayout({
         >
           <Preloader />
           <Cursor />
+          <div className="grain" aria-hidden />
           <SmoothScrollProvider>
             <SiteHeader />
             <main>{children}</main>

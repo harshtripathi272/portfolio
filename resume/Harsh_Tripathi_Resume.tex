@@ -1,0 +1,191 @@
+%-------------------------------------------------------------------------------
+% Harsh Tripathi --- Resume
+% ATS-friendly single-column template (based on Jake Gutierrez's template, MIT).
+% Compile with: pdflatex Harsh_Tripathi_Resume.tex   (run twice for links)
+%-------------------------------------------------------------------------------
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+% Load pdftex-only glyph mapping for ATS text extraction; skipped under xetex.
+\ifdefined\pdfgentounicode
+  \input{glyphtounicode}
+\fi
+
+% ---------- Page geometry ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.2in}
+\addtolength{\topmargin}{-.8in}
+\addtolength{\textheight}{1.55in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% ---------- Section formatting (standard headers = ATS friendly) ----------
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure PDF text is machine-readable (critical for ATS parsing).
+\ifdefined\pdfgentounicode
+  \pdfgentounicode=1
+\fi
+
+% ---------- Custom commands ----------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%===============================================================================
+\begin{document}
+
+% ---------- Heading ----------
+\begin{center}
+    {\Huge \scshape Harsh Tripathi} \\ \vspace{3pt}
+    \small
+    +91-9201479878 $|$
+    \href{mailto:harsht@iitbhilai.ac.in}{\underline{harsht@iitbhilai.ac.in}} $|$
+    \href{https://www.linkedin.com/in/harsh-tripathi-433393320/}{\underline{linkedin.com/in/harsh-tripathi}} $|$
+    \href{https://github.com/harshtripathi272}{\underline{github.com/harshtripathi272}} $|$
+    IIT Bhilai, India
+\end{center}
+
+% ---------- Education ----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Indian Institute of Technology (IIT) Bhilai}{2023 -- 2027}
+      {Bachelor of Technology in Electrical Engineering}{Chhattisgarh, India}
+  \resumeSubHeadingListEnd
+
+% ---------- Experience ----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Software Engineer Intern (Backend)}{2026 -- Present}
+      {Suvir AI}{Remote} % TODO: confirm dates / location
+      \resumeItemListStart
+        \resumeItem{Building the backend for an AI \textbf{agentic browser} that autonomously performs end-to-end \textbf{web application testing (QA)} for companies, replacing manually written test scripts.}
+        \resumeItem{Developing scalable, event-driven backend services and APIs that drive an \textbf{LLM agent} to navigate, interact with, and validate web UIs, then report failures with reproducible traces.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Research Intern}{May 2025 -- July 2025}
+      {Defence Research and Development Organisation (DRDO)}{India}
+      \resumeItemListStart
+        \resumeItem{Built \href{https://github.com/harshtripathi272/lunor}{\underline{\textbf{Lunor}}}, a fully offline, cross-platform neural machine translation desktop app (Rust/Tauri front end + Python/FastAPI backend) serving Meta's \textbf{NLLB-200} model.}
+        \resumeItem{Achieved a \textbf{BLEU score of 25.02} on Burmese$\rightarrow$English, \textbf{2.7$\times$} Google Translate's 9.14 baseline; benchmarked MarianMT, Argos, and LibreTranslate across Hindi, Chinese, and Burmese.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Machine Learning Engineer --- Explainable AI Trading System}{Nov 2025 -- Dec 2025}
+      {Inter-IIT Tech Meet}{India}
+      \resumeItemListStart
+        \resumeItem{Built a real-time algorithmic trading platform using \textbf{PPO reinforcement learning}, achieving a \textbf{22.3\% return} and ranking \textbf{12th among 23 IITs}.}
+        \resumeItem{Engineered a streaming data pipeline with \textbf{Pathway} and \textbf{Redis Streams}, and a multi-agent LLM \textbf{Bull-vs-Bear} debate for explainable trade decisions.}
+      \resumeItemListEnd
+
+    % --- OPTIONAL: uncomment to include your current IIT Bhilai research role ---
+    % \resumeSubheading
+    %   {Research Intern --- Railway Drone Project}{Aug 2025 -- Present}
+    %   {Indian Institute of Technology (IIT) Bhilai}{India}
+    %   \resumeItemListStart
+    %     \resumeItem{Developing and training YOLO models for a real-time railway alert system from drone imagery, optimized for edge deployment on the NVIDIA Jetson Orin Nano.}
+    %     \resumeItem{Owning the end-to-end pipeline from model development to on-device implementation.}
+    %   \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+% ---------- Projects ----------
+\section{Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+        {\textbf{VERIFAI --- Verified Evidence-Based Radiology AI} $|$ \emph{Python, PyTorch, LangGraph, MedGemma-4B, Next.js}}{\href{https://github.com/harshtripathi272/VERIFAI}{\underline{GitHub}}}
+        \resumeItemListStart
+          \resumeItem{Engineered a \textbf{9-agent} chest X-ray diagnosis system orchestrated on a \textbf{LangGraph} state machine, with safety guardrails, adversarial agent debate, and human-in-the-loop review.}
+          \resumeItem{Designed a \textbf{Monotonic Uncertainty Cascade} to quantify and propagate diagnostic uncertainty, cross-referencing patient history and medical literature to produce auditable, evidence-backed diagnoses on a single 24GB GPU.}
+        \resumeItemListEnd
+
+      \resumeProjectHeading
+        {\textbf{YOLOv11n with Dendritic Optimization} $|$ \emph{Python, PyTorch, Ultralytics, PerforatedAI}}{\href{https://github.com/PerforatedAI/PerforatedAI/tree/main/Examples/baseExamples/yolo-pascal}{\underline{GitHub}}}
+        \resumeItemListStart
+          \resumeItem{Integrated PerforatedAI dendritic optimization into a custom YOLOv11n/Ultralytics training loop with adaptive plateau detection for optimal dendrite addition.}
+          \resumeItem{Improved detection accuracy by \textbf{+2.30 mAP50} (100\% data) and \textbf{+2.90 mAP50} (50\% data) over baseline; work was adopted as an official base example in PerforatedAI's open-source repository.}
+        \resumeItemListEnd
+
+      \resumeProjectHeading
+        {\textbf{VesselWatch --- Oil Spill Detection System} $|$ \emph{Python, Apache Kafka, Apache Airflow, Sentinel-1 SAR}}{\href{https://github.com/harshtripathi272/oil-spill-detection}{\underline{GitHub}}}
+        \resumeItemListStart
+          \resumeItem{Built a production-grade, event-driven pipeline that fuses live \textbf{AIS} vessel-traffic streams with satellite \textbf{Synthetic Aperture Radar (SAR)} imagery to detect and validate potential oil spills.}
+          \resumeItem{Orchestrated a deep-learning anomaly detector with \textbf{Kafka} and \textbf{Airflow} to auto-trigger Sentinel-1 satellite validation, enabling rapid, all-weather maritime environmental response.}
+        \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+% ---------- Achievements ----------
+\section{Achievements}
+  \begin{itemize}[leftmargin=0.28in, itemsep=1pt, topsep=2pt, parsep=0pt]
+    \small
+      \item \textbf{\href{https://offpay.vercel.app}{\underline{OffPay}} (Offline UPI Payments):} Drove \textbf{200K+ impressions}, \textbf{1,000+ upvotes}, and \textbf{420+ downloads} from a community product launch.
+      \item \textbf{Finalist, Meta PyTorch OpenEnv Hackathon} --- selected among \textbf{800 finalist teams} from \textbf{31,000+ registrations} (Meta $\cdot$ PyTorch $\cdot$ Hugging Face), for a PII-redaction environment.
+      \item \textbf{1st Place / 957 participants} --- Student Innovators Without Borders Hacks, for \emph{SafeWander}, a dementia-patient monitoring system.
+      \item \textbf{1st Place / 693 participants} --- International Hackathon by Perforated AI; submission adopted as an official base example in PerforatedAI's open-source repository.
+      \item \textbf{Lemma AI Hackathon:} Secured \textbf{two winning positions (6th and 11th)} out of \textbf{450 submissions}, among 11 total winners.
+  \end{itemize}\vspace{-5pt}
+
+% ---------- Technical Skills ----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages:} Python, TypeScript, JavaScript, Go, Rust, C++, Java, SQL \\ \vspace{2pt}
+     \textbf{AI / ML:} PyTorch, LangGraph, LangChain, RAG, LLMs, Multi-Agent Systems, Reinforcement Learning (PPO), Computer Vision, YOLO/Ultralytics, Hugging Face Transformers \\ \vspace{2pt}
+     \textbf{Backend \& Data:} FastAPI, Node.js, Apache Kafka, Apache Airflow, Redis, PostgreSQL, Qdrant, SQLAlchemy \\ \vspace{2pt}
+     \textbf{Web \& DevOps:} React, Next.js, Tailwind CSS, Docker, Kubernetes, AWS (EC2), Git, Linux, CI/CD
+    }}
+ \end{itemize}
+
+\end{document}

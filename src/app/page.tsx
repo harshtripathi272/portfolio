@@ -1,6 +1,7 @@
 import { Hero } from "@/components/kinetic/hero";
 import { SkillMarquee } from "@/components/kinetic/marquee";
 import { ProjectReel } from "@/components/kinetic/project-reel";
+import { ProjectModalProvider } from "@/components/kinetic/project-modal";
 import { WorkList } from "@/components/kinetic/work-list";
 import { Awards } from "@/components/kinetic/awards";
 import { Stats } from "@/components/kinetic/stats";
@@ -32,7 +33,9 @@ export default function Page() {
       </section>
 
       <Stats />
-      <ProjectReel />
+      <ProjectModalProvider>
+        <ProjectReel />
+      </ProjectModalProvider>
       <WorkList />
       <Awards />
       <Contact />

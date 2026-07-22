@@ -452,12 +452,85 @@ section[id] {
 }
 /* A <canvas> is a replaced element: with `inset:0` and `width:auto` it resolves
    to its intrinsic 300x150 rather than stretching. The explicit 100% is load-bearing. */
+/* Animated gradient backdrop sits furthest back; dots + vignette layer over it. */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  --mx: 50%;
+  --my: 40%;
+}
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.aurora-a {
+  width: 46vw;
+  height: 46vw;
+  left: -8vw;
+  top: -10vh;
+  background: radial-gradient(circle, var(--accent), transparent 62%);
+  animation: aurora-a 20s var(--ease) infinite alternate;
+}
+.aurora-b {
+  width: 42vw;
+  height: 42vw;
+  right: -8vw;
+  top: 8vh;
+  background: radial-gradient(circle, #c99a4e, transparent 62%);
+  animation: aurora-b 26s var(--ease) infinite alternate;
+}
+.aurora-c {
+  width: 36vw;
+  height: 36vw;
+  left: 32vw;
+  bottom: -14vh;
+  background: radial-gradient(circle, #8a6a34, transparent 62%);
+  animation: aurora-c 30s var(--ease) infinite alternate;
+}
+/* Follows the pointer; just moves a gradient's centre, so it stays cheap. */
+.aurora-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    34vw 34vw at var(--mx) var(--my),
+    var(--accent-glow),
+    transparent 68%
+  );
+  opacity: 0.6;
+}
+@keyframes aurora-a {
+  to {
+    transform: translate3d(7vw, 5vh, 0) scale(1.18);
+  }
+}
+@keyframes aurora-b {
+  to {
+    transform: translate3d(-6vw, 7vh, 0) scale(1.22);
+  }
+}
+@keyframes aurora-c {
+  to {
+    transform: translate3d(5vw, -6vh, 0) scale(1.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora-orb {
+    animation: none;
+  }
+}
 .hero-field {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 .hero-vignette {
@@ -1450,4 +1523,284 @@ section[id] {
   .cursor-ring {
     display: none;
   }
+}
+
+/* ═══════════════  PROJECT CARDS AS BUTTONS + MODAL  ═══════════════ */
+
+/* Reel + archive cards are now <button>s that open the detail modal. */
+.reel-card,
+.archive-card {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.reel-card {
+  background: var(--panel);
+}
+.reel-card:focus-visible,
+.archive-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* "Details" affordance that slides up over the media on hover/focus. */
+.reel-view {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  pointer-events: none;
+}
+.reel-card:hover .reel-view,
+.reel-card:focus-visible .reel-view,
+.reel-card.is-active .reel-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The archive "+" rotates instead of drifting, signalling "expand". */
+.archive-card:hover .archive-arrow,
+.archive-card:focus-visible .archive-arrow {
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
+/* ────────────────────────  CATEGORY GROUPS  ─────────────────────── */
+
+.category {
+  margin-top: clamp(28px, 4vw, 48px);
+}
+.category:first-of-type {
+  margin-top: clamp(20px, 2.5vw, 32px);
+}
+.category-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.category-name {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.category-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.category-count {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+}
+
+/* ──────────────────────────  DETAIL MODAL  ──────────────────────── */
+
+.pm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(4, 4, 6, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.pm-panel {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: min(88svh, 900px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+.pm-panel:focus {
+  outline: none;
+}
+.pm-close {
+  position: sticky;
+  top: 12px;
+  left: 100%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: 12px 12px -34px auto;
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(8, 8, 10, 0.6);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.pm-close:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+.pm-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px) calc(var(--radius) + 4px) 0 0;
+}
+.pm-media video,
+.pm-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pm-content {
+  padding: clamp(22px, 3.5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.pm-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.pm-title {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.pm-year {
+  flex-shrink: 0;
+  padding-top: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.pm-desc {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.4vw, 1.02rem);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.pm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pm-label {
+  margin: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.pm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.pm-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  background: var(--panel-soft);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+.pm-link:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+  background: var(--accent-soft);
+}
+.pm-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ═══════════════════════  SITE-WIDE FILM GRAIN  ══════════════════════ */
+
+/* A fixed, animated noise layer over the whole page — the connective tissue
+   that gives the WebGL hero and the rest of the site one cinematic surface. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* ───────────────────────  MOBILE "SHOW MORE"  ─────────────────────── */
+
+.show-more-wrap {
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--gutter);
+  margin-top: 20px;
+}
+.show-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+.show-more:hover,
+.show-more:focus-visible {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+  background: var(--accent-soft);
 }

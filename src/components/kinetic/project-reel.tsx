@@ -8,25 +8,94 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { Plus } from "lucide-react";
 import { DATA } from "@/data/resume";
 import { MaskText } from "@/components/motion/mask-text";
 import { Reveal } from "@/components/motion/reveal";
+import { useProjectModal } from "@/components/kinetic/project-modal";
 import { cn } from "@/lib/utils";
 
 type Project = (typeof DATA.projects)[number];
 
-const isFeatured = (p: Project) => "featured" in p && p.featured === true;
+// The curated set shown in the kinetic reel. Everything else falls into the
+// categorised grids below. Matched by title so the data file stays untouched.
+const FEATURED_TITLES: readonly string[] = [
+  "OffPay - Offline UPI Payment System",
+  "Dia - Offline On-Device AI Companion",
+  "Fake Dataset Factory - Synthetic Medical Imaging",
+  "VesselWatch - Oil Spill Detection System",
+  "BHC (Balaji Health Care) Business Suite",
+  "Reverie - Cognitive Observability for AI Agents",
+  "FlakeForge - OpenEnv Environment Server",
+  "Lunor Translator (DRDO Internship)",
+];
 
-// The kinetic reel shows a curated set; everything else lands in the archive
-// grid below. Fall back to the first 8 if nothing is tagged.
-const FEATURED = DATA.projects.filter(isFeatured);
-const REEL: readonly Project[] = FEATURED.length ? FEATURED : DATA.projects.slice(0, 8);
-const ARCHIVE: readonly Project[] = FEATURED.length
-  ? DATA.projects.filter((p) => !isFeatured(p))
-  : DATA.projects.slice(8);
+const isFeatured = (p: Project) => FEATURED_TITLES.includes(p.title);
+
+// Preserve the featured order as listed above.
+const REEL: readonly Project[] = FEATURED_TITLES.map((t) =>
+  DATA.projects.find((p) => p.title === t)
+).filter(Boolean) as Project[];
+
+const REST: readonly Project[] = DATA.projects.filter((p) => !isFeatured(p));
+
+// Category buckets for the non-featured work. A project not listed here lands
+// in "More".
+const CATEGORIES: { name: string; titles: string[] }[] = [
+  {
+    name: "AI Agents & Infrastructure",
+    titles: [
+      "FlowSpeak - Live Presenter Co-Pilot",
+      "memora - Memory Layer for AI Agents",
+      "OnCall AI - AI On-Call Engineer",
+      "Collections Agent - AR Follow-Up Automation",
+      "RootCause - AI Intent Tracking & Code Provenance",
+      "PII Redaction Env",
+    ],
+  },
+  {
+    name: "Machine Learning & Research",
+    titles: [
+      "YOLOv11n with Dendritic Optimization",
+      "VERIFAI - Verified Evidence-Based Radiology AI",
+      "ClinicalPilot - Multi-Agent Clinical Support",
+      "Lung Disease Classification",
+      "Asfalis - AI-Powered Security Monitor",
+      "T&C Summarizer",
+      "Recapture Detection",
+    ],
+  },
+  {
+    name: "Web & Products",
+    titles: [
+      "SevaSetu - Crisis Response Platform",
+      "SafeWander - Dementia Patient Monitoring",
+      "EcoVoice - Acoustic Biodiversity Monitor",
+      "MERAZ 6.0 - Techno-Cultural Fest Portal",
+      "SoilStack - Biochar Carbon Credit Marketplace",
+      "Roast Your Base",
+    ],
+  },
+];
 
 const pad = (n: number) => String(n).padStart(2, "0");
+
+// True on phone-width screens, where the vertical stack would otherwise get
+// very long — used to collapse the lists behind "show more".
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  return mobile;
+}
+
+// How many featured cards to show on mobile before "show more".
+const MOBILE_FEATURED = 4;
 
 const normalize = (src: string) =>
   !src ? src : src.startsWith("http") || src.startsWith("/") ? src : `/${src}`;
@@ -49,8 +118,9 @@ function Card({
   /** In the stacked layout there is no reel progress, so each card watches itself. */
   autoActivate?: boolean;
 }) {
+  const { open } = useProjectModal();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const articleRef = useRef<HTMLElement>(null);
+  const articleRef = useRef<HTMLButtonElement>(null);
   const [selfActive, setSelfActive] = useState(false);
 
   useEffect(() => {
@@ -79,7 +149,13 @@ function Card({
   const image = normalize(project.image || "");
 
   return (
-    <article ref={articleRef} className={cn("reel-card", isActive && "is-active")}>
+    <button
+      ref={articleRef}
+      type="button"
+      onClick={() => open(project)}
+      className={cn("reel-card", isActive && "is-active")}
+      aria-label={`View details for ${project.title}`}
+    >
       <div className="reel-media">
         <span className="reel-index font-mono">{pad(index + 1)}</span>
         {video ? (
@@ -90,6 +166,9 @@ function Card({
         ) : (
           <span className="reel-media-empty">{pad(index + 1)}</span>
         )}
+        <span className="reel-view">
+          <Plus className="size-3.5" /> Details
+        </span>
       </div>
 
       <div className="reel-body">
@@ -107,25 +186,8 @@ function Card({
             </span>
           ))}
         </div>
-
-        {project.links.length > 0 && (
-          <div className="reel-links">
-            {project.links.map((l) => (
-              <a
-                key={l.type}
-                href={l.href}
-                target="_blank"
-                rel="noreferrer"
-                className="reel-link"
-              >
-                {l.type}
-                <ArrowUpRight className="size-3" />
-              </a>
-            ))}
-          </div>
-        )}
       </div>
-    </article>
+    </button>
   );
 }
 
@@ -137,6 +199,8 @@ export function ProjectReel() {
   const [distance, setDistance] = useState(0);
   const [active, setActive] = useState(0);
   const [horizontal, setHorizontal] = useState(false);
+  const isMobile = useIsMobile();
+  const [featOpen, setFeatOpen] = useState(false);
 
   // Only run the sticky/horizontal treatment where it makes sense.
   useEffect(() => {
@@ -199,17 +263,32 @@ export function ProjectReel() {
   // Mobile / reduced-motion: a plain vertical stack, no scroll hijacking.
   // outerRef stays attached so useScroll always has a live target.
   if (!horizontal) {
+    const collapsed = isMobile && !featOpen;
+    const shown = collapsed ? REEL.slice(0, MOBILE_FEATURED) : REEL;
     return (
       <>
         <section ref={outerRef} className="section" id="projects">
           {head}
           <div className="reel-stack">
-            {REEL.map((p, i) => (
+            {shown.map((p, i) => (
               <Card key={p.title} project={p} index={i} active={false} autoActivate />
             ))}
           </div>
+          {isMobile && REEL.length > MOBILE_FEATURED && (
+            <div className="show-more-wrap">
+              <button
+                type="button"
+                className="show-more"
+                onClick={() => setFeatOpen((v) => !v)}
+              >
+                {featOpen
+                  ? "Show less"
+                  : `Show ${REEL.length - MOBILE_FEATURED} more`}
+              </button>
+            </div>
+          )}
         </section>
-        <Archive />
+        <Categories />
       </>
     );
   }
@@ -246,52 +325,97 @@ export function ProjectReel() {
           </div>
         </div>
       </section>
-      <Archive />
+      <Categories />
     </>
   );
 }
 
-/** Compact grid of every non-featured project, below the reel. */
-function Archive() {
-  if (ARCHIVE.length === 0) return null;
+/** A single non-featured project tile that opens the detail modal. */
+function GridCard({ project, delay }: { project: Project; delay: number }) {
+  const { open } = useProjectModal();
+  return (
+    <Reveal delay={delay}>
+      <button
+        type="button"
+        onClick={() => open(project)}
+        className="archive-card"
+        aria-label={`View details for ${project.title}`}
+      >
+        <div className="archive-top">
+          <h3>{project.title}</h3>
+          <Plus className="size-4 archive-arrow" />
+        </div>
+        <p className="archive-desc">{clean(project.description)}</p>
+        <div className="archive-tags">
+          {project.technologies.slice(0, 3).map((t) => (
+            <span className="tag" key={t}>
+              {t}
+            </span>
+          ))}
+        </div>
+      </button>
+    </Reveal>
+  );
+}
+
+/** Non-featured projects, grouped into labelled category grids. */
+function Categories() {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState(false);
+
+  if (REST.length === 0) return null;
+
+  const used = new Set<string>();
+  const groups = CATEGORIES.map((cat) => {
+    const items = cat.titles
+      .map((t) => REST.find((p) => p.title === t))
+      .filter(Boolean) as Project[];
+    items.forEach((p) => used.add(p.title));
+    return { name: cat.name, items };
+  }).filter((g) => g.items.length > 0);
+
+  const leftovers = REST.filter((p) => !used.has(p.title));
+  if (leftovers.length) groups.push({ name: "More", items: leftovers });
+
+  // On phones the full grid makes for an endless scroll, so it collapses
+  // behind a single toggle. Desktop always shows everything.
+  const showGroups = !isMobile || open;
 
   return (
     <section className="section" id="archive">
       <div className="shell">
         <p className="eyebrow">
-          <span className="eyebrow-num">01b</span> Everything else · {ARCHIVE.length}
+          <span className="eyebrow-num">01b</span> Everything else · {REST.length}
         </p>
-        <div className="archive-grid">
-          {ARCHIVE.map((p, i) => {
-            const primary = p.links?.[0];
-            const href =
-              (p.href && p.href !== "#" && p.href) || primary?.href || undefined;
-            const Tag = href ? "a" : "div";
-            return (
-              <Reveal key={p.title} delay={(i % 3) * 0.05}>
-                <Tag
-                  {...(href
-                    ? { href, target: "_blank", rel: "noreferrer" }
-                    : {})}
-                  className="archive-card"
-                >
-                  <div className="archive-top">
-                    <h3>{p.title}</h3>
-                    {href && <ArrowUpRight className="size-4 archive-arrow" />}
-                  </div>
-                  <p className="archive-desc">{clean(p.description)}</p>
-                  <div className="archive-tags">
-                    {p.technologies.slice(0, 3).map((t) => (
-                      <span className="tag" key={t}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </Tag>
-              </Reveal>
-            );
-          })}
-        </div>
+
+        {showGroups &&
+          groups.map((group) => (
+            <div className="category" key={group.name}>
+              <div className="category-head">
+                <h3 className="category-name">{group.name}</h3>
+                <span className="category-count font-mono">
+                  {pad(group.items.length)}
+                </span>
+              </div>
+              <div className="archive-grid">
+                {group.items.map((p, i) => (
+                  <GridCard key={p.title} project={p} delay={(i % 3) * 0.05} />
+                ))}
+              </div>
+            </div>
+          ))}
+
+        {isMobile && (
+          <div className="show-more-wrap">
+            <button
+              type="button"
+              className="show-more"
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? "Show less" : `Show all ${REST.length} projects`}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

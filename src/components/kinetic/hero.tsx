@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { DATA } from "@/data/resume";
 import { MaskTextOnLoad } from "@/components/motion/mask-text";
 import { PointerField } from "@/components/kinetic/pointer-field";
+import { Aurora } from "@/components/kinetic/aurora";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -27,6 +28,7 @@ export function Hero() {
 
   return (
     <section ref={ref} className="hero" id="top">
+      <Aurora className="hero-aurora" />
       <PointerField className="hero-field" />
       <div className="hero-vignette" />
 
