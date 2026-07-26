@@ -177,7 +177,7 @@ export const DATA = {
       dates: "Perforated AI Hackathon",
       active: true,
       description:
-        "Improved YOLOv11n object detection accuracy using PerforatedAI dendritic optimization. Integrated open-source PAI dendrites with a custom YOLO training loop. Achieved +2.30 mAP50 (100% data) and +2.90 mAP50 (50% data) over baseline. Demonstrated 5%+ remaining error reduction and improved data efficiency. Secured 3rd place globally among 693 participants as part of Team Neuron AI.",
+        "Improved YOLOv11n object detection accuracy using PerforatedAI dendritic optimization. Integrated open-source PAI dendrites with a custom YOLO training loop. Achieved +2.30 mAP50 (100% data) and +2.90 mAP50 (50% data) over baseline. Demonstrated 5%+ remaining error reduction and improved data efficiency. Secured 1st place globally among 693 participants as part of Team Neuron AI.",
       technologies: [
         "Python",
         "PyTorch",
@@ -1053,7 +1053,7 @@ export const DATA = {
       title: "First Prize - International Hackathon by Perforated AI",
       description: "Secured 1st place among 693 participants globally as part of Team Neuron AI",
       date: "2026",
-      icon: "🥉",
+      icon: "🥇",
       longDescription: "This project demonstrates the application of PerforatedAI's dendritic neural network optimization to YOLOv11n object detection on the Pascal VOC2007 dataset. We proved that dendrite-enhanced networks can achieve higher accuracy on the same data compared to traditional neural networks. Our submission was officially adopted as a base example in PerforatedAI's official repository.",
       links: {
         github: "https://github.com/PerforatedAI/PerforatedAI/tree/main/Examples/baseExamples/yolo-pascal",
