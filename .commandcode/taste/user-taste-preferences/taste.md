@@ -1,0 +1,17 @@
+# User Taste Preferences
+- Prefers to commit changes themselves; agent should not auto-commit. Confidence: 0.95
+- Gives full creative freedom for website redesigns and revamps. Confidence: 0.95
+- Expects the agent to independently research references and inspiration sources. Confidence: 0.9
+- Wants the agent to render/verify output (e.g., resume fits one page) before presenting. Confidence: 0.85
+- Uses Next.js with React/TypeScript (.tsx). Confidence: 0.95
+- Uses LaTeX for resumes. Confidence: 0.95
+- Prefers Opus 4.8 with max effort as the model setting. Confidence: 0.9
+- Wants modern, aesthetic, jaw-dropping portfolio designs with 3D elements and smooth animations. Confidence: 0.95
+- References design inspiration from awwwards, recent.design, 21st.dev, meinhardtaxer.com, motionsites.ai, movin.design, zero.university. Confidence: 0.9
+- Prioritizes performance; rejects heavy or laggy elements. Confidence: 0.95
+- Cares strongly about mobile responsiveness. Confidence: 0.9
+- Prefers modal pop-ups over direct redirects for project detail views. Confidence: 0.9
+- Prioritizes ATS-friendly resume formatting, targeting 90+ ATS scores. Confidence: 0.95
+- Wants one-page resumes in the style of Google/AI engineers. Confidence: 0.95
+- Wants links included for projects and experiences when available. Confidence: 0.9
+- Expects the agent to read referenced files (e.g., README) to extract additional details or context for tasks. Confidence: 0.8
