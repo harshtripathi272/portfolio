@@ -30,7 +30,7 @@ export const DATA = {
     { href: "/blog", icon: NotebookIcon, label: "Blog" },
   ],
   contact: {
-    email: "harsht@iitbhilai.ac.in",
+    email: "harsh@harshtripathi.lol",
     tel: "+919201479878",
     social: {
       GitHub: {
@@ -49,7 +49,7 @@ export const DATA = {
       },
       email: {
         name: "Send Email",
-        url: "mailto:harsht@iitbhilai.ac.in",
+        url: "mailto:harsh@harshtripathi.lol",
         icon: Icons.email,
 
         navbar: true,
