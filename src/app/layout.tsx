@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Inter, JetBrains_Mono, Indie_Flower } from "next/font/google";
 
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScrollProvider } from "@/components/smooth-scroll";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { Preloader } from "@/components/kinetic/preloader";
-import { Cursor } from "@/components/kinetic/cursor";
 
 import "./globals.css";
 
@@ -24,12 +20,11 @@ const fontMono = JetBrains_Mono({
   display: "swap",
 });
 
-// Used only for the italic emphasis words, so a single weight is plenty.
-const fontSerif = Instrument_Serif({
+// Handwritten accents on the cutting-mat homepage.
+const fontHand = Indie_Flower({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  variable: "--font-hand",
   display: "swap",
 });
 
@@ -65,7 +60,7 @@ export default function RootLayout({
           "antialiased",
           fontSans.variable,
           fontMono.variable,
-          fontSerif.variable
+          fontHand.variable
         )}
         style={{ ["--font-display" as string]: "var(--font-sans)" }}
       >
@@ -75,14 +70,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Preloader />
-          <Cursor />
-          <div className="grain" aria-hidden />
-          <SmoothScrollProvider>
-            <SiteHeader />
-            <main>{children}</main>
-            <SiteFooter />
-          </SmoothScrollProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>
